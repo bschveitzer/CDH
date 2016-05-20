@@ -1,0 +1,39 @@
+entity Usuario{
+	nome String
+}
+
+entity Relatorio{
+
+}relationship ManyToOne{
+	Relatorio{user} to Usuario
+}
+
+entity Mes{
+
+}relationship ManyToOne{
+	Mes{user} to Usuario
+}
+
+entity Semana{
+
+}relationship ManyToOne{
+	Semana{mes} to Mes
+}
+
+entity Dia{
+
+}relationship ManyToOne{
+	Dia{semana} to Semana
+}
+
+entity Entrada{
+
+}relationship ManyToOne{
+	Entrada{dia} to Dia
+}
+
+entity Saida{
+
+}relationship ManyToOne{
+	Saida{dia} to Dia
+}
