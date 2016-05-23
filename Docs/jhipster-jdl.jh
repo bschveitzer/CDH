@@ -1,38 +1,63 @@
 entity Usuario{
 	nome String
+    sobrenome String
+    email String
+    senha String
+    
+}
+
+entity TipoUsuario{
+usuario ObjectID
+tipo Number
+}relationship ManyToOne{
+	Usuario{user} to TipoUsuario   
 }
 
 entity Relatorio{
+usuario ObjectID
 
 }relationship ManyToOne{
 	Relatorio{user} to Usuario
 }
 
-entity Mes{
 
+entity Mes{
+nome String
+ano Number
+fechado Boolean 
+usuario ObjectID
 }relationship ManyToOne{
 	Mes{user} to Usuario
 }
 
 entity Semana{
-
+nome Number
+mes ObjectID
 }relationship ManyToOne{
 	Semana{mes} to Mes
 }
 
 entity Dia{
+nome String
+data Date
+semana ObjectID
 
 }relationship ManyToOne{
 	Dia{semana} to Semana
 }
 
 entity Entrada{
+horaEntrada Date
+dia ObjectID
 
 }relationship ManyToOne{
 	Entrada{dia} to Dia
 }
 
 entity Saida{
+horaSaida Date
+reposta Number
+dia ObjectID 
 
 }relationship ManyToOne{
 	Saida{dia} to Dia
