@@ -13,14 +13,6 @@ tipo Number
 	Usuario{user} to TipoUsuario   
 }
 
-entity Relatorio{
-usuario ObjectID
-
-}relationship ManyToOne{
-	Relatorio{user} to Usuario
-}
-
-
 entity Mes{
 nome String
 ano Number
