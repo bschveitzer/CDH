@@ -1,0 +1,68 @@
+<div class="container">
+	<div class="row">
+		<navbar></navbar>
+		<table class="table table-hover">
+		    <thead>
+		      	<tr>
+		        	<th class="text-center">Nome</th>
+		        	<th class="text-center">Criar Nova Entidade</th>
+		        	<th class="text-center">Visualizar Entidade</th>
+		      	</tr>
+		    </thead>
+		    <tbody>
+		    	<tr ng-repeat="entidade in entidades">
+		        	<td align="center">
+		        		{{entidade.nome}}
+		        	</td>
+		        	<td align="center">
+		        		<button 
+		        			class="btn btn-info" 
+		        			ng-click="selecionaEntidade(entidade)" 
+		        			data-toggle="modal" 
+		        			data-target="#modalCriaEntidade"
+		        		>
+		        			Criar {{entidade.nome}}
+		        		</button>
+		        	</td>
+		        	<td align="center">
+		        		<button class="btn btn-success">
+		        			Visualizar todos {{entidade.nome}}s
+		        		</button>
+		        	</td>
+		      	</tr>
+		    </tbody>
+		</table>
+
+		<!-- MODAL CRIA ENTIDADE -->
+		<div id="modalCriaEntidade" class="modal fade" role="dialog">
+		  	<div class="modal-dialog">
+
+		    	<!-- Modal content-->
+		    	<div class="modal-content">
+		      		<div class="modal-header">
+		        		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		        		<h4 class="modal-title">Criar Novo/a {{entidadeSelecionado.nome}}</h4>
+		      		</div>
+		     		<div class="modal-body">
+		        		<div ng-repeat="variavel in entidadeSelecionado.modelo">
+		        			<!-- todo adicionar nome varivarel -->
+		        			<label>+({{variavel}})</label>
+		        			<!-- todo adicionar nome variavel no ng-model -->
+		        			<input ng-model="{{entidadeSelecionado.nome}}">
+		        		</div>
+		        		<div>
+		        			<button>
+		        				Criar
+		        			</button>
+		        		</div>
+		      		</div>
+		      		<div class="modal-footer">
+		        		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      		</div>
+		    	</div>
+
+		  	</div>
+		</div>
+
+	</div>
+</div>

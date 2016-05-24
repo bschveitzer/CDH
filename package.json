@@ -1,0 +1,34 @@
+{
+  "name": "Esqueleton",
+  "version": "0.0.1",
+  "description": "É o padrão de pastas e arquivos utilizadas no laboratório.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/omiguel/esqueleton.git"
+  },
+  "keywords": [
+    "inicio",
+    "esqueleto",
+    "evento",
+    "socket"
+  ],
+  "author": "Osvaldo Miguel Junior",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/omiguel/esqueleton/issues"
+  },
+  "homepage": "https://github.com/omiguel/esqueleton",
+  "dependencies": {
+    "clone": "^1.0.2",
+    "connect-busboy": "0.0.2",
+    "eventemitter2": "^0.4.14",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.1",
+    "node": "0.0.0",
+    "socket.io": "^1.4.5"
+  }
+}

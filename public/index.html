@@ -1,0 +1,43 @@
+<!DOCTYPE>
+<html>
+<head lang="pt">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="stylesheets/main.css">
+
+    <script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/angular/angular.min.js"></script>
+    <title>Esqueleto</title>
+</head>
+<body ng-app="agere">
+    <div class="container-fluid">
+        <div ng-view="true"></div>
+    </div>
+
+</body>
+
+<script src="/bower_components/jquery/dist/jquery.js"></script>
+<script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="scripts/events/eventemitter2.js"></script>
+<script src="scripts/events/MensagemBrowser.js"></script>
+<script src="/scripts/events/SIOM.js"></script>
+
+<script src="/scripts/app.js"></script>
+<script src="/scripts/rotas.js"></script>
+
+<!--SERVICES AND CONTROLLER-->
+<script src="/scripts/services/userLogado.js"></script>
+<script src="/scripts/services/utilvalues.js"></script>
+<script src="/scripts/controllers/homeController.js"></script>
+<script src="/scripts/controllers/loginController.js"></script>
+<script src="/scripts/controllers/entidadesController.js"></script>
+
+<!--DIRETIVAS-->
+<script src="scripts/directives/navbar.js"></script>
+
+<!--BOWER COMPONENTS-->
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+</html>

@@ -1,0 +1,20 @@
+body {
+  font-family: Century Gothic, sans-serif;
+}
+
+img {
+	width: 95%;
+}
+.tam-content{
+    height: 42em;
+    padding-top: 1em;
+}
+.color-border{
+    border-color: lightskyblue;
+}
+.ulnobullet{
+    list-style: none;
+}
+.centralize{
+    text-align: center;
+}
