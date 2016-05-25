@@ -20,8 +20,6 @@ var obj = Mongoose.Schema({
     sobrenome: {type: types.String, required: true},
     email: {type: types.String, required: true},
     senha: {type: types.String, required: true},
-    datanascimento: {type: types.Date, required: true},
-    sexo: {type: types.String, required: true},
     numerocelular: {type: types.String},
     foto: {type: types.String},
     tipo: {type: types.Number}
