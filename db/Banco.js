@@ -9,7 +9,7 @@ function Banco() {
     var db;
     me.listeners = {};
     me.models = {};
-    Mongoose.connect('mongodb://localhost/nomeDoBanco');
+    Mongoose.connect('mongodb://localhost/CDH');
     this.mongoose = Mongoose;
     this.conectado = false;
     db = Mongoose.connection;
