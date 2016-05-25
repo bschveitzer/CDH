@@ -10,7 +10,7 @@ var rtcLogin = require('./rtc/rtcLoginManager.js');
 var banco = require('./db/');
 var fs = require('fs');
 var busboy = require('connect-busboy');
-//todo, teste
+
 app.set('view engine', 'ejs');
 app.set('views', path.resolve(__dirname + '/views'));
 app.use(express['static'](path.resolve(__dirname+ '/public')));
