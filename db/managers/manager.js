@@ -11,7 +11,6 @@ function Manager() {}
 Manager.prototype.create = function(msg){
     var me = this;
     var dados = msg.getRes();
-    console.log('chegou no create?', dados);
     this.model.create(dados, function(err, res){
         if(res){
             me.emitManager(msg, '.created', {res: res});

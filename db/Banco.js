@@ -29,6 +29,11 @@ Banco.prototype.wiring = function(){
     me.listeners['rtc.usuario.*'] = me.repassaComando.bind(me);
     me.listeners['modelo'] = me.entidademodelo.bind(me);
     me.listeners['rtc.getallmodels'] = me.enviamodelscompletos.bind(me);
+    me.listeners['rtc.dia.*'] = me.repassaComando.bind(me);
+    me.listeners['rtc.entrada.*'] = me.repassaComando.bind(me);
+    me.listeners['rtc.saida.*'] = me.repassaComando.bind(me);
+    me.listeners['rtc.mes.*'] = me.repassaComando.bind(me);
+    me.listeners['rtc.semana.*'] = me.repassaComando.bind(me);
 
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);
@@ -38,6 +43,7 @@ Banco.prototype.wiring = function(){
 
 Banco.prototype.enviamodelscompletos = function (msg) {
     var me = this;
+    console.log(me.models, 'enviando');
     var retorno = msg.next(me, 'allmodels', {res: me.models}, msg.getFlag);
     hub.emit(retorno.getEvento(), retorno);
 };

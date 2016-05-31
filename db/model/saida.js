@@ -16,7 +16,8 @@ var options = {
 };
 
 var obj = Mongoose.Schema({
-    horaEntrada: {type: types.Date, required: true},
+    hora: {type: types.Date, required: true},
+    resposta: {type: types.Boolean, require: true},
     saida: {type: types.ObjectId, ref:'dia', require: true}
 });
 

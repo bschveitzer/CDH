@@ -12,7 +12,7 @@ function RtcAdmin(conf){
     var me = this;
     me.config = conf;
 
-    console.log('rtcRoottttt', me.config.socket.id);
+    console.log('rtcAdminnnn', me.config.socket.id);
 }
 
 module.exports = RtcAdmin;

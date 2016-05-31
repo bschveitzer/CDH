@@ -22,7 +22,7 @@ var obj = Mongoose.Schema({
     senha: {type: types.String, required: true},
     numerocelular: {type: types.String},
     foto: {type: types.String},
-    tipo: {type: types.Number}
+    tipo: {type: types.Number, required: true}
 });
 
 new ctrbd(obj, 'usuario');
