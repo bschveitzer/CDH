@@ -25,4 +25,4 @@ http.listen(80, function(err){
     console.log("Rodando na porta 80", err);
 });
 
-app.use('/image', express.static(path.resolve(__dirname + '/image/')));
+app.use('/imagens', express.static(path.resolve(__dirname + '/imagens/')));

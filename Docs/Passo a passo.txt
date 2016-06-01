@@ -1,0 +1,8 @@
+1- Esquematização das entidades
+2- Esquematização do banco (jhipster)
+3- Montagem do banco (managers e models)
+4- bdtest
+5- Banco OK
+6- Esquematização das interfaces.
+7- Esboço das interfaces (webdemo)
+8-

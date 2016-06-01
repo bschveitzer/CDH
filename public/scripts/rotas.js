@@ -9,7 +9,7 @@ function ConfigRotas($routeProvider) {
     me.rotas = {};
 
     me.incluiRota = function(){
-        me.route.when('/home', {templateUrl: '../views/home.html', controller: 'homeController'});
+        me.route.when('/home', {templateUrl: '../views/relatorio.html', controller: 'relatorioController'});
         me.route.when('/entidades', {templateUrl: '../views/entidades.html', controller: 'entidadesController'});
     };
 
