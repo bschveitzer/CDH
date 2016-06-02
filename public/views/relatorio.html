@@ -1,4 +1,50 @@
-<div>
+<div class="container">
     <navbar></navbar>
-    <h1>relatorio</h1>
+    <div class="row" style="border-style: solid; border-color:#e3f2fd;">
+        <div class="row">
+            <h1 class=" col-md-offset-4 col-md-8">Controle de horas</h1>
+        </div>
+        <div class="row">
+            <div class=" col-md-offset-7 col-md-4" style="font-size: 1em; text-align: right;">Bem vindo Bernardo Schveitzer de Souza!</div>
+            <button style="max-width: 6em; min-width: 2em; min-height: 1.7em" type="button" class="btn btn-danger btn-default btn-xs">
+                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="form-group row" style="margin-top: 4%">
+            <row>
+                <label class="col-md-1 text-right">Usuário</label>
+                <input class="col-md-1">
+                <label class="col-md-1 text-right">Ano</label>
+                <input class="col-md-1">
+                <label class="col-md-1 text-right">Mês</label>
+                <input class="col-md-1">
+                <button style="margin-left: 1em; min-width: 2em; min-height: 2.2em;" class="btn btn-default btn-primary btn-xs" type="button">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
+            </row>
+        </div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th class="text-center">Semana</th>
+            <th class="text-center">Dia</th>
+            <th class="text-center">Hora de entrada</th>
+            <th class="text-center">Hora de saída</th>
+            <th class="text-center">Anotações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="dia in dias">
+            <td align="center">
+                {{dia.nome}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+        <div class="row">
+            <label class="col-md-offset-9" style="margin-top: 5%;">Powered by</label>
+            <img style="width: 15em;" class="col-md-offset-9 col-md-2" src="../../imagens/labtic.jpg">
+        </div>
+
+    </div>
 </div>

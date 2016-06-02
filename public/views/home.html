@@ -1,38 +1,61 @@
-<div class="container" style="margin-top: 8%;">
+<div class="container">
 	<navbar></navbar>
-	<div class="row">
+	<div class="row" style="border-style: solid; border-color:#e3f2fd;">
 		<div class="row">
 			<h1 class=" col-md-offset-4 col-md-8">Controle de horas</h1>
 		</div>
 		<div class="row">
-			<div class=" col-md-offset-7 col-md-4" style="font-size: 1em; text-align: right;">Bem vindo Bernardo Schveitzer de Souza!</div>
-			<button style="max-width: 6em;" type="button" class=" col-md-1 btn btn-danger btn-default btn-xs">logout</button>
+			<div class=" col-md-offset-8 col-md-3" style="font-size: 1em; text-align: right;">Bem vindo Bernardo Schveitzer de Souza!</div>
+			<button style="max-width: 6em; min-width: 2em; min-height: 1.7em" type="button" class="btn btn-danger btn-default btn-xs">
+				<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+			</button>
+			<br>
 		</div>
-		<div class="col-md-offset-1" style="margin-top: 8%;">
-			<div class="form-group row">
-				<label class="col-md-2">Data</label>
-				<label class="col-md-4">01 de Junho de 2016</label>
+		<div style="margin-top: 6%;">
+			<div class="form-group" style="background-color: #e3f2fd;">
+				<div align="left" style="position:absolute">
+					<label class="">Data</label>
+				</div>
+				<div align="center">
+					<label class="">01 de Junho de 2016</label>
+				</div>
 			</div>
-			<div class="form-group row">
-				<label class="col-md-2">Horário de entrada</label>
-				<label class="col-md-4">14:00</label>
+			<div class="form-group" style="background-color: #e3f2fd;">
+				<div align="left" style="position:absolute">
+					<label class="">Horário de entrada</label>
+				</div>
+				<div align="center">
+					<label class="">14:00</label>
+				</div>
 			</div>
-			<div class="form-group row">
-				<row>
-					<label class="col-md-2">Previsão de saída</label>
-					<input class="col-md-1">
-					<button style="margin-left: 1em; max-width: 2em; min-height: 2.2em;" class="btn btn-default btn-warning btn-xs col-md-1" type="button">V</button>
-				</row>
+			<div class="form-group" style="background-color: #e3f2fd;">
+				<div align="left" style="position:absolute">
+					<label class="">Previsão de saída</label>
+				</div>
+				<div align="center">
+					<input type="time" class="" style="max-width: 8em">
+					<button style="margin-left: 1em; width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs" type="button">
+						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					</button>
+				</div>
+
 			</div>
-			<div class="form-group row">
-				<label class="col-md-2">Banco de horas semanal</label>
-				<label class="col-md-4">20:00</label>
+			<div class="form-group" style="background-color: #e3f2fd;">
+				<div align="left" style="position:absolute">
+					<label class="">Banco de horas</label>
+				</div>
+				<div align="center">
+					<label class="">20:00</label>
+				</div>
 			</div>
 		</div>
 		<div class="col-md-offset-1">
 			<div class="row">
-				<button style="max-width: 6em;" type="button" class=" col-md-1 btn btn-danger btn-default btn-xs">relatorio</button>
-				<img style="width: 15em;" class="col-md-offset-8 col-md-2" src="../../imagens/logo.jpg">
+				<button style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
+					<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+				</button>
+				<label class="col-md-offset-8" style="margin-right: 1%">Powered by</label>
+				<img style="width: 15em;" class="col-md-offset-9 col-md-2" src="../../imagens/labtic.jpg">
 			</div>
 		</div>
 	</div>
