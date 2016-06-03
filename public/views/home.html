@@ -1,22 +1,22 @@
 <div class="container">
 	<navbar></navbar>
-	<div class="row" style="border-style: solid; border-color:#e3f2fd;">
+	<div class="row panel panel-primary container">
 		<div class="row">
-			<h1 class=" col-md-offset-4 col-md-8">Controle de horas</h1>
+			<h1 class=" col-md-offset-4 col-md-8"><span class="glyphicon glyphicon-time"></span>   Controle de horas</h1>
 		</div>
 		<div class="row">
 			<div class=" col-md-offset-8 col-md-3" style="font-size: 1em; text-align: right;">Bem vindo Bernardo Schveitzer de Souza!</div>
-			<button style="max-width: 6em; min-width: 2em; min-height: 1.7em" type="button" class="btn btn-danger btn-default btn-xs">
+			<button ng-click="trocaRota('')" style="max-width: 6em; min-width: 2em; min-height: 1.7em" type="button" class="btn btn-danger btn-default btn-xs">
 				<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
 			</button>
 			<br>
 		</div>
-		<div style="margin-top: 6%;">
+		<div style="margin-top: 2%;" class="panel panel-primary">
 			<div class="form-group" style="background-color: #e3f2fd;">
 				<div align="left" style="position:absolute">
 					<label class="">Data</label>
 				</div>
-				<div align="center">
+				<div class="col-md-offset-2">
 					<label class="">01 de Junho de 2016</label>
 				</div>
 			</div>
@@ -24,7 +24,7 @@
 				<div align="left" style="position:absolute">
 					<label class="">Horário de entrada</label>
 				</div>
-				<div align="center">
+				<div class="col-md-offset-2">
 					<label class="">14:00</label>
 				</div>
 			</div>
@@ -32,11 +32,64 @@
 				<div align="left" style="position:absolute">
 					<label class="">Previsão de saída</label>
 				</div>
-				<div align="center">
+				<div class="col-md-offset-2">
 					<input type="time" class="" style="max-width: 8em">
-					<button style="margin-left: 1em; width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs" type="button">
+					<button type="button" style="margin-left: 1em; width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs" data-toggle="modal" data-target="#myModal">
 						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 					</button>
+					<!--MODAL MYMODAL-->
+					<div id="myModal" class="modal fade" role="dialog">
+						<div class="modal-dialog" >
+							<div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
+								<div class="modal-header">
+									<h4 class="modal-title text-center">Confirmação de saída</h4>
+								</div>
+								<div class="modal-body text-center">
+									<p>Você sairá às 18:00?</p>
+									<p><button type="button" class="btn btn-default btn-primary" data-toggle="modal" data-target="#Sim" data-dismiss="modal">Sim</button>
+										<button type="button" class="btn btn-default btn-danger" data-toggle="modal" data-target="#Nao">Não</button></p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--MODAL NAO-->
+					<div id="Nao" class="modal fade" role="dialog">
+						<div class="modal-dialog" >
+							<div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4 class="modal-title text-center">Confirmação de saída</h4>
+								</div>
+								<div class="modal-body text-center">
+									<p>Novo horário de saída:
+										<input type="time" style="max-width: 8em">
+										<button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-dismiss="modal">
+											<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+										</button>
+									</p>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--MODAL SIM-->
+					<div id="Sim" class="modal fade" role="dialog">
+						<div class="modal-dialog" >
+							<div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
+								<div class="modal-header">
+									<h4 class="modal-title text-center">Confirmação de saída</h4>
+								</div>
+								<div class="modal-body text-center">
+									<p>Horário salvo. Até amanhã!
+										<button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-dismiss="modal">
+											<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+										</button>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
 				</div>
 
 			</div>
@@ -44,18 +97,18 @@
 				<div align="left" style="position:absolute">
 					<label class="">Banco de horas</label>
 				</div>
-				<div align="center">
+				<div class="col-md-offset-2">
 					<label class="">20:00</label>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-offset-1">
 			<div class="row">
-				<button style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
+				<button ng-click="trocaRota('relatorio')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
 					<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
 				</button>
 				<label class="col-md-offset-8" style="margin-right: 1%">Powered by</label>
-				<img style="width: 15em;" class="col-md-offset-9 col-md-2" src="../../imagens/labtic.jpg">
+				<img style="width: 15em;" class="col-md-offset-9 col-md-2" src="../../imagens/logobranco.jpg">
 			</div>
 		</div>
 	</div>
