@@ -6,8 +6,7 @@ var Mongoosemodels = {
     dia: require('./diaManager.js'),
     entrada: require('./entradaManager.js'),
     mes: require('./mesManager.js'),
-    saida: require('./saidaManager.js'),
-    semana: require('./semanaManager.js')
+    saida: require('./saidaManager.js')
     
 };
 

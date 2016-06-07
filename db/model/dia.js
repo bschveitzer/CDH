@@ -17,8 +17,8 @@ var options = {
 
 var obj = Mongoose.Schema({
     nome: {type: types.String, required: true},
-    data: {type: types.Date, required: true},
-    semana: {type: types.ObjectId, ref:'semana', require: true}
+    data: {type: types.Number, required: true},
+    mes: {type: types.ObjectId, ref: 'mes', require: true}
 });
 
 new ctrbd(obj, 'dia');

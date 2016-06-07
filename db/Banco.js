@@ -33,7 +33,6 @@ Banco.prototype.wiring = function(){
     me.listeners['rtc.entrada.*'] = me.repassaComando.bind(me);
     me.listeners['rtc.saida.*'] = me.repassaComando.bind(me);
     me.listeners['rtc.mes.*'] = me.repassaComando.bind(me);
-    me.listeners['rtc.semana.*'] = me.repassaComando.bind(me);
 
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);

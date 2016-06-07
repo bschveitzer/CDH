@@ -2,7 +2,7 @@
  * Created by Osvaldo on 05/10/15.
  */
 
-app.controller("loginController",['$scope', '$location', 'setUserLogado', '$route',function ($scope, $location, setUserLogado, $route) {
+app.controller("loginController",['$scope', '$location', 'setUserLogado', '$route', 'utilvalues',function ($scope, $location, setUserLogado, $route, utilvalues) {
     var me = this;
     me.listeners = {};
 
@@ -15,8 +15,10 @@ app.controller("loginController",['$scope', '$location', 'setUserLogado', '$rout
     };
 
     me.logou = function(msg){
-        setUserLogado.setLogado(msg.getDado());
-        SIOM.emit('setarota', msg.getDado().tipo);
+        var dado = msg.getDado();
+        setUserLogado.setLogado(dado.logado);
+        utilvalues.entrada = dado.entrada;
+        SIOM.emit('setarota', dado.logado.tipo);
     };
 
     me.nextView = function(){

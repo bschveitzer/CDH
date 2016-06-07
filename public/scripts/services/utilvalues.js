@@ -5,5 +5,6 @@ app.value('utilvalues', {
     rotaatual: {
         home: 'active',
         entidades: ''
-    }
+    },
+    entrada: null
 });

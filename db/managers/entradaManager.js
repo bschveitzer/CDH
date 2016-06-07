@@ -32,9 +32,31 @@ entradamanager.prototype.executaCrud = function(msg){
     }
 };
 
+entradamanager.prototype.registraentrada = function (registro) {
+    var me = this;
+    var entrada = {
+        horaEntrada: registro.entrada,
+        dia: registro.day
+    };
+
+    /**
+     * todo: aqui tem que verificar se ele já tem uma entrada nesse mesmo dia,
+     * todo: se sim, tem que verificar se ele tem uma saida no mesmo dia, se ele tiver uma saida no mesmo dia, poderá ser criada uma nova entrada
+     * todo: caso contrario mantem-se a entrada antiga.
+     */
+    this.model.create(entrada, function(err, res){
+        if(res){
+            registro.cb(res);
+        } else {
+            console.log('deu erro no cria entrada', err);
+        }
+    })
+};
+
 entradamanager.prototype.wiring = function(){
     var me = this;
     me.listeners['banco.entrada.*'] = me.executaCrud.bind(me);
+    me.listeners['entrada'] = me.registraentrada.bind(me);
 
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);

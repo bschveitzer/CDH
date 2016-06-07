@@ -13,6 +13,16 @@ function diamanager(){
     me.model = Model;
     me.listeners = {};
 
+    me.nomedia = [
+        'domingo',
+        'segunda',
+        'terça',
+        'quarta',
+        'quinta',
+        'sexta',
+        'sabado'
+    ];
+
     me.wiring();
 }
 
@@ -32,9 +42,43 @@ diamanager.prototype.executaCrud = function(msg){
     }
 };
 
+diamanager.prototype.entrada = function (ponto) {
+    var me = this;
+    var entrada = ponto.entrada;
+    var dia = entrada.getDate();
+    var mes = ponto.mes;
+    var novaentrada = {cb : ponto.cb};
+
+    this.model.findOne({'data': dia, 'mes': mes}, function(err, res){
+        if(!res){
+            var novodia = {
+                nome: me.nomedia[entrada.getDay()],
+                data: dia,
+                mes: mes
+            };
+            me.model.create(novodia, function(err, res){
+                if(res){
+                    novaentrada.day = res;
+                    novaentrada.entrada = entrada;
+                    hub.emit('entrada', novaentrada);
+                } else {
+                    console.log('deu erro no cria dia', err);
+                }
+            })
+        } else if (err){
+            console.log('deu merda aqui', err);
+        } else {
+            novaentrada.day = res;
+            novaentrada.entrada = entrada;
+            hub.emit('entrada', novaentrada);
+        }
+    });
+};
+
 diamanager.prototype.wiring = function(){
     var me = this;
     me.listeners['banco.dia.*'] = me.executaCrud.bind(me);
+    me.listeners['pontosemana'] = me.entrada.bind(me);
 
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);

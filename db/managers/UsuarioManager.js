@@ -37,7 +37,18 @@ usuariomanager.prototype.trataLogin = function(msg){
     this.model.findOne({'email': dado.email}, function(err, res){
         if(res){
             if(dado.senha == res.senha){
-                me.emitManager(msg, '.login', {res: res});
+                var entrada = {
+                    horaentrada: new Date(),
+                    usuario: res,
+                    cb: function (entrada) {
+                        var logado = {
+                            entrada: entrada,
+                            logado: res
+                        };
+                        me.emitManager(msg, '.login', {res: logado});
+                    }
+                };
+                hub.emit('bateuponto', entrada);
             } else {
                 me.emitManager(msg, '.senhaincorreta', {res: null});
             }

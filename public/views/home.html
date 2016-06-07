@@ -5,8 +5,8 @@
 			<h1 class=" col-md-offset-4 col-md-8"><span class="glyphicon glyphicon-time"></span>   Controle de horas</h1>
 		</div>
 		<div class="row">
-			<div class=" col-md-offset-8 col-md-3" style="font-size: 1em; text-align: right;">Bem vindo Bernardo Schveitzer de Souza!</div>
-			<button ng-click="trocaRota('')" style="max-width: 6em; min-width: 2em; min-height: 1.7em" type="button" class="btn btn-danger btn-default btn-xs">
+			<div class=" col-md-offset-8 col-md-3" style="font-size: 1em; text-align: right;">Bem vindo {{logado.nome}} {{logado.sobrenome}}!</div>
+			<button ng-click="sair()" style="max-width: 6em; min-width: 2em; min-height: 1.7em" type="button" class="btn btn-danger btn-default btn-xs">
 				<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
 			</button>
 			<br>
@@ -17,7 +17,7 @@
 					<label class="">Data</label>
 				</div>
 				<div class="col-md-offset-2">
-					<label class="">01 de Junho de 2016</label>
+					<label> {{dataEscrita}}</label>
 				</div>
 			</div>
 			<div class="form-group" style="background-color: #e3f2fd;">
@@ -25,7 +25,7 @@
 					<label class="">Horário de entrada</label>
 				</div>
 				<div class="col-md-offset-2">
-					<label class="">14:00</label>
+					<label class="">{{hora}}</label>
 				</div>
 			</div>
 			<div class="form-group" style="background-color: #e3f2fd;">
@@ -33,9 +33,9 @@
 					<label class="">Previsão de saída</label>
 				</div>
 				<div class="col-md-offset-2">
-					<input type="time" class="" style="max-width: 8em">
-					<button type="button" style="margin-left: 1em; width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs" data-toggle="modal" data-target="#myModal">
-						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					<input type="time" class="" style="max-width: 8em" ng-model="saida">
+					<button type="button" style="margin-left: 1em; width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs" >
+						<span class="glyphicon glyphicon-ok" aria-hidden="true" ng-click="registrasaida()"></span>
 					</button>
 					<!--MODAL MYMODAL-->
 					<div id="myModal" class="modal fade" role="dialog">
