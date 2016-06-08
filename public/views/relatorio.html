@@ -24,24 +24,27 @@
                 </button>
             </row>
         </div>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th class="text-center">Semana</th>
-            <th class="text-center">Dia</th>
-            <th class="text-center">Hora de entrada</th>
-            <th class="text-center">Hora de saída</th>
-            <th class="text-center">Anotações</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="dia in dias">
-            <td align="center">
-                {{dia.nome}}
-            </td>
-        </tr>
-        </tbody>
-    </table>
+        <div class="panel panel-primary">
+            <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="text-center">Semana</th>
+                <th class="text-center">Dia</th>
+                <th class="text-center">Hora de entrada</th>
+                <th class="text-center">Hora de saída</th>
+                <th class="text-center">Anotações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="dia in dias">
+                <td align="center">
+                    {{dia.nome}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+
         <div class="row">
             <label class="col-md-offset-9" style="margin-top: 5%;">Powered by</label>
             <img style="width: 15em;" class="col-md-offset-9 col-md-2" src="../../imagens/logobranco.jpg">
