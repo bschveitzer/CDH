@@ -16,10 +16,10 @@ var options = {
 };
 
 var obj = Mongoose.Schema({
-    hora: {type: types.Date, required: true},
+    hora: {type: types.Date},
+    previsao: {type: types.Date, required: true},
     resposta: {type: types.Boolean, require: true},
-    saida: {type: types.ObjectId, ref:'dia', require: true}
-});
+    entrada: {type: types.ObjectId, ref:'entrada', require: true}});
 
 new ctrbd(obj, 'saida');
 

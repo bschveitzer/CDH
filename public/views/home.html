@@ -32,64 +32,14 @@
 				<div align="left" style="position:absolute">
 					<label class="">Previsão de saída</label>
 				</div>
-				<div class="col-md-offset-2">
+				<div class="col-md-offset-2" ng-show="saidaregistrada">
+					<label class="">{{horasaida}}</label>
+				</div>
+				<div class="col-md-offset-2" ng-show="!saidaregistrada">
 					<input type="time" class="" style="max-width: 8em" ng-model="saida">
-					<button type="button" style="margin-left: 1em; width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs" >
-						<span class="glyphicon glyphicon-ok" aria-hidden="true" ng-click="registrasaida()"></span>
+					<button type="button" style="margin-left: 1em; width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs" ng-click="registrasaida()">
+						<span class="glyphicon glyphicon-ok" aria-hidden="true" ></span>
 					</button>
-					<!--MODAL MYMODAL-->
-					<div id="myModal" class="modal fade" role="dialog">
-						<div class="modal-dialog" >
-							<div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
-								<div class="modal-header">
-									<h4 class="modal-title text-center">Confirmação de saída</h4>
-								</div>
-								<div class="modal-body text-center">
-									<p>Você sairá às 18:00?</p>
-									<p><button type="button" class="btn btn-default btn-primary" data-toggle="modal" data-target="#Sim" data-dismiss="modal">Sim</button>
-										<button type="button" class="btn btn-default btn-danger" data-toggle="modal" data-target="#Nao">Não</button></p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--MODAL NAO-->
-					<div id="Nao" class="modal fade" role="dialog">
-						<div class="modal-dialog" >
-							<div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
-									<h4 class="modal-title text-center">Confirmação de saída</h4>
-								</div>
-								<div class="modal-body text-center">
-									<p>Novo horário de saída:
-										<input type="time" style="max-width: 8em">
-										<button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-dismiss="modal">
-											<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-										</button>
-									</p>
-
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--MODAL SIM-->
-					<div id="Sim" class="modal fade" role="dialog">
-						<div class="modal-dialog" >
-							<div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
-								<div class="modal-header">
-									<h4 class="modal-title text-center">Confirmação de saída</h4>
-								</div>
-								<div class="modal-body text-center">
-									<p>Horário salvo. Até amanhã!
-										<button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-dismiss="modal">
-											<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-										</button>
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-
 				</div>
 
 			</div>
@@ -109,6 +59,59 @@
 				</button>
 				<label class="col-md-offset-8" style="margin-right: 1%">Powered by</label>
 				<img style="width: 15em;" class="col-md-offset-9 col-md-2" src="../../imagens/logobranco.jpg">
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--MODAL MYMODAL-->
+<div id="myModal" class="modal fade" role="dialog">
+	<div class="modal-dialog" >
+		<div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
+			<div class="modal-header">
+				<h4 class="modal-title text-center">Confirmação de saída</h4>
+			</div>
+			<div class="modal-body text-center">
+				<p>Você sairá às 18:00?</p>
+				<p><button type="button" class="btn btn-default btn-primary" data-toggle="modal" data-target="#Sim" data-dismiss="modal">Sim</button>
+					<button type="button" class="btn btn-default btn-danger" data-toggle="modal" data-target="#Nao">Não</button></p>
+			</div>
+		</div>
+	</div>
+</div>
+<!--MODAL NAO-->
+<div id="Nao" class="modal fade" role="dialog">
+	<div class="modal-dialog" >
+		<div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title text-center">Confirmação de saída</h4>
+			</div>
+			<div class="modal-body text-center">
+				<p>Novo horário de saída:
+					<input type="time" style="max-width: 8em">
+					<button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-dismiss="modal">
+						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					</button>
+				</p>
+
+			</div>
+		</div>
+	</div>
+</div>
+<!--MODAL SIM-->
+<div id="Sim" class="modal fade" role="dialog">
+	<div class="modal-dialog" >
+		<div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
+			<div class="modal-header">
+				<h4 class="modal-title text-center">Confirmação de saída</h4>
+			</div>
+			<div class="modal-body text-center">
+				<p>Horário salvo. Até amanhã!
+					<button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-dismiss="modal">
+						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					</button>
+				</p>
 			</div>
 		</div>
 	</div>

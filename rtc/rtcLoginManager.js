@@ -34,7 +34,7 @@ RtcLoginManager.prototype.trataLogin = function(msg){
 
     if(msg.getRtc() == me){
         var dado = msg.getRes();
-        switch (dado.tipo){
+        switch (dado.logado.tipo){
             case 0:
                 new rtcRoot(me.config);
                 break;

@@ -8,9 +8,10 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
 
     $scope.logado = getUserLogado.getLogado();
     var data = new Date(utilvalues.entrada.horaEntrada);
+    var entrada = utilvalues.entrada;
     $scope.dataEscrita = '';
     $scope.hora = '';
-    // $scope.saida =
+    $scope.saida = '';
     var mes = [
         'Janeiro',
         'Fevereiro',
@@ -25,6 +26,10 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         'Novembro',
         'Dezembro'
     ];
+
+    $scope.saidaregistrada = false;
+    $scope.horasaida = null;
+
 
     $scope.classes = utilvalues.rotaatual;
 
@@ -48,9 +53,19 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
     };
 
     $scope.registrasaida = function () {
+        console.log($scope.saida);
         data.setHours($scope.saida.getHours());
-        data.setMinutes($scope.saida.getUTCMinutes());
-        console.log("vou mandar isso", data);
+        data.setMinutes($scope.saida.getMinutes());
+        var registro = {
+            saida: data,
+            entrada: entrada
+        };
+
+        console.log('vou mandar', registro);
+
+        var msg = new Mensagem(me, 'registrasaida', registro, 'saida');
+        SIOM.emitirServer(msg);
+        
     };
 
     var setData = function () {
@@ -58,8 +73,20 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         $scope.hora = data.getHours()+':'+ data.getMinutes();
     };
 
+    var saidaregistrada = function (msg) {
+       var dado = msg.getDado();
+        var s = new Date(dado.previsao);
+        $scope.horasaida = s.getHours()+ ":" + s.getMinutes();
+        $scope.saidaregistrada = true;
+
+        console.log($scope.horasaida, $scope.saidaregistrada);
+
+        $scope.$apply();
+        
+    };
+
     me.wiring = function(){
-        console.log($scope.logado);
+        me.listeners['saida.registrada'] = saidaregistrada.bind(me);
 
         for(var name in me.listeners){
 

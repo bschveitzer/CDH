@@ -28,6 +28,7 @@ RtcRoot.prototype.wiring = function(){
 
     me.listeners['usuario.created'] = me.emitePraInterface.bind(me);
     me.listeners['allmodels'] = me.emitePraInterface.bind(me);
+    me.listeners['saida.registrada'] = me.emitePraInterface.bind(me);
 
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);
@@ -38,6 +39,7 @@ RtcRoot.prototype.interfaceWiring = function(){
     var me = this;
 
     me.browserlisteners['getallmodels'] = me.daInterface.bind(me);
+    me.browserlisteners['registrasaida'] = me.daInterface.bind(me);
 
     for(var name in me.browserlisteners){
         me.config.socket.on(name, me.browserlisteners[name]);

@@ -33,10 +33,30 @@ saidamanager.prototype.executaCrud = function(msg){
     }
 };
 
+saidamanager.prototype.registrasaida = function (registro) {
+    var me = this;
+    var dainterface = registro.getRes();
+    var dado = {
+        previsao: dainterface.saida,
+        resposta: false,
+        entrada: dainterface.entrada
+    };
+    
+    this.model.create(dado, function(err, res){
+        if(res){
+            me.emitManager(registro, '.registrada', {res: res});
+        } else{
+            me.emitManager(registro, '.error.registro', {err: err});
+            console.log('erro no create', err);
+        }
+    })
+    
+};
+
 saidamanager.prototype.wiring = function(){
     var me = this;
     me.listeners['banco.saida.*'] = me.executaCrud.bind(me);
-
+    me.listeners['rtc.registrasaida'] = me.registrasaida.bind(me);
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);
     }
