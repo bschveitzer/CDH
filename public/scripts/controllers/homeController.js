@@ -9,6 +9,7 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
     $scope.logado = getUserLogado.getLogado();
     var data = new Date(utilvalues.entrada.horaEntrada);
     var entrada = utilvalues.entrada;
+    $scope.saidaInvalida = false;
     $scope.dataEscrita = '';
     $scope.hora = '';
     $scope.saida = '';
@@ -52,7 +53,17 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         cb();
     };
 
+    /** criado/modificado por: Gustavo, Bernardo
+    /** criado/modificado por: Gustavo, Bernardo
+     *  se hora invalida impede
+     *  registra hora escolhida
+     */
     $scope.registrasaida = function () {
+
+        if($scope.saida.getHours() < $scope.hora.slice(0,2)){
+            $scope.saidaInvalida = true;
+            return;
+        };
         console.log($scope.saida);
         data.setHours($scope.saida.getHours());
         data.setMinutes($scope.saida.getMinutes());
@@ -65,24 +76,46 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
 
         var msg = new Mensagem(me, 'registrasaida', registro, 'saida');
         SIOM.emitirServer(msg);
-        
+
     };
 
     var setData = function () {
-        $scope.dataEscrita = data.getDate()+' de '+ mes[data.getMonth()]+' de '+ data.getFullYear();
-        $scope.hora = data.getHours()+':'+ data.getMinutes();
+        colocazero(data.getDate(), function (retData) {
+            colocazero(data.getHours() , function (retHora) {
+                colocazero(data.getMinutes(), function (retMin) {
+                    $scope.dataEscrita = retData +' de '+ mes[data.getMonth()]+' de '+ data.getFullYear();
+                    $scope.hora = retHora +':'+ retMin;
+                });
+
+            });
+
+
+        });
+
     };
 
     var saidaregistrada = function (msg) {
        var dado = msg.getDado();
         var s = new Date(dado.previsao);
-        $scope.horasaida = s.getHours()+ ":" + s.getMinutes();
-        $scope.saidaregistrada = true;
 
-        console.log($scope.horasaida, $scope.saidaregistrada);
+        colocazero(s.getMinutes(), function (retMinutos) {
+            colocazero(s.getHours(), function (retHoras) {
 
-        $scope.$apply();
+                $scope.horasaida = retHoras+ ":" + retMinutos;
+                $scope.saidaregistrada = true;
+                $scope.$apply();
+
+            });
+        });
         
+    };
+    var colocazero = function (n, callback) {
+        console.log("oq vem",n);
+        if (n <= 9) {
+            callback('0' + n);
+        }else{
+            callback(n);
+        }
     };
 
     me.wiring = function(){
