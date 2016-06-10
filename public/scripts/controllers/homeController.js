@@ -60,7 +60,7 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
      */
     $scope.registrasaida = function () {
 
-        if($scope.saida.getHours() < $scope.hora.slice(0,2)){
+        if($scope.saida.getHours() <= $scope.hora.slice(0,2)){
             $scope.saidaInvalida = true;
             return;
         };

@@ -1,0 +1,111 @@
+<div>
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h2 class="modal-title" style="text-align: center">Adicionar usuário</h2>
+            </div>
+            <div class="modal-body">
+                <form name="formAddUsuario">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div ng-class="{ 'has-error' : !validonomeusuario && formAddUsuario.nome.$dirty}">
+                                    <div ng-class="{ 'has-success' : validonomeusuario && formAddUsuario.nome.$dirty}">
+                                        <label class="control-label">Nome:</label>
+                                        <input type="text" class="form-control" ng-model="adicionaUsuario.nome" name="nome" required="" ng-change="validanomeuser()">
+                                        <div ng-if="!validonomeusuario && formAddUsuario.nome.$dirty" class="alert alert-danger control-label">Digite um nome!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div ng-class="{ 'has-error' : !validosobrenome && formAddUsuario.sobrenome.$dirty}">
+                                    <div ng-class="{ 'has-success' : validosobrenome && formAddUsuario.sobrenome.$dirty}">
+                                        <label class="control-label">Sobrenome:</label>
+                                        <input type="text" class="form-control" ng-model="adicionaUsuario.sobrenome" name="sobrenome" required="" ng-change="validasobrenomeuser()">
+                                        <div ng-if="!validosobrenome && formAddUsuario.sobrenome.$dirty" class="alert alert-danger control-label">Digite um sobrenome!</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div ng-class="{ 'has-error' : !validoemail && formAddUsuario.email.$dirty}">
+                                    <div ng-class="{ 'has-success' : validoemail && formAddUsuario.email.$dirty}">
+                                        <label class="control-label">E-mail:</label>
+                                        <input type="email" class="form-control" ng-model="adicionaUsuario.email" name="email" required="" ng-change="validaemailuser()">
+                                        <div ng-if="!validoemail && formAddUsuario.email.$dirty" class="alert alert-danger control-label">Digite um e-mail válido!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div ng-class="{ 'has-error' : !validosenha && formAddUsuario.email.$dirty}">
+                                    <div ng-class="{ 'has-success' : validosenha && formAddUsuario.email.$dirty}">
+                                        <label class="control-label">Senha:</label>
+                                        <input type="password" class="form-control" ng-model="adicionaUsuario.email" name="senha" required="" ng-change="validasenhauser()">
+                                        <div ng-if="!validosenha && formAddUsuario.senha.$dirty" class="alert alert-danger control-label">Digite uma senha válida!</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div ng-class="{ 'has-error' : !validotelefone && formAddUsuario.telefone.$dirty}">
+                                    <div ng-class="{ 'has-success' : validotelefone && formAddUsuario.telefone.$dirty}">
+                                        <label class="control-label">Telefone:</label>
+                                        <input type="text" class="form-control" ng-model="adicionaUsuario.telefone" name="telefone" required="" ng-change="validatelefoneuser()">
+                                        <div ng-if="!validotelefone && formAddUsuario.telefone.$dirty" class="alert alert-danger control-label">Digite um telefone válido!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div ng-class="{ 'has-error' : !validotipo && formAddUsuario.tipo.$dirty}">
+                                    <div ng-class="{ 'has-success' : validotipo && formAddUsuario.tipo.$dirty}">
+                                        <label class="control-label">Tipo:</label>
+                                        <br>
+                                        <select name="Tipos">
+                                            <option value="1">Administrador</option>
+                                            <option value="2">Comum</option>
+                                        </select>
+                                        <div ng-if="!validotipo && formAddUsuario.tipo.$dirty" class="alert alert-danger control-label">Escolha em tipo válido!</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div ng-class="{ 'has-error' : !validoimagem && formAddUsuario.imagem.$dirty}">
+                                    <div ng-class="{ 'has-success' : validoimagem && formAddUsuario.imagem.$dirty}">
+                                        <label class="control-label">Imagem:</label>
+                                        <input type="file" class="form-control" ng-model="adicionaUsuario.imagem" name="imagem" ng-change="validaimagemuser()">
+                                        <div ng-if="!validoimagem && formAddUsuario.imagem.$dirty" class="alert alert-danger control-label">Digite um telefone válido!</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success"  ng-disabled="!validonomeusuario || !validosobrenome || !validoemail || !validosenha || !validotelefone" ng-click="adicionarusuario()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL USUARIO VALIDO-->
+<div id="usuarioValido" class="modal fade" role="dialog">
+    <div class="modal-dialog" >
+        <div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
+            <div class="modal-body">
+                <br>
+                <h4 class="modal-title text-center">Usuário adicionado!</h4>
+                <button type="button" class="btn btn-default btn-primary btn-xs close" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                </button>
+                <br>
+
+            </div>
+
+        </div>
+    </div>
+</div>
