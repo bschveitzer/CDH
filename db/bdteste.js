@@ -31,7 +31,7 @@ bdteste.prototype.criaUser = function () {
         sobrenome: 'Criador',
         email: 'root',
         senha: 'root',
-        numerocelular: '96198272',
+        numerocelular: '(48) 96198272',
         foto: 'caminhodafoto',
         tipo: 0
     };
@@ -42,7 +42,7 @@ bdteste.prototype.criaUser = function () {
         sobrenome: 'admin',
         email: 'admin',
         senha: 'admin',
-        numerocelular: '99476823',
+        numerocelular: '(48) 99476823',
         foto: 'caminhodafoto',
         tipo: 1
     };
@@ -53,7 +53,7 @@ bdteste.prototype.criaUser = function () {
         sobrenome: 'comum',
         email: 'comum',
         senha: 'comum',
-        numerocelular: '99476823',
+        numerocelular: '(48) 99476823',
         foto: 'caminhodafoto',
         tipo: 2
     };

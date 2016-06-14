@@ -1,11 +1,12 @@
 /**
  * Created by udesc on 21/05/2016.
  */
-app.controller("entidadesController",['$scope', function ($scope) {
+app.controller("entidadesController",['$scope','getUserLogado', function ($scope,getUserLogado) {
     var me = this;
 
     $scope.entidades = {};
     $scope.entidadeSelecionado = {}
+    $scope.logado = getUserLogado.getLogado();
 
     var listeners = {};
 

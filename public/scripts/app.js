@@ -2,5 +2,6 @@
 
 var app = angular.module('agere', [
     'ngAnimate',
-    'ngRoute'
+    'ngRoute',
+    'ngMask'
 ]);

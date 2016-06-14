@@ -40,9 +40,9 @@
                             </div>
                             <div class="col-md-6">
                                 <div ng-class="{ 'has-error' : !validosenha && formAddUsuario.email.$dirty}">
-                                    <div ng-class="{ 'has-success' : validosenha && formAddUsuario.email.$dirty}">
+                                    <div ng-class="{ 'has-success' : validosenha && formAddUsuario.senha.$dirty}">
                                         <label class="control-label">Senha:</label>
-                                        <input type="password" class="form-control" ng-model="adicionaUsuario.email" name="senha" required="" ng-change="validasenhauser()">
+                                        <input type="password" class="form-control" ng-model="adicionaUsuario.senha" name="senha" required="" ng-change="validasenhauser()">
                                         <div ng-if="!validosenha && formAddUsuario.senha.$dirty" class="alert alert-danger control-label">Digite uma senha válida!</div>
                                     </div>
                                 </div>
@@ -50,11 +50,11 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <div ng-class="{ 'has-error' : !validotelefone && formAddUsuario.telefone.$dirty}">
-                                    <div ng-class="{ 'has-success' : validotelefone && formAddUsuario.telefone.$dirty}">
+                                <div ng-class="{ 'has-error' : !validotelefone && formAddUsuario.numerocelular.$dirty}">
+                                    <div ng-class="{ 'has-success' : validotelefone && formAddUsuario.numerocelular.$dirty}">
                                         <label class="control-label">Telefone:</label>
-                                        <input type="text" class="form-control" ng-model="adicionaUsuario.telefone" name="telefone" required="" ng-change="validatelefoneuser()">
-                                        <div ng-if="!validotelefone && formAddUsuario.telefone.$dirty" class="alert alert-danger control-label">Digite um telefone válido!</div>
+                                        <input type="text" class="form-control" ng-model="adicionaUsuario.numerocelular" name="numerocelular" required="" ng-change="validatelefoneuser()" mask="(99) 9999-9999">
+                                        <div ng-if="!validotelefone && formAddUsuario.numerocelular.$dirty" class="alert alert-danger control-label">Digite um telefone válido!</div>
                                     </div>
                                 </div>
                             </div>

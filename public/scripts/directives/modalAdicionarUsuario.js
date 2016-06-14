@@ -50,7 +50,7 @@ app.directive('modaladicionarusuario', ['$location', '$route', function($locatio
                 }
             };
             scope.validatelefoneuser = function () {
-                if(scope.formAddUsuario.telefone.$valid) {
+                if(scope.formAddUsuario.numerocelular.$valid) {
                     scope.validotelefone = true;
                 }else{
                     scope.validotelefone = false;
@@ -76,8 +76,8 @@ app.directive('modaladicionarusuario', ['$location', '$route', function($locatio
             scope.adicionarusuario = function(){
                 
                 console.log('teste aqui', scope.adicionarUsuario);
-                
-                
+
+
                 return;
                 
                 var user = new Mensagem(me, 'usuario.create', scope.adicionarUsuario, 'usuario');
