@@ -63,7 +63,7 @@
                                     <div ng-class="{ 'has-success' : validotipo && formAddUsuario.tipo.$dirty}">
                                         <label class="control-label">Tipo:</label>
                                         <br>
-                                        <select name="Tipos">
+                                        <select name="Tipos" ng-model="adicionaUsuario.tipo">
                                             <option value="1">Administrador</option>
                                             <option value="2">Comum</option>
                                         </select>
@@ -72,22 +72,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div ng-class="{ 'has-error' : !validoimagem && formAddUsuario.imagem.$dirty}">
-                                    <div ng-class="{ 'has-success' : validoimagem && formAddUsuario.imagem.$dirty}">
-                                        <label class="control-label">Imagem:</label>
-                                        <input type="file" class="form-control" ng-model="adicionaUsuario.imagem" name="imagem" ng-change="validaimagemuser()">
-                                        <div ng-if="!validoimagem && formAddUsuario.imagem.$dirty" class="alert alert-danger control-label">Digite um telefone válido!</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success"  ng-disabled="!validonomeusuario || !validosobrenome || !validoemail || !validosenha || !validotelefone" ng-click="adicionarusuario()">Adicionar</button>
+                <button type="button" class="btn btn-success" data-target="#usuarioValido" data-toggle="modal" ng-disabled="!validonomeusuario || !validosobrenome || !validoemail || !validosenha || !validotelefone" ng-click="adicionarusuario()">Adicionar</button>
             </div>
         </div>
     </div>

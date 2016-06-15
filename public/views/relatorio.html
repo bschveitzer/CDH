@@ -11,19 +11,15 @@
             </button>
             <br>
         </div>
-        <div class="form-group row" style="margin-top: 2%">
-            <row>
-                <label class="col-md-1 text-right">Usuário</label>
-                <input class="col-md-1">
-                <label class="col-md-1 text-right">Ano</label>
-                <input class="col-md-1">
-                <label class="col-md-1 text-right">Mês</label>
-                <input class="col-md-1">
-                <button style="margin-left: 1em; min-width: 2em; min-height: 2.2em;" class="btn btn-default btn-primary btn-xs" type="button">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                </button>
-            </row>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="input-group col-md-offset-1">
+                    <span class="input-group-addon"><span class='glyphicon glyphicon-search'></span></span>
+                    <input type="text" class="form-control" ng-model="empresaFiltro.nome">
+                </div>
+            </div>
         </div>
+        <br>
         <div class="panel panel-primary">
             <table class="table table-hover">
             <thead>
@@ -48,6 +44,5 @@
         <div class="row">
             <img style="width: 15em;" class="col-md-offset-9 col-md-2" src="../../imagens/logobranco.jpg">
         </div>
-
     </div>
 </div>

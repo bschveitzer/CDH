@@ -6,7 +6,7 @@
         </div>
         <div class="modal-body">
             <div align="center">
-                <img src="" style="height: 15em; width: 15em;">
+                <img src="{{logado.imagem}}" style="height: 15em; width: 15em;">
             </div>
             <br>
             <div class="form-group">
@@ -26,7 +26,7 @@
                         <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                         <label class="control-label">E-mail: </label>
                     </div>
-                   <p>{{logado.email}}</p>
+                    <p>{{logado.email}}</p>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
@@ -41,10 +41,46 @@
                         Alterar senha
                     </button>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
 <!--MODAL ALTERAR SENHA-->
-<div class="modal"></div>
+<div id="alterarSenha" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h2 class="modal-title" style="text-align: center"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Alterar senha</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-4">
+                            <label>Senha antiga:</label>
+                            <input type="password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-4">
+                            <label>Nova senha:</label>
+                            <input type="password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-4">
+                            <label>Confirma nova senha: </label>
+                            <input type="password" class="form-control">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-4">
+                            <button type="button" class="btn btn-default btn-success" data-dismiss="modal">Confirmar nova senha</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -11,7 +11,7 @@ app.directive('modaladicionarusuario', ['$location', '$route', function($locatio
             var me = this;
             me.listeners = [];
             
-            scope.adicionarUsuario = {};
+            scope.adicionaUsuario = {};
             
             scope.validonomeusuario = false;
             scope.validosobrenome= false;
@@ -63,24 +63,9 @@ app.directive('modaladicionarusuario', ['$location', '$route', function($locatio
                     scope.validotipo = false;
                 }
             };
-            scope.validaimagemuser = function () {
-                if(scope.formAddUsuario.imagem.$valid) {
-                    scope.validoimagem = true;
-                }else{
-                    scope.validoimagem = false;
-                }
-            };
-            
-            
 
             scope.adicionarusuario = function(){
-                
-                console.log('teste aqui', scope.adicionarUsuario);
-
-
-                return;
-                
-                var user = new Mensagem(me, 'usuario.create', scope.adicionarUsuario, 'usuario');
+                var user = new Mensagem(me, 'usuario.create', scope.adicionaUsuario, 'usuario');
                 SIOM.emitirServer(user);
             };
         }

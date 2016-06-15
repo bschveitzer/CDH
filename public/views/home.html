@@ -6,7 +6,7 @@
 		</div>
 		<div class="row">
 			<div class=" col-md-offset-8 col-md-3" style="font-size: 1em; text-align: right;">Bem vindo {{logado.nome}} {{logado.sobrenome}}!</div>
-			<button ng-click="sair()" style="max-width: 6em; min-width: 2em; min-height: 1.7em" type="button" class="btn btn-danger btn-default btn-xs">
+			<button ng-click="sair()" style="max-width: 6em; min-width: 2em; min-height: 1.7em" type="button" class="btn btn-danger btn-default btn-xs" ng-show="saidaregistrada">
 				<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
 			</button>
 			<br>
@@ -52,7 +52,7 @@
 			</div>
 		</div>
 		<div style="margin-left: 1em">
-			<div class="row">
+			<div class="row" ng-show="saidaregistrada">
 				<button ng-click="trocaRota('relatorio')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
 					<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
 				</button>

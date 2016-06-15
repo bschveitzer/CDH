@@ -2,14 +2,14 @@
 	<navbar></navbar>
 	<div class="row panel panel-primary container">
 		<div class="row">
-		<h1 class=" col-md-offset-4 col-md-8"><span class="glyphicon glyphicon-time"></span>   Controle de horas</h1>
+			<h1 class=" col-md-offset-4 col-md-8"><span class="glyphicon glyphicon-time"></span>   Controle de horas</h1>
 		</div>
 		<div class="row">
-		<div class=" col-md-offset-8 col-md-3" style="font-size: 1em; text-align: right;">Bem vindo {{logado.nome}} {{logado.sobrenome}}!</div>
-		<button ng-click="sair()" style="max-width: 6em; min-width: 2em; min-height: 1.7em" type="button" class="btn btn-danger btn-default btn-xs">
-			<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
-		</button>
-		<br>
+			<div class=" col-md-offset-8 col-md-3" style="font-size: 1em; text-align: right;">Bem vindo {{logado.nome}} {{logado.sobrenome}}!</div>
+			<button ng-click="sair()" style="max-width: 6em; min-width: 2em; min-height: 1.7em" type="button" class="btn btn-danger btn-default btn-xs">
+				<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+			</button>
+			<br>
 			<div class="row">
 				<div class="col-md-3">
 					<div class="input-group col-md-offset-1">
@@ -33,9 +33,9 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr>
-					<td align="center"></td>
-					<td align="center"></td>
+				<tr ng-repeat="usuario in usuarios">
+					<td align="center">{{usuario.nome}}</td>
+					<td align="center"> {{usuario.email}}</td>
 					<td align="center">
 						<button class="btn btn-primary">
 							<span class='glyphicon glyphicon-pencil'></span>
