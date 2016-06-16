@@ -7,6 +7,7 @@ app.controller("entidadesController",['$scope','$location', 'utilvalues','getUse
     $scope.classes = utilvalues.rotaatual;
     $scope.usuarios = [];
     $scope.logado = getUserLogado.getLogado();
+    var entrada = utilvalues.entrada;
 
     var listeners = {};
 
@@ -20,6 +21,16 @@ app.controller("entidadesController",['$scope','$location', 'utilvalues','getUse
     $scope.sair = function () {
         $scope.trocaRota('');
         location.reload();
+
+        var tei = {
+            saida: new Date(),
+            entrada: entrada
+        };
+
+        console.log('vou mandar', tei);
+
+        var msg = new Mensagem(me, 'registrasaida', tei, 'saida');
+        SIOM.emitirServer(msg);
     };
 
     var limpanav = function (local, cb) {

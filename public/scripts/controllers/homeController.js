@@ -9,6 +9,8 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
     $scope.logado = getUserLogado.getLogado();
     var data = new Date(utilvalues.entrada.horaEntrada);
     var entrada = utilvalues.entrada;
+    $scope.saidaregistrada = utilvalues.saidaregistrada;
+    $scope.horasaida = utilvalues.horasaida;
     $scope.saidaInvalida = false;
     $scope.dataEscrita = '';
     $scope.hora = '';
@@ -28,8 +30,6 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         'Dezembro'
     ];
 
-    $scope.saidaregistrada = false;
-    $scope.horasaida = null;
 
 
     $scope.classes = utilvalues.rotaatual;
@@ -44,6 +44,17 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
     $scope.sair = function () {
         $scope.trocaRota('');
         location.reload();
+
+        var tei = {
+            saida: new Date(),
+            entrada: entrada
+        };
+
+        console.log('vou mandar', tei);
+
+        var msg = new Mensagem(me, 'registrasaida', tei, 'saida');
+        SIOM.emitirServer(msg);
+
     };
 
     var limpanav = function (local, cb) {
@@ -101,8 +112,10 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         colocazero(s.getMinutes(), function (retMinutos) {
             colocazero(s.getHours(), function (retHoras) {
 
-                $scope.horasaida = retHoras+ ":" + retMinutos;
-                $scope.saidaregistrada = true;
+                utilvalues.horasaida = retHoras+ ":" + retMinutos;
+                utilvalues.saidaregistrada = true;
+                $scope.saidaregistrada = utilvalues.saidaregistrada;
+                $scope.horasaida = utilvalues.horasaida;
                 $scope.$apply();
 
             });

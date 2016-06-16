@@ -1,12 +1,11 @@
 <div class="container">
-	<navbar></navbar>
 	<div class="row panel panel-primary container">
 		<div class="row">
 			<h1 class=" col-md-offset-4 col-md-8"><span class="glyphicon glyphicon-time"></span>   Controle de horas</h1>
 		</div>
 		<div class="row">
 			<div class=" col-md-offset-8 col-md-3" style="font-size: 1em; text-align: right;">Bem vindo {{logado.nome}} {{logado.sobrenome}}!</div>
-			<button ng-click="sair()" style="max-width: 6em; min-width: 2em; min-height: 1.7em" type="button" class="btn btn-danger btn-default btn-xs" ng-show="saidaregistrada">
+			<button ng-click="sair()" style="max-width: 6em; min-width: 2em; min-height: 1.7em" type="button" class="btn btn-danger btn-default btn-xs" ng-hide="!saidaregistrada">
 				<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
 			</button>
 			<br>
@@ -52,12 +51,15 @@
 			</div>
 		</div>
 		<div style="margin-left: 1em">
-			<div class="row" ng-show="saidaregistrada">
+			<div class="row" ng-hide="!saidaregistrada">
+				<button style="max-width: 5em;" type="button" data-target="#perfilUsuario" data-toggle="modal" class=" btn btn-primary btn-default btn-lg">
+					<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+				</button>
+				<button ng-click="trocaRota('entidades')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
+					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+				</button>
 				<button ng-click="trocaRota('relatorio')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
 					<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-				</button>
-				<button style="max-width: 5em;" type="button" data-target="#perfilUsuario" data-toggle="modal" class=" btn btn-success btn-default btn-lg">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 				</button>
 				<img style="width: 15em;" class="col-md-offset-9 col-md-2" src="../../imagens/logobranco.jpg">
 			</div>

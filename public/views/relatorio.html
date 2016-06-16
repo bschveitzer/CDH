@@ -1,5 +1,4 @@
 <div class="container">
-    <navbar></navbar>
     <div class="row panel panel-primary container">
         <div class="row">
             <h1 class=" col-md-offset-4 col-md-8"><span class="glyphicon glyphicon-time"></span>   Controle de horas</h1>
@@ -40,8 +39,13 @@
             </tbody>
         </table>
         </div>
-
-        <div class="row">
+        <div class="row" style="margin-left: 1em">
+            <button ng-click="trocaRota('home')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
+                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+            </button>
+            <button ng-click="trocaRota('entidades')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            </button>
             <img style="width: 15em;" class="col-md-offset-9 col-md-2" src="../../imagens/logobranco.jpg">
         </div>
     </div>

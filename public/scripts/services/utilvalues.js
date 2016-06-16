@@ -6,5 +6,7 @@ app.value('utilvalues', {
         home: 'active',
         entidades: ''
     },
-    entrada: null
+    entrada: null,
+    saidaregistrada: false,
+    horasaida: null
 });
