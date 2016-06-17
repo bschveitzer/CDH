@@ -58,25 +58,25 @@
                     <div class="row">
                         <div class="col-md-offset-1 col-md-4">
                             <label>Senha antiga:</label>
-                            <input type="password" class="form-control">
+                            <input type="password" class="form-control" ng-model="logado.senhaantiga">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-offset-1 col-md-4">
                             <label>Nova senha:</label>
-                            <input type="password" class="form-control">
+                            <input type="password" class="form-control" ng-model="logado.novasenha">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-offset-1 col-md-4">
                             <label>Confirma nova senha: </label>
-                            <input type="password" class="form-control">
+                            <input type="password" class="form-control" ng-model="logado.novasenha1">
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-md-offset-1 col-md-4">
-                            <button type="button" class="btn btn-default btn-success" data-dismiss="modal">Confirmar nova senha</button>
+                            <button type="button" class="btn btn-default btn-success" data-dismiss="modal" ng-click="trocasenha()">Confirmar nova senha</button>
                         </div>
                     </div>
                 </div>

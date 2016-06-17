@@ -30,6 +30,24 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         'Dezembro'
     ];
 
+    $scope.trocasenha = function () {
+        if($scope.logado.senha != $scope.logado.senhaantiga){
+            console.log('deu erro 1');
+            return;
+        }
+        else if($scope.logado.novasenha != $scope.logado.novasenha1){
+            console.log('deu erro 2');
+            return;
+        }
+        $scope.logado.senha = $scope.logado.novasenha;
+        var user = new Mensagem(me, 'usuario.update', $scope.logado, 'usuario');
+        console.log('entrou aqui');
+        SIOM.emitirServer(user);
+    };
+
+    var teste = function (msg) {
+        console.log('trocou', msg);
+    };
 
 
     $scope.classes = utilvalues.rotaatual;
@@ -133,6 +151,7 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
 
     me.wiring = function(){
         me.listeners['saida.registrada'] = saidaregistrada.bind(me);
+        me.listeners['usuario.updated'] = teste.bind(me);
 
         for(var name in me.listeners){
 

@@ -21,6 +21,7 @@ utility.inherits(usuariomanager, Manager);
  * que vai ser executada por meio da herança.
  */
 usuariomanager.prototype.executaCrud = function(msg){
+
     var me = this;
     var method = msg.getEvento().substr(msg.getEvento().lastIndexOf('.')+1);
     try {
@@ -28,6 +29,7 @@ usuariomanager.prototype.executaCrud = function(msg){
     }catch (e){
         me.emitManager(msg, 'error.manager', {err: e});
     }
+    console.log('trocando senha aqui');
 };
 
 usuariomanager.prototype.trataLogin = function(msg){
