@@ -8,5 +8,6 @@ app.value('utilvalues', {
     },
     entrada: null,
     saidaregistrada: false,
-    horasaida: null
+    horasaida: null,
+    saida: null
 });

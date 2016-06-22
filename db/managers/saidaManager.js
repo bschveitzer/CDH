@@ -41,7 +41,7 @@ saidamanager.prototype.registrasaida = function (registro) {
         resposta: false,
         entrada: dainterface.entrada
     };
-    
+
     this.model.create(dado, function(err, res){
         if(res){
             me.emitManager(registro, '.registrada', {res: res});
@@ -53,10 +53,19 @@ saidamanager.prototype.registrasaida = function (registro) {
     
 };
 
+
+//todo, fazer depois que implementar a funcao de fechar a saida.
+saidamanager.prototype.verificasesaidaemaberto = function (msg) {
+    console.log('chegou aqui pora', msg.getRes());
+};
+
 saidamanager.prototype.wiring = function(){
     var me = this;
     me.listeners['banco.saida.*'] = me.executaCrud.bind(me);
     me.listeners['rtc.registrasaida'] = me.registrasaida.bind(me);
+    me.listeners['pegasaida'] = me.verificasesaidaemaberto.bind(me);
+
+
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);
     }

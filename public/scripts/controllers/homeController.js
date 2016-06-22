@@ -46,7 +46,7 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
     };
 
     var teste = function (msg) {
-        console.log('trocou', msg);
+        console.log('tei')
     };
 
 
@@ -56,24 +56,22 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         limpanav(local, function () {
             utilvalues.rotaatual[local] = 'active';
             $location.path('/'+local);
+            $scope.apply;
         });
     };
 
     $scope.sair = function () {
-        $scope.trocaRota('');
-        location.reload();
 
-        var tei = {
-            saida: new Date(),
-            entrada: entrada
-        };
+        utilvalues.saida.hora = new Date();
 
-        console.log('vou mandar', tei);
+        console.log('vou mandar', utilvalues.saida);
 
-        var msg = new Mensagem(me, 'registrasaida', tei, 'saida');
+        var msg = new Mensagem(me, 'saida.update', utilvalues.saida, 'saida');
         SIOM.emitirServer(msg);
 
     };
+
+
 
     var limpanav = function (local, cb) {
         for(var id in $scope.classes){
@@ -101,8 +99,6 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
             entrada: entrada
         };
 
-        console.log('vou mandar', registro);
-
         var msg = new Mensagem(me, 'registrasaida', registro, 'saida');
         SIOM.emitirServer(msg);
 
@@ -125,6 +121,7 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
 
     var saidaregistrada = function (msg) {
        var dado = msg.getDado();
+        utilvalues.saida = dado;
         var s = new Date(dado.previsao);
 
         colocazero(s.getMinutes(), function (retMinutos) {
@@ -138,7 +135,7 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
 
             });
         });
-        
+
     };
     var colocazero = function (n, callback) {
         console.log("oq vem",n);
@@ -152,6 +149,7 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
     me.wiring = function(){
         me.listeners['saida.registrada'] = saidaregistrada.bind(me);
         me.listeners['usuario.updated'] = teste.bind(me);
+        me.listeners['saida.updated'] = teste.bind(me);
 
         for(var name in me.listeners){
 
