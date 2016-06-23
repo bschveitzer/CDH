@@ -6,6 +6,7 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
     var me = this;
     me.listeners = [];
 
+    $scope.classes = utilvalues.rotaatual;
     $scope.logado = getUserLogado.getLogado();
     var data = new Date(utilvalues.entrada.horaEntrada);
     var entrada = utilvalues.entrada;
@@ -30,6 +31,21 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         'Dezembro'
     ];
 
+    $scope.trocaRota=function (local) {
+        limpanav(local, function () {
+            utilvalues.rotaatual[local] = 'active';
+            $location.path('/'+local);
+        });
+    };
+
+    var limpanav = function (local, cb) {
+        for(var id in $scope.classes){
+            utilvalues.rotaatual[id] = '';
+        }
+        cb();
+    };
+
+
     $scope.trocasenha = function () {
         if($scope.logado.senha != $scope.logado.senhaantiga){
             console.log('deu erro 1');
@@ -45,19 +61,17 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         SIOM.emitirServer(user);
     };
 
-    var teste = function (msg) {
-        console.log('tei')
+    var usuarioatualizado = function () {
+        console.log('usuarioatualizado');
     };
 
+    var saidaatualizada = function () {
 
-    $scope.classes = utilvalues.rotaatual;
+        $scope.trocaRota('');
+        location.reload();
 
-    $scope.trocaRota=function (local) {
-        limpanav(local, function () {
-            utilvalues.rotaatual[local] = 'active';
-            $location.path('/'+local);
-            $scope.apply;
-        });
+        $scope.$apply();
+        
     };
 
     $scope.sair = function () {
@@ -73,12 +87,6 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
 
 
 
-    var limpanav = function (local, cb) {
-        for(var id in $scope.classes){
-            utilvalues.rotaatual[id] = '';
-        }
-        cb();
-    };
 
     /** criado/modificado por: Gustavo, Bernardo
     /** criado/modificado por: Gustavo, Bernardo
@@ -89,6 +97,7 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
 
         if($scope.saida.getHours() <= $scope.hora.slice(0,2)){
             $scope.saidaInvalida = true;
+            $('#horaInvalida').modal();
             return;
         };
         console.log($scope.saida);
@@ -111,12 +120,8 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
                     $scope.dataEscrita = retData +' de '+ mes[data.getMonth()]+' de '+ data.getFullYear();
                     $scope.hora = retHora +':'+ retMin;
                 });
-
             });
-
-
         });
-
     };
 
     var saidaregistrada = function (msg) {
@@ -148,8 +153,8 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
 
     me.wiring = function(){
         me.listeners['saida.registrada'] = saidaregistrada.bind(me);
-        me.listeners['usuario.updated'] = teste.bind(me);
-        me.listeners['saida.updated'] = teste.bind(me);
+        me.listeners['usuario.updated'] = usuarioatualizado.bind(me);
+        me.listeners['saida.updated'] = saidaatualizada.bind(me);
 
         for(var name in me.listeners){
 

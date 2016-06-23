@@ -3,13 +3,14 @@
  */
 app.controller("entidadesController",['$scope','$location', 'utilvalues','getUserLogado', function ($scope,$location, utilvalues,getUserLogado) {
     var me = this;
+    me.listeners = [];
 
     $scope.classes = utilvalues.rotaatual;
     $scope.usuarios = [];
     $scope.logado = getUserLogado.getLogado();
     var entrada = utilvalues.entrada;
 
-    var listeners = {};
+    
 
     $scope.trocaRota=function (local) {
         limpanav(local, function () {
@@ -18,26 +19,30 @@ app.controller("entidadesController",['$scope','$location', 'utilvalues','getUse
         });
     };
 
-    $scope.sair = function () {
-        $scope.trocaRota('');
-        location.reload();
-
-        var tei = {
-            saida: new Date(),
-            entrada: entrada
-        };
-
-        console.log('vou mandar', tei);
-
-        var msg = new Mensagem(me, 'registrasaida', tei, 'saida');
-        SIOM.emitirServer(msg);
-    };
-
     var limpanav = function (local, cb) {
         for(var id in $scope.classes){
             utilvalues.rotaatual[id] = '';
         }
         cb();
+    };
+
+    $scope.sair = function () {
+
+        utilvalues.saida.hora = new Date();
+
+        console.log('vou mandar', utilvalues.saida);
+
+        var msg = new Mensagem(me, 'saida.update', utilvalues.saida, 'saida');
+        SIOM.emitirServer(msg);
+
+    };
+    var saidaatualizada = function () {
+
+        $scope.trocaRota('');
+        location.reload();
+
+        $scope.$apply();
+
     };
 
     var ready = function () {
@@ -50,18 +55,19 @@ app.controller("entidadesController",['$scope','$location', 'utilvalues','getUse
         $scope.$apply();
     };
 
-    var wiring = function () {
+    me.wiring = function () {
 
-        listeners['usuario.readed'] = retusers.bind(me);
-        listeners['usuario.created'] = ready.bind(me);
+        me.listeners['usuario.readed'] = retusers.bind(me);
+        me.listeners['usuario.created'] = ready.bind(me);
+        me.listeners['saida.updated'] = saidaatualizada.bind(me);
 
-        for(var name in listeners){
-            SIOM.on(name, listeners[name]);
+        for(var name in  me.listeners){
+            SIOM.on(name, me.listeners[name]);
         }
 
         ready();
     };
 
-    wiring();
+    me.wiring();
 
 }]);

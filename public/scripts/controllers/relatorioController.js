@@ -4,30 +4,16 @@
 app.controller("relatorioController",['$scope','$location', 'utilvalues','getUserLogado', function ($scope,$location, utilvalues,getUserLogado) {
     
     var me = this;
+    me.listeners = [];
+
     $scope.classes = utilvalues.rotaatual;
     $scope.logado = getUserLogado.getLogado();
-    var entrada = utilvalues.entrada;
 
     $scope.trocaRota=function (local) {
         limpanav(local, function () {
             utilvalues.rotaatual[local] = 'active';
             $location.path('/'+local);
         });
-    };
-    
-    $scope.sair = function () {
-        $scope.trocaRota('');
-        location.reload();
-        
-        var tei = {
-            saida: new Date(),
-            entrada: entrada
-        };
-
-        console.log('vou mandar', tei);
-
-        var msg = new Mensagem(me, 'registrasaida', tei, 'saida');
-        SIOM.emitirServer(msg);
     };
 
     var limpanav = function (local, cb) {
@@ -37,4 +23,35 @@ app.controller("relatorioController",['$scope','$location', 'utilvalues','getUse
         cb();
     };
 
+
+    $scope.sair = function () {
+
+        utilvalues.saida.hora = new Date();
+
+        console.log('vou mandar', utilvalues.saida);
+
+        var msg = new Mensagem(me, 'saida.update', utilvalues.saida, 'saida');
+        SIOM.emitirServer(msg);
+
+    };
+    var saidaatualizada = function () {
+
+        $scope.trocaRota('');
+        location.reload();
+
+        $scope.$apply();
+
+    };
+
+    me.wiring = function() {
+        me.listeners['saida.updated'] = saidaatualizada.bind(me);
+
+        for (var name in me.listeners) {
+
+            SIOM.on(name, me.listeners[name]);
+
+        }
+    };
+
+    me.wiring();
 }]);

@@ -4,7 +4,8 @@
 app.value('utilvalues', {
     rotaatual: {
         home: 'active',
-        entidades: ''
+        entidades: '',
+        relatorio: ''
     },
     entrada: null,
     saidaregistrada: false,
