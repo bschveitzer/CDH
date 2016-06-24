@@ -1,7 +1,7 @@
 /**
  * Created by labtic on 14/06/2016.
  */
-app.directive('modalperfilusuario', ['getUserLogado', function(getUserLogado) {
+app.directive('modalperfilusuario',['$location', 'utilvalues', 'getUserLogado', function ($location, utilvalues, getUserLogado) {
     return {
         restrict: 'E',
         transclude: true,
@@ -9,7 +9,40 @@ app.directive('modalperfilusuario', ['getUserLogado', function(getUserLogado) {
 
         link: function (scope) {
             var me = this;
+            me.listeners = [];
             scope.logado = getUserLogado.getLogado();
+
+
+            scope.trocasenha = function () {
+                if (scope.logado.senha != scope.logado.senhaantiga) {
+                    console.log('deu erro 1');
+                    return;
+                }
+                else if (scope.logado.novasenha != scope.logado.novasenha1) {
+                    console.log('deu erro 2');
+                    return;
+                }
+                scope.logado.senha = scope.logado.novasenha;
+                var user = new Mensagem(me, 'usuario.update', scope.logado, 'usuario');
+                console.log('entrou aqui');
+                SIOM.emitirServer(user);
+            };
+
+             var usuarioatualizado = function () {
+                 console.log('senha atualizada');
+                 $('#senhaAtualizada').modal();
+            };
+
+            me.wiring = function(){
+                    me.listeners['usuario.updated'] = usuarioatualizado.bind(me);
+
+                    for(var name in me.listeners){
+                        SIOM.on(name, me.listeners[name]);
+
+                    }
+            };
+            me.wiring();
         }
     };
+
 }]);

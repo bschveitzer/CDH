@@ -34,13 +34,12 @@ entradamanager.prototype.executaCrud = function(msg){
 
 entradamanager.prototype.registraentrada = function (registro) {
     var me = this;
-    console.log('o registro aqui', registro);
+    var mes = registro.mes;
+
     var entrada = {
         horaEntrada: registro.entrada,
         dia: registro.day
     };
-
-    console.log('diaaa', registro.day);
     //
     // this.model.find({dia: registro.day._id}, function (err, res) {
     //     if (res.length > 0){
@@ -49,7 +48,7 @@ entradamanager.prototype.registraentrada = function (registro) {
     //     } else {
     me.model.create(entrada, function(err, res){
         if(res){
-            registro.cb(res);
+            registro.cb(res, mes);
         } else {
             console.log('deu erro no cria entrada', err);
         }

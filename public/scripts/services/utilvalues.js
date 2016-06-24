@@ -10,5 +10,6 @@ app.value('utilvalues', {
     entrada: null,
     saidaregistrada: false,
     horasaida: null,
-    saida: null
+    saida: null,
+    mes: null
 });

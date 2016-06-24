@@ -60,7 +60,8 @@ mesmanager.prototype.entrada = function (ponto) {
                 nome: mes,
                 ano: ano,
                 fechado: false,
-                usuario: usuario
+                usuario: usuario,
+                bancodehoras: 4800
             };
             me.model.create(novomes, function(err, res){
                 if(res){

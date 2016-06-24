@@ -42,10 +42,12 @@ usuariomanager.prototype.trataLogin = function(msg){
                 var entrada = {
                     horaentrada: new Date(),
                     usuario: res,
-                    cb: function (entrada) {
+                    cb: function (entrada, mes) {
+                        console.log('entrada', mes);
                         var logado = {
                             entrada: entrada,
-                            logado: res
+                            logado: res,
+                            mes: mes
                         };
                         me.emitManager(msg, '.login', {res: logado});
                     }

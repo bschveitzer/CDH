@@ -10,6 +10,7 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
     $scope.logado = getUserLogado.getLogado();
     var data = new Date(utilvalues.entrada.horaEntrada);
     var entrada = utilvalues.entrada;
+    var mes = utilvalues.mes;
     $scope.saidaregistrada = utilvalues.saidaregistrada;
     $scope.horasaida = utilvalues.horasaida;
     $scope.saidaInvalida = false;
@@ -45,26 +46,6 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         cb();
     };
 
-
-    $scope.trocasenha = function () {
-        if($scope.logado.senha != $scope.logado.senhaantiga){
-            console.log('deu erro 1');
-            return;
-        }
-        else if($scope.logado.novasenha != $scope.logado.novasenha1){
-            console.log('deu erro 2');
-            return;
-        }
-        $scope.logado.senha = $scope.logado.novasenha;
-        var user = new Mensagem(me, 'usuario.update', $scope.logado, 'usuario');
-        console.log('entrou aqui');
-        SIOM.emitirServer(user);
-    };
-
-    var usuarioatualizado = function () {
-        console.log('usuarioatualizado');
-    };
-
     var saidaatualizada = function () {
 
         $scope.trocaRota('');
@@ -94,8 +75,8 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
      *  registra hora escolhida
      */
     $scope.registrasaida = function () {
-
-        if($scope.saida.getHours() <= $scope.hora.slice(0,2)){
+        
+        if ($scope.saida.getHours() <= $scope.hora.slice(0,2) && $scope.saida.getMinutes() <= $scope.hora.slice(3,5)){
             $scope.saidaInvalida = true;
             $('#horaInvalida').modal();
             return;
@@ -153,7 +134,6 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
 
     me.wiring = function(){
         me.listeners['saida.registrada'] = saidaregistrada.bind(me);
-        me.listeners['usuario.updated'] = usuarioatualizado.bind(me);
         me.listeners['saida.updated'] = saidaatualizada.bind(me);
 
         for(var name in me.listeners){

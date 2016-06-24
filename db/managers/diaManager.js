@@ -60,6 +60,7 @@ diamanager.prototype.entrada = function (ponto) {
                 if(res){
                     novaentrada.day = res;
                     novaentrada.entrada = entrada;
+                    novaentrada.mes = mes;
                     hub.emit('entrada', novaentrada);
                 } else {
                     console.log('deu erro no cria dia', err);
@@ -70,6 +71,7 @@ diamanager.prototype.entrada = function (ponto) {
         } else {
             novaentrada.day = res;
             novaentrada.entrada = entrada;
+            novaentrada.mes = mes;
             hub.emit('entrada', novaentrada);
         }
     });
