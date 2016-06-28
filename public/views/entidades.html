@@ -26,6 +26,7 @@
 				<thead>
 				<tr>
 					<th align="center">Nome</th>
+					<th align="center">Sobrenome</th>
 					<th align="center">E-mail</th>
 					<th align="center">Editar</th>
 					<th align="center">Remover</th>
@@ -34,14 +35,15 @@
 				<tbody>
 				<tr ng-repeat="usuario in usuarios">
 					<td align="center">{{usuario.nome}}</td>
+					<td align="center">{{usuario.sobrenome}}</td>
 					<td align="center"> {{usuario.email}}</td>
 					<td align="center">
-						<button class="btn btn-primary">
+						<button class="btn btn-primary" ng-click="seteditar(usuario)">
 							<span class='glyphicon glyphicon-pencil'></span>
 						</button>
 					</td>
 					<td align="center">
-						<button class="btn btn-danger" data-toggle="modal" data-target="#usuarioRemovido">
+						<button class="btn btn-danger" ng-click="setremover(usuario)">
 							<span class='glyphicon glyphicon-remove'></span>
 						</button>
 					</td>
@@ -56,7 +58,7 @@
 			<button ng-click="trocaRota('relatorio')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
 				<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
 			</button>
-			<img style="width: 15em;" class="col-md-offset-9 col-md-2" src="../../imagens/logobranco.jpg">
+			<img style="width: 30em;" class="col-md-offset-7 col-md-2" src="../../imagens/CDHicon.png">
 		</div>
 	</div>
 </div>
@@ -68,8 +70,10 @@
 				<h4 class="modal-title text-center">Tem certeza que deseja remover o usuário?</h4>
 			</div>
 			<div class="modal-body text-center">
-				<p><button type="button" class="btn btn-default btn-primary" data-toggle="modal" data-target="#certeza" data-dismiss="modal">Sim</button>
-					<button type="button" class="btn btn-default btn-danger" data-dismiss="modal">Não</button></p>
+				<p>
+					<button ng-click="removerusuario()" type="button" class="btn btn-default btn-primary" data-dismiss="modal" >Sim</button>
+					<button type="button" class="btn btn-default btn-danger" data-dismiss="modal">Não</button>
+				</p>
 			</div>
 		</div>
 	</div>
@@ -92,4 +96,14 @@
 <div class="modal fade" id="adicionarUsuario" role="dialog">
 	<modaladicionarusuario>
 	</modaladicionarusuario>
+</div>
+<!--MODAL EDITAR USUARIO-->
+<div id="usuarioEditado" class="modal fade" role="dialog">
+	<div class="modal-dialog" >
+		<div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
+			<div class="modal-header">
+				<h4 class="modal-title text-center">Editar usuário</h4>
+			</div>
+		</div>
+	</div>
 </div>

@@ -29,7 +29,6 @@ usuariomanager.prototype.executaCrud = function(msg){
     }catch (e){
         me.emitManager(msg, 'error.manager', {err: e});
     }
-    console.log('trocando senha aqui');
 };
 
 usuariomanager.prototype.trataLogin = function(msg){

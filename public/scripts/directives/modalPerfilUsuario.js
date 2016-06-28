@@ -12,6 +12,24 @@ app.directive('modalperfilusuario',['$location', 'utilvalues', 'getUserLogado', 
             me.listeners = [];
             scope.logado = getUserLogado.getLogado();
 
+            scope.validaantigasenha = false;
+            scope.validosenha2 = false;
+
+            scope.validasenhaantiga = function () {
+                if(scope.logado.senha == scope.logado.senhaantiga){
+                    scope.validaantigasenha = true;
+                }else{
+                    scope.validaantigasenha = false;
+                }
+            };
+
+            scope.validasenhadois = function () {
+                if(scope.logado.novasenha == scope.logado.novasenha1){
+                    scope.logado.validosenha2 = true;
+                }else{
+                    scope.logado.validosenha2 = false;
+                }
+            };
 
             scope.trocasenha = function () {
                 if (scope.logado.senha != scope.logado.senhaantiga) {

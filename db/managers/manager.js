@@ -62,8 +62,9 @@ Manager.prototype.update = function(msg){
 };
 
 Manager.prototype.destroy = function(msg){
-    var dados = msg.getDado();
-    this.model.remove({_id: dados.id}, function(err, res){
+    var me = this;
+    var dados = msg.getRes();
+    this.model.remove({_id: dados._id}, function(err, res){
         if(res){
             me.emitManager(msg, '.destroied', {res: res});
         } else{

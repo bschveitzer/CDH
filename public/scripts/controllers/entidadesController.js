@@ -8,9 +8,7 @@ app.controller("entidadesController",['$scope','$location', 'utilvalues','getUse
     $scope.classes = utilvalues.rotaatual;
     $scope.usuarios = [];
     $scope.logado = getUserLogado.getLogado();
-    var entrada = utilvalues.entrada;
-
-    
+    me.userremover = null;
 
     $scope.trocaRota=function (local) {
         limpanav(local, function () {
@@ -40,7 +38,6 @@ app.controller("entidadesController",['$scope','$location', 'utilvalues','getUse
 
         $scope.trocaRota('');
         location.reload();
-
         $scope.$apply();
 
     };
@@ -54,12 +51,46 @@ app.controller("entidadesController",['$scope','$location', 'utilvalues','getUse
         $scope.usuarios = msg.getDado();
         $scope.$apply();
     };
+// REMOVER USUARIO
+    $scope.removerusuario = function () {
+        console.log('destruindo usuario',me.userremover);
+
+        var user = new Mensagem(me, 'usuario.destroy', me.userremover, 'usuario');
+        SIOM.emitirServer(user);
+    };
+
+    var usuarioremovido = function () {
+        $('#certeza').modal();
+        $scope.$apply();
+        ready();
+    };
+
+    $scope.setremover = function (usuario) {
+        me.userremover = usuario;
+        $('#usuarioRemovido').modal('toggle');
+    };
+// EDITAR USUARIO
+    $scope.seteditar = function (usuario) {
+        me.usereditar = usuario;
+        $('#usuarioEditado').modal('toggle');
+    };
+    $scope.editarusuario = function () {
+        var user = new Mensagem(me, 'usuario.update', me.usereditar, 'usuario');
+        SIOM.emitirServer(user);
+    };
+    var usuarioeditado = function () {
+        $('#confirmacao').modal();
+        $scope.$apply();
+        ready();
+    };
 
     me.wiring = function () {
 
         me.listeners['usuario.readed'] = retusers.bind(me);
         me.listeners['usuario.created'] = ready.bind(me);
         me.listeners['saida.updated'] = saidaatualizada.bind(me);
+        me.listeners['usuario.destroied'] = usuarioremovido.bind(me);
+        me.listeners['usuario.updated'] = usuarioeditado.bind(me);
 
         for(var name in  me.listeners){
             SIOM.on(name, me.listeners[name]);

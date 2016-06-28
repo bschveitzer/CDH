@@ -58,7 +58,7 @@ entradamanager.prototype.registraentrada = function (registro) {
      * todo: se sim, tem que verificar se ele tem uma saida no mesmo dia, se ele tiver uma saida no mesmo dia, poderá ser criada uma nova entrada
      * todo: caso contrario mantem-se a entrada antiga.
      */
-
+        
 
 };
 
