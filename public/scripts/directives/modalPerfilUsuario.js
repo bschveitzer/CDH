@@ -47,7 +47,6 @@ app.directive('modalperfilusuario',['$location', 'utilvalues', 'getUserLogado', 
             };
 
              var usuarioatualizado = function () {
-                 console.log('senha atualizada');
                  $('#senhaAtualizada').modal();
             };
 

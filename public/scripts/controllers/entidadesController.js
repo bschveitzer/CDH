@@ -70,19 +70,74 @@ app.controller("entidadesController",['$scope','$location', 'utilvalues','getUse
         $('#usuarioRemovido').modal('toggle');
     };
 // EDITAR USUARIO
+    $scope.usereditar = {};
+    
     $scope.seteditar = function (usuario) {
-        me.usereditar = usuario;
+        $scope.usereditar = usuario;
         $('#usuarioEditado').modal('toggle');
     };
+    
+// TRATAMENTO EDITAR USUARIO
+    $scope.validonomeusuario = false;
+    $scope.validosobrenome= false;
+    $scope.validoemail= false;
+    $scope.validotelefone= false;
+    $scope.validotipo= false;
+    
+    $scope.nomevalido = function () {
+        if($scope.formEditarUsuario.nomevar.$valid){
+            $scope.validonomeusuario = true;
+        } else {
+            $scope.validonomeusuario = false;
+        }
+    };
+    $scope.sobrenomevalido = function () {
+        if($scope.formEditarUsuario.sobrenomevar.$valid) {
+            $scope.validosobrenome = true;
+        }else{
+            $scope.validosobrenome = false;
+        }
+    };
+    $scope.emailvalido = function () {
+        if($scope.formEditarUsuario.emailvar.$valid) {
+            $scope.validoemail = true;
+        }else{
+            $scope.validoemail = false;
+        }
+    };
+    $scope.telefonevalido = function () {
+        if($scope.formEditarUsuario.numerocelularvar.$valid) {
+            $scope.validotelefone = true;
+        }else{
+            $scope.validotelefone = false;
+        }
+    };
+    $scope.tipovalido = function () {
+        if($scope.formEditarUsuario.tipovar.$valid) {
+            $scope.validotipo = true;
+        }else{
+            $scope.validotipo = false;
+        }
+    };
+
     $scope.editarusuario = function () {
-        var user = new Mensagem(me, 'usuario.update', me.usereditar, 'usuario');
-        SIOM.emitirServer(user);
+        if(!$scope.formEditarUsuario.nomevar.$valid || !$scope.formEditarUsuario.sobrenomevar.$valid || !$scope.formEditarUsuario.emailvar.$valid || !$scope.formEditarUsuario.numerocelularvar.$valid || !$scope.formEditarUsuario.tipovar.$valid){
+            $('#erroeditar').modal();
+            ready();
+            return;
+        }else {
+            var user = new Mensagem(me, 'usuario.update', $scope.usereditar, 'usuario');
+            SIOM.emitirServer(user);
+        }
     };
     var usuarioeditado = function () {
+        console.log('editou aqui');
         $('#confirmacao').modal();
         $scope.$apply();
         ready();
     };
+
+// WIRING
 
     me.wiring = function () {
 

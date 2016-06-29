@@ -81,13 +81,13 @@
 <!--MODAL CERTEZA-->
 <div id="certeza" class="modal fade" role="dialog">
 	<div class="modal-dialog" >
-		<div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
-			<div class="modal-body text-center">
-				<p>Usuário removido com sucesso!
+		<div class="modal-content" style="background-color:green; border-style: solid; border-color:black;">
+			<div class="modal-body">
+				<h4>Usuário removido com sucesso!
 					<button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-dismiss="modal">
 						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 					</button>
-				</p>
+				</h4>
 			</div>
 		</div>
 	</div>
@@ -100,9 +100,135 @@
 <!--MODAL EDITAR USUARIO-->
 <div id="usuarioEditado" class="modal fade" role="dialog">
 	<div class="modal-dialog" >
-		<div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
-			<div class="modal-header">
-				<h4 class="modal-title text-center">Editar usuário</h4>
+		<div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color: #2b669a;">
+			<div class="modal-header" style="background-color: #2b669a">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h2 class="modal-title" style="text-align: center"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Editar usuário</h2>
+			</div>
+			<div class="modal-body">
+				<form name="formEditarUsuario">
+					<div class="form-group">
+
+						<div class="row">
+							<div class="col-md-6">
+								<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+								<label class="control-label">Nome: </label>
+								<p>{{usereditar.nome}}</p>
+							</div>
+							<div>
+							</div>
+							<div class="col-md-6">
+								<div ng-class="{ 'has-error' : !validonomeusuario && formEditarUsuario.nomevar.$dirty}">
+									<div ng-class="{ 'has-success' : validonomeusuario && formEditarUsuario.nomevar.$dirty}">
+										<label class="control-label">Novo nome:</label>
+										<input type="text" class="form-control" ng-model="usereditar.nome" name="nomevar" required="" ng-change="nomevalido()">
+										<div ng-if="!validonomeusuario && formEditarUsuario.nomevar.$dirty" class="alert alert-danger control-label">Digite um nome válido!</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+								<label class="control-label">Sobrenome: </label>
+								<p>{{usereditar.sobrenome}}</p>
+							</div>
+							<div class="col-md-6">
+								<div ng-class="{ 'has-error' : !validosobrenome && formEditarUsuario.sobrenomevar.$dirty}">
+									<div ng-class="{ 'has-success' : validosobrenome && formEditarUsuario.sobrenomevar.$dirty}">
+										<label class="control-label">Novo sobrenome:</label>
+										<input type="text" class="form-control" ng-model="usereditar.sobrenome" name="sobrenomevar" required="" ng-change="sobrenomevalido()">
+										<div ng-if="!validosobrenome && formEditarUsuario.sobrenomevar.$dirty" class="alert alert-danger control-label">Digite um sobrenome válido!</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+								<label class="control-label">Email: </label>
+								<p>{{usereditar.email}}</p>
+							</div>
+							<div class="col-md-6">
+								<div ng-class="{ 'has-error' : !validoemail && formEditarUsuario.emailvar.$dirty}">
+									<div ng-class="{ 'has-success' : validoemail && formEditarUsuario.emailvar.$dirty}">
+										<label class="control-label"> Novo E-mail:</label>
+										<input type="email" class="form-control" ng-model="usereditar.email" name="emailvar" required="" ng-change="emailvalido()">
+										<div ng-if="!validoemail && formEditarUsuario.emailvar.$dirty" class="alert alert-danger control-label">Digite um e-mail válido!</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+								<label class="control-label">Telefone: </label>
+								<p>{{usereditar.numerocelular}}</p>
+							</div>
+							<div class="col-md-6">
+								<div ng-class="{ 'has-error' : !validotelefone && formEditarUsuario.numerocelularvar.$dirty}">
+									<div ng-class="{ 'has-success' : validotelefone && formEditarUsuario.numerocelularvar.$dirty}">
+										<label class="control-label">Novo telefone:</label>
+										<input type="text" class="form-control" ng-model="usereditar.numerocelular" name="numerocelularvar" required="" ng-change="telefonevalido()" mask="(99) 9999-9999">
+										<div ng-if="!validotelefone && formEditarUsuario.numerocelularvar.$dirty" class="alert alert-danger control-label">Digite um telefone válido!</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+								<label class="control-label">Tipo: </label>
+								<p>{{usereditar.tipo}}</p>
+							</div>
+							<div class="col-md-6">
+								<div ng-class="{ 'has-error' : !validotipo && formEditarUsuario.tipovar.$dirty}">
+									<div ng-class="{ 'has-success' : validotipo && formEditarUsuario.tipovar.$dirty}">
+										<label class="control-label">Novo tipo:</label>
+										<input type="number" min="0" max="2" class="form-control" ng-model="usereditar.tipo" name="tipovar" required="" ng-change="tipovalido()" >
+										<div ng-if="!validotipo && formEditarUsuario.tipovar.$dirty" class="alert alert-danger control-label">Digite em tipo válido!    0=Root/1=Administrador/2=Comum.</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" data-dismiss="modal" ng-click="editarusuario()">Editar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--MODAL CONFIRMAÇÃO EDITAR-->
+<div id="confirmacao" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content" style="background-color:green; border-style: solid; border-color:black;">
+			<div class="modal-dialog">
+				<h4 class="modal-title" style="text-align: center">Usuário atualizado.</h4>
+				<button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-dismiss="modal">
+					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+				</button>
+				<br>
+			</div>
+		</div>
+	</div>
+</div>
+<!--MODAL ERRO EDITAR-->
+<div id="erroeditar" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content" style="background-color:indianred; border-style: solid; border-color:black;">
+			<div class="modal-dialog">
+				<h4 class="modal-title" style="text-align: center">Erro ao editar. Verifique as informações.</h4>
+				<button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-target="#usuarioEditado" data-toggle="modal" data-dismiss="modal">
+					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+				</button>
+				<br>
 			</div>
 		</div>
 	</div>

@@ -62,12 +62,8 @@
                                 <div ng-class="{ 'has-error' : !validotipo && formAddUsuario.tipo.$dirty}">
                                     <div ng-class="{ 'has-success' : validotipo && formAddUsuario.tipo.$dirty}">
                                         <label class="control-label">Tipo:</label>
-                                        <br>
-                                        <select name="Tipos" ng-model="adicionaUsuario.tipo">
-                                            <option value="1">Administrador</option>
-                                            <option value="2">Comum</option>
-                                        </select>
-                                        <div ng-if="!validotipo && formAddUsuario.tipo.$dirty" class="alert alert-danger control-label">Escolha em tipo válido!</div>
+                                        <input type="number" min="0" max="2" class="form-control" ng-model="adicionaUsuario.tipo" name="tipo" required="" ng-change="validatipouser()" >
+                                        <div ng-if="!validotipo && formAddUsuario.tipo.$dirty" class="alert alert-danger control-label">Digite em tipo válido!    0=Root/1=Administrador/2=Comum.</div>
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +72,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-target="#usuarioValido" data-toggle="modal" ng-disabled="!validonomeusuario || !validosobrenome || !validoemail || !validosenha || !validotelefone" ng-click="adicionarusuario()">Adicionar</button>
+                <button type="button" class="btn btn-success" data-target="#usuarioValido" data-toggle="modal" ng-disabled="!validonomeusuario || !validosobrenome || !validoemail || !validosenha || !validotelefone || !validotipo" ng-click="adicionarusuario()">Adicionar</button>
             </div>
         </div>
     </div>
@@ -84,11 +80,11 @@
 <!--MODAL USUARIO VALIDO-->
 <div id="usuarioValido" class="modal fade" role="dialog">
     <div class="modal-dialog" >
-        <div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
+        <div class="modal-content" style="background-color:green; border-style: solid; border-color:black;">
             <div class="modal-body">
                 <br>
                 <h4 class="modal-title text-center">Usuário adicionado!</h4>
-                <button type="button" class="btn btn-default btn-primary btn-xs close" data-dismiss="modal">
+                <button type="button" class="btn btn-default btn-primary close" data-dismiss="modal">
                     <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                 </button>
                 <br>
