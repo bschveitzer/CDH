@@ -36,7 +36,7 @@
                     <p class="col-md-3">{{logado.numerocelular}}</p>
                 </div>
                 <div class="row" style="margin-left: 0.1em">
-                    <button type="button" class="btn btn-default btn-danger" data-target="#alterarSenha" data-toggle="modal">
+                    <button type="button" class="btn btn-default btn-danger" data-target="#alterarSenha" data-toggle="modal" data-dismiss="modal">
                         <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
                         Alterar senha
                     </button>
@@ -44,41 +44,4 @@
             </div>
         </div>
     </div>
-</div>
-<!--MODAL ALTERAR SENHA-->
-<div id="alterarSenha" class="modal fade" role="dialog">
-        <div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:#2b669a;">
-            <div class="modal-header" style="background-color: #2b669a">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h2 class="modal-title" style="text-align: center"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Alterar senha</h2>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-offset-1 col-md-4">
-                            <label>Senha antiga:</label>
-                            <input type="password" class="form-control" ng-change="validasenhaantiga()" ng-model="logado.senhaantiga">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-offset-1 col-md-4">
-                            <label>Nova senha:</label>
-                            <input type="password" class="form-control" ng-model="logado.novasenha">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-offset-1 col-md-4">
-                            <label>Confirma nova senha: </label>
-                            <input type="password" class="form-control" ng-change="validasenhadois()" ng-model="logado.novasenha1">
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-offset-1 col-md-4">
-                            <button type="button" class="btn btn-default btn-success" data-dismiss="modal" ng-disabled="!validaantigasenha || !validosenha2" ng-click="trocasenha()">Confirmar nova senha</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 </div>
