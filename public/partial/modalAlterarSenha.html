@@ -10,19 +10,19 @@
                 <div class="row">
                     <div class="col-md-offset-1 col-md-4">
                         <label>Senha antiga:</label>
-                        <input type="password" class="form-control" ng-change="validasenhaantiga()" ng-model="logado.senhaantiga">
+                        <input type="password" class="form-control" ng-change="validasenhaantiga()" ng-model="logado.senhaantiga"  required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-offset-1 col-md-4">
                         <label>Nova senha:</label>
-                        <input type="password" class="form-control" ng-model="logado.novasenha">
+                        <input type="password" class="form-control" ng-model="logado.novasenha" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-offset-1 col-md-4">
                         <label>Confirma nova senha: </label>
-                        <input type="password" class="form-control" ng-change="validasenhadois()" ng-model="logado.novasenha1">
+                        <input type="password" class="form-control" ng-change="validasenhadois()" ng-model="logado.novasenha1"  required>
                     </div>
                 </div>
                 <br>

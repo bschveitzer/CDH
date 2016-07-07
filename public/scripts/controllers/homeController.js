@@ -1,7 +1,3 @@
-/**
- * Created by Osvaldo on 23/09/15.
- */
-
 app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLogado', function ($scope,$location, utilvalues, getUserLogado) {
     var me = this;
     me.listeners = [];
@@ -124,7 +120,6 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
 
     };
     var colocazero = function (n, callback) {
-        console.log("oq vem",n);
         if (n <= 9) {
             callback('0' + n);
         }else{

@@ -77,10 +77,25 @@ diamanager.prototype.entrada = function (ponto) {
     });
 };
 
+diamanager.prototype.diabymes = function (msg) {
+    var me = this;
+    var dado = msg.getRes();
+    this.model.find({mes: dado}, function (err, res) {
+        if(res){
+            msg.setRes(res);
+            msg.setEvento('relatorio.getentrada');
+            hub.emit(msg.getEvento(), msg);
+        } else {
+            me.emitManager(msg, '.error.getdiasbymes', {err: err});
+        }
+    });
+};
+
 diamanager.prototype.wiring = function(){
     var me = this;
     me.listeners['banco.dia.*'] = me.executaCrud.bind(me);
     me.listeners['pontosemana'] = me.entrada.bind(me);
+    me.listeners['relatorio.getdias'] = me.diabymes.bind(me);
 
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);

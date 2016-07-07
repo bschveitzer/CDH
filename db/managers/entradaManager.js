@@ -58,16 +58,29 @@ entradamanager.prototype.registraentrada = function (registro) {
      * todo: se sim, tem que verificar se ele tem uma saida no mesmo dia, se ele tiver uma saida no mesmo dia, poderá ser criada uma nova entrada
      * todo: caso contrario mantem-se a entrada antiga.
      */
-        
+
 
 };
 
-
+entradamanager.prototype.getentradabydia = function (msg) {
+    var me = this;
+    var dado = msg.getRes();
+    this.model.find({ dia: { "$in" : dado} }, function (err, res) {
+        if(res){
+            msg.setRes(res);
+            msg.setEvento('relatorio.getsaida');
+            hub.emit(msg.getEvento(), msg);
+        } else {
+            me.emitManager(msg, '.erro.getentradabydia', {err: err});
+        }
+    });
+};
 
 entradamanager.prototype.wiring = function(){
     var me = this;
     me.listeners['banco.entrada.*'] = me.executaCrud.bind(me);
     me.listeners['entrada'] = me.registraentrada.bind(me);
+    me.listeners['relatorio.getentrada'] = me.getentradabydia.bind(me);
 
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);

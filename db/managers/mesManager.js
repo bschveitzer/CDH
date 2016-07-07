@@ -85,10 +85,29 @@ mesmanager.prototype.entrada = function (ponto) {
     });
 };
 
+mesmanager.prototype.findMesEscolhido = function (msg) {
+    var me = this;
+    var dado = msg.getRes();
+    var user = JSON.parse(dado.usuario);
+    var ano = parseInt(dado.ano);
+    var mes = dado.mes.toLowerCase();
+
+    this.model.findOne({nome: mes, ano: ano, usuario: user}, function (err, res) {
+        if(res){
+            msg.setRes(res);
+            msg.setEvento('relatorio.getdias');
+            hub.emit(msg.getEvento(), msg);
+        } else {
+            me.emitManager(msg, '.error.readed', {err: err});
+        }
+    });
+};
+
 mesmanager.prototype.wiring = function(){
     var me = this;
     me.listeners['banco.mes.*'] = me.executaCrud.bind(me);
     me.listeners['bateuponto'] = me.entrada.bind(me);
+    me.listeners['rtc.relatorio.read'] = me.findMesEscolhido.bind(me);
 
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);

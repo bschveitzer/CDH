@@ -11,33 +11,59 @@
             <br>
         </div>
         <div class="row">
-            <div class="col-md-3">
-                <div class="input-group col-md-offset-1">
-                    <span class="input-group-addon"><span class='glyphicon glyphicon-search'></span></span>
-                    <input type="text" class="form-control" ng-model="empresaFiltro.nome">
-                </div>
+            <div class="col-md-2">
+                <label class="control-label">Colaborador:</label>
+                <select name="userCombo" id="userCombo" ng-model="relatorio.usuario">
+                    <option ng-repeat="usuario in usuarios" value="{{usuario}}">{{usuario.nome}}</option>
+                </select>
+
             </div>
+            <div class="col-md-2">
+                <label class="control-label">Mês:</label>
+                <select name="mesCombo" id="mesCombo" ng-model="relatorio.mes">
+                    <option ng-repeat="mes in meses" value="{{mes}}">{{mes}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="control-label">Ano:</label>
+                <input type="text" class="form-control" ng-model="relatorio.ano" name="ano"  mask="9999" placeholder="2020" style="width: 4em;" >
+            </div>
+            <div>
+                <button type="button" style="margin-left: 1em; width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs" ng-click="buscarrelatorio()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true" ></span>
+                </button>
+            </div>
+
         </div>
         <br>
         <div class="panel panel-primary">
             <table class="table table-hover">
-            <thead>
-            <tr>
-                <th class="text-center">Semana</th>
-                <th class="text-center">Dia</th>
-                <th class="text-center">Hora de entrada</th>
-                <th class="text-center">Hora de saída</th>
-                <th class="text-center">Anotações</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="dia in dias">
-                <td align="center">
-                    {{dia.nome}}
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                <thead>
+                <tr>
+                    <th class="text-center">Dia</th>
+                    <th class="text-center">Hora de entrada</th>
+                    <th class="text-center">Hora de saída</th>
+                    <th class="text-center">Horas trabalhadas</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="relat in relatorioretornado">
+                    <td align="center">
+                        {{relat.dia}}
+                    </td>
+                    <td align="center">
+                        {{relat.horaentrada}}
+                    </td>
+                    <td align="center">
+                        {{relat.horasaida}}
+                    </td>
+                    <td align="center">
+                        <span ng-if="!relat.horasaida">Incompleto</span>
+                        <span ng-if="relat.horasaida">{{relat.horatrabalhada}}</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
         <div class="row" style="margin-left: 1em">
             <button ng-click="trocaRota('home')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
