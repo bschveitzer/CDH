@@ -11,7 +11,9 @@ app.controller("relatorioController",['$scope','$location', 'utilvalues','getUse
 
     $scope.relatorio = null;
 
-
+    $scope.saidaregistrada = utilvalues.saidaregistrada;
+    $scope.horasaida = utilvalues.horasaida;
+    
 
 
     $scope.classes = utilvalues.rotaatual;
@@ -50,12 +52,14 @@ app.controller("relatorioController",['$scope','$location', 'utilvalues','getUse
     $scope.sair = function () {
 
         utilvalues.saida.hora = new Date();
+        var entrada1 = new Date(utilvalues.entrada.horaEntrada);
 
         console.log('vou mandar', utilvalues.saida);
+        utilvalues.tempotrabalhado = utilvalues.saida.hora.getTime() - entrada1.getTime();
+        console.log('BIRL',utilvalues.tempotrabalhado);
 
         var msg = new Mensagem(me, 'saida.update', utilvalues.saida, 'saida');
         SIOM.emitirServer(msg);
-
     };
     var saidaatualizada = function () {
 
@@ -77,6 +81,8 @@ app.controller("relatorioController",['$scope','$location', 'utilvalues','getUse
 
 
     };
+
+    
 
 
 // RETORNOS
@@ -134,6 +140,8 @@ app.controller("relatorioController",['$scope','$location', 'utilvalues','getUse
     };
 
     var retrelatorios = function (msg) {
+
+        $scope.relatorioretornado = [];
 
         var dado = msg.getDado();
 

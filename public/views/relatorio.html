@@ -11,32 +11,31 @@
             <br>
         </div>
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <label class="control-label">Colaborador:</label>
                 <select name="userCombo" id="userCombo" ng-model="relatorio.usuario">
                     <option ng-repeat="usuario in usuarios" value="{{usuario}}">{{usuario.nome}}</option>
                 </select>
-
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <label class="control-label">Mês:</label>
-                <select name="mesCombo" id="mesCombo" ng-model="relatorio.mes">
+                <select name="mesCombo" id="mesCombo" ng-model="relatorio.mes" >
                     <option ng-repeat="mes in meses" value="{{mes}}">{{mes}}</option>
                 </select>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-1">
                 <label class="control-label">Ano:</label>
-                <input type="text" class="form-control" ng-model="relatorio.ano" name="ano"  mask="9999" placeholder="2020" style="width: 4em;" >
+                <input type="text" class="form-control" ng-model="relatorio.ano" name="ano"  mask="9999" placeholder="2020">
             </div>
+            <br>
             <div>
-                <button type="button" style="margin-left: 1em; width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs" ng-click="buscarrelatorio()">
+                <button type="button" class="btn btn-default btn-primary btn-lg" ng-click="buscarrelatorio()">
                     <span class="glyphicon glyphicon-search" aria-hidden="true" ></span>
                 </button>
             </div>
-
         </div>
         <br>
-        <div class="panel panel-primary">
+        <div class="panel panel-primary" style="height:45em; line-height:3em;overflow:auto;padding:5px;">
             <table class="table table-hover">
                 <thead>
                 <tr>

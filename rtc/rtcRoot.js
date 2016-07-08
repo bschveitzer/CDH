@@ -51,6 +51,7 @@ RtcRoot.prototype.interfaceWiring = function(){
     me.browserlisteners['saida.update'] = me.daInterface.bind(me);
     me.browserlisteners['usuario.destroy'] = me.daInterface.bind(me);
     me.browserlisteners['relatorio.read'] = me.daInterface.bind(me);
+    me.browserlisteners['bancodehoras.update'] = me.daInterface.bind(me);
 
     for(var name in me.browserlisteners){
         me.config.socket.on(name, me.browserlisteners[name]);

@@ -61,7 +61,7 @@ mesmanager.prototype.entrada = function (ponto) {
                 ano: ano,
                 fechado: false,
                 usuario: usuario,
-                bancodehoras: 4800
+                bancodehoras: 288000000
             };
             me.model.create(novomes, function(err, res){
                 if(res){
@@ -102,12 +102,32 @@ mesmanager.prototype.findMesEscolhido = function (msg) {
         }
     });
 };
+mesmanager.prototype.diminuirHoras = function (msg) {
+    var me = this;
+    var dado = msg.getRes();
+    var bancohoras = me.model.bancodehoras;
+    var bancoatualizado = bancohoras - dado.dado;
+
+
+    var mesatualizado = {
+        bancodehoras: bancoatualizado
+    };
+    console.log('BIRL',mesatualizado);
+    me.model.update(mesatualizado, function (err, res) {
+        if(res){
+            console.log('DEU BOA NO BANCO DE HORAS');
+        }else{
+            console.log('DEU RUIIM NO BANCO DE HORAS');
+        }
+    });
+};
 
 mesmanager.prototype.wiring = function(){
     var me = this;
     me.listeners['banco.mes.*'] = me.executaCrud.bind(me);
     me.listeners['bateuponto'] = me.entrada.bind(me);
     me.listeners['rtc.relatorio.read'] = me.findMesEscolhido.bind(me);
+    me.listeners['rtc.bancodehoras.update'] = me.diminuirHoras.bind(me);
 
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);
