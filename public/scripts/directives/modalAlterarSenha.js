@@ -9,6 +9,7 @@ app.directive('modalalterarsenha', ['getUserLogado', function(getUserLogado) {
 
         link: function (scope) {
             var me = this;
+            me.listeners = {};
             scope.logado = getUserLogado.getLogado();
 
             scope.trocasenha = function () {

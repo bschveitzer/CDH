@@ -102,24 +102,23 @@ mesmanager.prototype.findMesEscolhido = function (msg) {
         }
     });
 };
-mesmanager.prototype.diminuirHoras = function (msg) {
+
+mesmanager.prototype.updatebancodehoras = function(msg){
     var me = this;
-    var dado = msg.getRes();
-    var bancohoras = me.model.bancodehoras;
-    var bancoatualizado = bancohoras - dado.dado;
-
-
-    var mesatualizado = {
-        bancodehoras: bancoatualizado
-    };
-    console.log('BIRL',mesatualizado);
-    me.model.update(mesatualizado, function (err, res) {
+    var dados = msg.getRes();
+    this.model.findByIdAndUpdate(dados._id, {$set: {bancodehoras: dados.bancodehoras}}, function(err, res){
         if(res){
-            console.log('DEU BOA NO BANCO DE HORAS');
-        }else{
-            console.log('DEU RUIIM NO BANCO DE HORAS');
+            me.model.findById(dados._id, function(err, res){
+                if(res){
+                    me.emitManager(msg, '.updated', {res: res});
+                } else{
+                    me.emitManager(msg, '.error.readedupdatedbancohoras', {err: err});
+                }
+            });
+        } else{
+            me.emitManager(msg, '.error.updatedbancohoras', {err: err});
         }
-    });
+    })
 };
 
 mesmanager.prototype.wiring = function(){
@@ -127,7 +126,7 @@ mesmanager.prototype.wiring = function(){
     me.listeners['banco.mes.*'] = me.executaCrud.bind(me);
     me.listeners['bateuponto'] = me.entrada.bind(me);
     me.listeners['rtc.relatorio.read'] = me.findMesEscolhido.bind(me);
-    me.listeners['rtc.bancodehoras.update'] = me.diminuirHoras.bind(me);
+    me.listeners['bancodehroas.update'] = me.updatebancodehoras.bind(me);
 
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);

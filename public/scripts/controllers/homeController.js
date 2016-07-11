@@ -56,12 +56,9 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         utilvalues.saida.hora = new Date();
         var entrada1 = new Date(utilvalues.entrada.horaEntrada);
         utilvalues.tempotrabalhado = utilvalues.saida.hora.getTime() - entrada1.getTime();
+        
 
-        var enviarhorastrabalhadas = new Mensagem(me, 'bancodehoras.update', utilvalues.tempotrabalhado, 'mes');
-        SIOM.emitirServer(enviarhorastrabalhadas);
-        console.log('BIRL',enviarhorastrabalhadas);
-
-        var msg = new Mensagem(me, 'saida.update', utilvalues.saida, 'saida');
+        var msg = new Mensagem(me, 'regsaida.update', utilvalues.saida, 'saida');
         SIOM.emitirServer(msg);
 
     };

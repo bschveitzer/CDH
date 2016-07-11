@@ -58,7 +58,7 @@ app.controller("relatorioController",['$scope','$location', 'utilvalues','getUse
         utilvalues.tempotrabalhado = utilvalues.saida.hora.getTime() - entrada1.getTime();
         console.log('BIRL',utilvalues.tempotrabalhado);
 
-        var msg = new Mensagem(me, 'saida.update', utilvalues.saida, 'saida');
+        var msg = new Mensagem(me, 'regsaida.update', utilvalues.saida, 'saida');
         SIOM.emitirServer(msg);
     };
     var saidaatualizada = function () {

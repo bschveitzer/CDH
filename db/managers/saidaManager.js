@@ -32,7 +32,7 @@ saidamanager.prototype.executaCrud = function (msg) {
     }
 };
 
-saidamanager.prototype.registrasaida = function (registro) {
+saidamanager.prototype.registraprevisao = function (registro) {
     var me = this;
     var dainterface = registro.getRes();
     var dado = {
@@ -50,6 +50,27 @@ saidamanager.prototype.registrasaida = function (registro) {
         }
     })
 
+};
+
+saidamanager.prototype.registrasaida = function (msg) {
+    var me = this;
+    var dado = msg.getRes();
+    this.model.findByIdAndUpdate(dado._id, {$set: dado}, function (err, res) {
+        if(res){
+            me.model.findById(res._id)
+                .populate('entrada')
+                .exec(function (err, ret) {
+                    if(ret){
+                        msg.setRes(ret);
+                        hub.emit('entradamaissaida', msg);
+                    }else{
+                        me.emitManager(msg, '.error.entradamaissaida', {err:err});
+                    }
+                })
+        }else{
+            me.emitManager(msg, '.error.registrasaida', {err: err});
+        }
+    });
 };
 
 saidamanager.prototype.getsaidabyentrada = function (msg) {
@@ -75,8 +96,9 @@ saidamanager.prototype.getsaidabyentrada = function (msg) {
 saidamanager.prototype.wiring = function () {
     var me = this;
     me.listeners['banco.saida.*'] = me.executaCrud.bind(me);
-    me.listeners['rtc.registrasaida'] = me.registrasaida.bind(me);
+    me.listeners['rtc.registrasaida'] = me.registraprevisao.bind(me);
     me.listeners['relatorio.getsaida'] = me.getsaidabyentrada.bind(me);
+    me.listeners['rtc.regsaida.update'] = me.registrasaida.bind(me);
 
 
     for (var name in me.listeners) {

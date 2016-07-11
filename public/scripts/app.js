@@ -5,3 +5,7 @@ var app = angular.module('agere', [
     'ngRoute',
     'ngMask'
 ]);
+
+window.onbeforeunload = function () {
+    return '';
+};

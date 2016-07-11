@@ -91,11 +91,33 @@ diamanager.prototype.diabymes = function (msg) {
     });
 };
 
+diamanager.prototype.diminuirHoras = function (msg) {
+    var me = this;
+    var dado = msg.getRes();
+
+    var horatrabalhada = dado.hora.getTime() - dado.entrada.horaEntrada.getTime();
+
+    this.model.findById(dado.entrada.dia)
+        .populate('mes')
+        .exec(function (err, ret) {
+            if(ret){
+                ret.mes.bancodehoras = ret.mes.bancodehoras - horatrabalhada;
+                msg.setRes(ret.mes);
+                hub.emit('bancodehroas.update', msg);
+            }else {
+                console.log('faz algo aqui viado.', err)
+            }
+        })
+
+
+};
+
 diamanager.prototype.wiring = function(){
     var me = this;
     me.listeners['banco.dia.*'] = me.executaCrud.bind(me);
     me.listeners['pontosemana'] = me.entrada.bind(me);
     me.listeners['relatorio.getdias'] = me.diabymes.bind(me);
+    me.listeners['entradamaissaida'] = me.diminuirHoras.bind(me);
 
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);
