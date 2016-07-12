@@ -93,12 +93,35 @@ saidamanager.prototype.getsaidabyentrada = function (msg) {
         });
 };
 
+saidamanager.prototype.buscasaida = function(msg){
+    var me = this;
+
+    this.model.findById(msg._id)
+        .populate({
+        path: 'entrada',
+            populate: {
+                path: 'saida'
+            }
+    })
+        .exec(function (err, res) {
+            if (res) {
+              hub.emit('achousaida', res);
+                console.log('chegou aqui ress', res);
+            } else {
+                console.log('chegou aqui err', err);
+               hub.emit('naoachousaida', err);
+            }
+        });
+
+};
+
 saidamanager.prototype.wiring = function () {
     var me = this;
     me.listeners['banco.saida.*'] = me.executaCrud.bind(me);
     me.listeners['rtc.registrasaida'] = me.registraprevisao.bind(me);
     me.listeners['relatorio.getsaida'] = me.getsaidabyentrada.bind(me);
     me.listeners['rtc.regsaida.update'] = me.registrasaida.bind(me);
+    me.listeners['verificasaidaexistente'] = me.buscasaida.bind(me);
 
 
     for (var name in me.listeners) {

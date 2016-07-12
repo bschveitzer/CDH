@@ -126,7 +126,7 @@ mesmanager.prototype.wiring = function(){
     me.listeners['banco.mes.*'] = me.executaCrud.bind(me);
     me.listeners['bateuponto'] = me.entrada.bind(me);
     me.listeners['rtc.relatorio.read'] = me.findMesEscolhido.bind(me);
-    me.listeners['bancodehroas.update'] = me.updatebancodehoras.bind(me);
+    me.listeners['bancodehoras.update'] = me.updatebancodehoras.bind(me);
 
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);

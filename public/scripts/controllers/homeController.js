@@ -6,13 +6,29 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
     $scope.logado = getUserLogado.getLogado();
     var data = new Date(utilvalues.entrada.horaEntrada);
     var entrada = utilvalues.entrada;
-    var mes = utilvalues.mes;
+    var meses = utilvalues.mes;
     $scope.saidaregistrada = utilvalues.saidaregistrada;
     $scope.horasaida = utilvalues.horasaida;
     $scope.saidaInvalida = false;
     $scope.dataEscrita = '';
     $scope.hora = '';
     $scope.saida = '';
+    $scope.bdhhora = parseInt(((meses.bancodehoras/1000)/60)/60);
+    $scope.bdhmin = parseInt(((meses.bancodehoras/1000)/60)%60);
+    $scope.bancodehorasmensal = '';
+    console.log('HORA', $scope.bancodehorasmensal);
+
+    var bancodehoras = function(){
+        colocazero($scope.bdhhora, function (retBdHora) {
+            colocazero($scope.bdhmin , function (retBdhMin) {
+                $scope.bancodehorasmensal = retBdHora + ':' + retBdhMin;
+                console.log('AQUIII', $scope.bancodehorasmensal);
+            });
+        });
+    };
+
+    console.log('HORA', $scope.bancodehorasmensal);
+
     var mes = [
         'Janeiro',
         'Fevereiro',
@@ -42,8 +58,10 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         cb();
     };
 
-    var saidaatualizada = function () {
-
+    var saidaatualizada = function (msg) {
+        var me = this;
+        var dado = msg.getDado();
+        console.log('BIRL', dado);
         $scope.trocaRota('');
         location.reload();
 
@@ -139,6 +157,7 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         }
 
         setData();
+        bancodehoras();
     };
 
     me.wiring();

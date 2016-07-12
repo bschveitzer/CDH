@@ -40,25 +40,26 @@ entradamanager.prototype.registraentrada = function (registro) {
         horaEntrada: registro.entrada,
         dia: registro.day
     };
-    //
-    // this.model.find({dia: registro.day._id}, function (err, res) {
-    //     if (res.length > 0){
-    //         console.log('ressssa', res[res.length -1]);
-    //         hub.emit('pegasaida', registro);
-    //     } else {
-    me.model.create(entrada, function(err, res){
-        if(res){
-            registro.cb(res, mes);
-        } else {
-            console.log('deu erro no cria entrada', err);
-        }
+
+    this.model.find({dia: registro.day._id}, function (err, res) {
+         if (res.length > 0) {
+             hub.emit('verificasaidaexistente', res[res.length - 1]);
+             console.log('vou enviar',res[res.length - 1]);
+         } else {
+             me.model.create(entrada, function (err, res) {
+                 if (res) {
+                     registro.cb(res, mes);
+                 } else {
+                     console.log('deu erro no cria entrada', err);
+                 }
+             });
+         }
     });
     /**
      * todo: aqui tem que verificar se ele já tem uma entrada nesse mesmo dia,
      * todo: se sim, tem que verificar se ele tem uma saida no mesmo dia, se ele tiver uma saida no mesmo dia, poderá ser criada uma nova entrada
      * todo: caso contrario mantem-se a entrada antiga.
      */
-
 
 };
 

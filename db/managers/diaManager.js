@@ -103,7 +103,7 @@ diamanager.prototype.diminuirHoras = function (msg) {
             if(ret){
                 ret.mes.bancodehoras = ret.mes.bancodehoras - horatrabalhada;
                 msg.setRes(ret.mes);
-                hub.emit('bancodehroas.update', msg);
+                hub.emit('bancodehoras.update', msg);
             }else {
                 console.log('faz algo aqui viado.', err)
             }
