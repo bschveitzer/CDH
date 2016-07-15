@@ -1,5 +1,5 @@
 /**
- * Created by labtic on 25/05/2016.
+ * Created by Bernardo on 25/05/2016.
  */
 var Manager = require('./manager.js');
 var utility = require('util');
@@ -96,41 +96,8 @@ saidamanager.prototype.getsaidabyentrada = function (msg) {
 saidamanager.prototype.buscasaida = function(msg){
     var me = this;
     var dado = msg.res;
+    var
     console.log('BIRL', dado);
-
-    // this.model.findById(dado._id)
-    //     .populate('entrada')
-    //     .exec(function (err, res) {
-    //         if(res){
-    //            me.model.find({saida: {$in:entrada}})
-    //                .populate('saida')
-    //                .exec(function (err, res) {
-    //                    if(res){
-    //                        me.model.find({hora: {$in:saida}})
-    //                            .populate('hora')
-    //                            .exec(function (err,res) {
-    //                                if(res){
-    //                                    hub.emit('achouhorasaida', msg);
-    //                                }else{
-    //                                    hub.emit('naoachouhorasaida',msg);
-    //                                }
-    //                            })
-    //                    }else{
-    //                        console.log('ERRO FIND HORA', err);
-    //                    }
-    //                })
-    //         }else{
-    //             console.log('erro FIND SAIDA', err);
-    //         }
-    // })
-    //     .exec(function (err, res) {
-    //         if (res) {
-    //             console.log('chegou aqui ress', res);
-    //         } else {
-    //             console.log('chegou aqui err', err);
-    //         }
-    //     });
-
 };
 
 saidamanager.prototype.wiring = function () {

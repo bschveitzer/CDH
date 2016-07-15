@@ -1,5 +1,5 @@
 /**
- * Created by labtic on 25/05/2016.
+ * Created by Bernardo on 25/05/2016.
  */
 var Manager = require('./manager.js');
 var utility = require('util');
@@ -35,20 +35,24 @@ entradamanager.prototype.executaCrud = function(msg){
 entradamanager.prototype.registraentrada = function (registro) {
     var me = this;
     var mes = registro.mes;
+    var versaida = {cb: registro.cb};
 
     var entrada = {
         horaEntrada: registro.entrada,
         dia: registro.day
     };
 
-    // this.model.find({dia: registro.day._id}, function (err, res) {
-    //      if (res.length > 0) {
-    //          var dado = {
-    //              reg: registro,
-    //              res: res[res.length - 1],
-    //          };
-    //          hub.emit('verificasaidaexistente', dado);
-    //      } else {
+     this.model.find({dia: registro.day._id}, function (err, res) {
+          if (res.length > 0) {
+              var dado = {
+                  reg: versaida,
+                  regmes: registro.mes,
+                  regentrada: entrada,
+                  res: res[res.length - 1]
+              };
+              hub.emit('verificasaidaexistente', dado);
+              console.log('BIRIRIRIRIRI', dado);
+          } else {
              me.model.create(entrada, function (err, res) {
                  if (res) {
                      registro.cb(res, mes);
@@ -56,9 +60,9 @@ entradamanager.prototype.registraentrada = function (registro) {
                      console.log('deu erro no cria entrada', err);
                  }
              });
-    //      }
-    // // });
-    // // /**
+          }
+      });
+     // /**
     //  * todo: aqui tem que verificar se ele já tem uma entrada nesse mesmo dia,
     //  * todo: se sim, tem que verificar se ele tem uma saida no mesmo dia, se ele tiver uma saida no mesmo dia, poderá ser criada uma nova entrada
     //  * todo: caso contrario mantem-se a entrada antiga.
