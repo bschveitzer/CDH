@@ -27,10 +27,14 @@
                 <label class="control-label">Ano:</label>
                 <input type="text" class="form-control" ng-model="relatorio.ano" name="ano"  mask="9999" placeholder="2020">
             </div>
-            <br>
-            <div>
+            <div class="col-md-1">
                 <button type="button" class="btn btn-default btn-primary btn-lg" ng-click="buscarrelatorio()">
                     <span class="glyphicon glyphicon-search" aria-hidden="true" ></span>
+                </button>
+            </div>
+            <div class="">
+                <button type="button" class="btn btn-default btn-success btn-lg" ng-click="imprimerelatorio()">
+                    <span class="glyphicon glyphicon-download-alt" aria-hidden="true" ></span>
                 </button>
             </div>
         </div>

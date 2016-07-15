@@ -95,23 +95,41 @@ saidamanager.prototype.getsaidabyentrada = function (msg) {
 
 saidamanager.prototype.buscasaida = function(msg){
     var me = this;
+    var dado = msg.res;
+    console.log('BIRL', dado);
 
-    this.model.findById(msg._id)
-        .populate({
-        path: 'entrada',
-            populate: {
-                path: 'saida'
-            }
-    })
-        .exec(function (err, res) {
-            if (res) {
-              hub.emit('achousaida', res);
-                console.log('chegou aqui ress', res);
-            } else {
-                console.log('chegou aqui err', err);
-               hub.emit('naoachousaida', err);
-            }
-        });
+    // this.model.findById(dado._id)
+    //     .populate('entrada')
+    //     .exec(function (err, res) {
+    //         if(res){
+    //            me.model.find({saida: {$in:entrada}})
+    //                .populate('saida')
+    //                .exec(function (err, res) {
+    //                    if(res){
+    //                        me.model.find({hora: {$in:saida}})
+    //                            .populate('hora')
+    //                            .exec(function (err,res) {
+    //                                if(res){
+    //                                    hub.emit('achouhorasaida', msg);
+    //                                }else{
+    //                                    hub.emit('naoachouhorasaida',msg);
+    //                                }
+    //                            })
+    //                    }else{
+    //                        console.log('ERRO FIND HORA', err);
+    //                    }
+    //                })
+    //         }else{
+    //             console.log('erro FIND SAIDA', err);
+    //         }
+    // })
+    //     .exec(function (err, res) {
+    //         if (res) {
+    //             console.log('chegou aqui ress', res);
+    //         } else {
+    //             console.log('chegou aqui err', err);
+    //         }
+    //     });
 
 };
 

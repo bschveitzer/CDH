@@ -41,11 +41,14 @@ entradamanager.prototype.registraentrada = function (registro) {
         dia: registro.day
     };
 
-    this.model.find({dia: registro.day._id}, function (err, res) {
-         if (res.length > 0) {
-             hub.emit('verificasaidaexistente', res[res.length - 1]);
-             console.log('vou enviar',res[res.length - 1]);
-         } else {
+    // this.model.find({dia: registro.day._id}, function (err, res) {
+    //      if (res.length > 0) {
+    //          var dado = {
+    //              reg: registro,
+    //              res: res[res.length - 1],
+    //          };
+    //          hub.emit('verificasaidaexistente', dado);
+    //      } else {
              me.model.create(entrada, function (err, res) {
                  if (res) {
                      registro.cb(res, mes);
@@ -53,13 +56,13 @@ entradamanager.prototype.registraentrada = function (registro) {
                      console.log('deu erro no cria entrada', err);
                  }
              });
-         }
-    });
-    /**
-     * todo: aqui tem que verificar se ele já tem uma entrada nesse mesmo dia,
-     * todo: se sim, tem que verificar se ele tem uma saida no mesmo dia, se ele tiver uma saida no mesmo dia, poderá ser criada uma nova entrada
-     * todo: caso contrario mantem-se a entrada antiga.
-     */
+    //      }
+    // // });
+    // // /**
+    //  * todo: aqui tem que verificar se ele já tem uma entrada nesse mesmo dia,
+    //  * todo: se sim, tem que verificar se ele tem uma saida no mesmo dia, se ele tiver uma saida no mesmo dia, poderá ser criada uma nova entrada
+    //  * todo: caso contrario mantem-se a entrada antiga.
+    //  */
 
 };
 
@@ -77,11 +80,16 @@ entradamanager.prototype.getentradabydia = function (msg) {
     });
 };
 
+entradamanager.prototype.naoachousaida = function () {
+    console.log('CHEGOU CARAI');
+};
+
 entradamanager.prototype.wiring = function(){
     var me = this;
     me.listeners['banco.entrada.*'] = me.executaCrud.bind(me);
     me.listeners['entrada'] = me.registraentrada.bind(me);
     me.listeners['relatorio.getentrada'] = me.getentradabydia.bind(me);
+    me.listeners['naoachouhorasaida'] = me.naoachousaida.bind(me);
 
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);

@@ -16,18 +16,14 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
     $scope.bdhhora = parseInt(((meses.bancodehoras/1000)/60)/60);
     $scope.bdhmin = parseInt(((meses.bancodehoras/1000)/60)%60);
     $scope.bancodehorasmensal = '';
-    console.log('HORA', $scope.bancodehorasmensal);
 
     var bancodehoras = function(){
         colocazero($scope.bdhhora, function (retBdHora) {
             colocazero($scope.bdhmin , function (retBdhMin) {
                 $scope.bancodehorasmensal = retBdHora + ':' + retBdhMin;
-                console.log('AQUIII', $scope.bancodehorasmensal);
             });
         });
     };
-
-    console.log('HORA', $scope.bancodehorasmensal);
 
     var mes = [
         'Janeiro',

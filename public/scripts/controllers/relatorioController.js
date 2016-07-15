@@ -1,7 +1,7 @@
 /**
  * Created by labtic on 01/06/2016.
  */
-app.controller("relatorioController",['$scope','$location', 'utilvalues','getUserLogado', function ($scope,$location, utilvalues,getUserLogado) {
+app.controller("relatorioController",['$scope','$location', '$window', 'utilvalues','getUserLogado', function ($scope,$location,$window, utilvalues,getUserLogado) {
 
     var me = this;
     me.listeners = [];
@@ -149,6 +149,9 @@ app.controller("relatorioController",['$scope','$location', 'utilvalues','getUse
 
     };
 
+    $scope.imprimerelatorio = function () {
+        $window.open('/download');
+    };
 
     me.wiring = function() {
         me.listeners['saida.updated'] = saidaatualizada.bind(me);
