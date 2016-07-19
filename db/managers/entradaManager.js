@@ -42,17 +42,17 @@ entradamanager.prototype.registraentrada = function (registro) {
         dia: registro.day
     };
 
-     this.model.find({dia: registro.day._id}, function (err, res) {
-          if (res.length > 0) {
-              var dado = {
-                  reg: versaida,
-                  regmes: registro.mes,
-                  regentrada: entrada,
-                  res: res[res.length - 1]
-              };
-              hub.emit('verificasaidaexistente', dado);
-              console.log('BIRIRIRIRIRI', dado);
-          } else {
+     // this.model.find({dia: registro.day._id}, function (err, res) {
+     //      if (res.length > 0) {
+     //          var dado = {
+     //              reg: versaida,
+     //              regmes: registro.mes,
+     //              regentrada: entrada,
+     //              res: res[res.length - 1]
+     //          };
+     //          hub.emit('verificasaidaexistente', dado);
+     //          console.log('BIRIRIRIRIRI', dado);
+     //      } else {
              me.model.create(entrada, function (err, res) {
                  if (res) {
                      registro.cb(res, mes);
@@ -60,8 +60,8 @@ entradamanager.prototype.registraentrada = function (registro) {
                      console.log('deu erro no cria entrada', err);
                  }
              });
-          }
-      });
+      //     }
+      // });
      // /**
     //  * todo: aqui tem que verificar se ele já tem uma entrada nesse mesmo dia,
     //  * todo: se sim, tem que verificar se ele tem uma saida no mesmo dia, se ele tiver uma saida no mesmo dia, poderá ser criada uma nova entrada

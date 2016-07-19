@@ -18,6 +18,7 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
 
     $scope.classes = utilvalues.rotaatual;
     $scope.logado = getUserLogado.getLogado();
+    console.log('AQUUIIIII',  $scope.logado);
 
     $scope.meses = [
         'Janeiro',
@@ -71,8 +72,17 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
     };
 
     $scope.buscarrelatorio = function () {
-        var relatorio = new Mensagem(me, 'relatorio.read', $scope.relatorio,'relatorio');
-        SIOM.emitirServer(relatorio);
+
+        if ($scope.logado.tipo != 0) {
+            $scope.relatorio.usuario = $scope.logado;
+            var msg = new Mensagem(me, 'relatorio.read', $scope.relatorio, 'relatorio');
+            console.log('COMUM', $scope.relatorio);
+            SIOM.emitirServer(msg);
+        } else {
+            var relatorio = new Mensagem(me, 'relatorio.read', $scope.relatorio, 'relatorio');
+            console.log('ROOT', $scope.relatorio);
+            SIOM.emitirServer(relatorio);
+        }
     };
 // ENVIOS
     var ready = function () {

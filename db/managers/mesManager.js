@@ -111,6 +111,7 @@ mesmanager.prototype.updatebancodehoras = function(msg){
             me.model.findById(dados._id, function(err, res){
                 if(res){
                     me.emitManager(msg, '.updated', {res: res});
+                    console.log('BIRLLLLEDEA', msg);
                 } else{
                     me.emitManager(msg, '.error.readedupdatedbancohoras', {err: err});
                 }

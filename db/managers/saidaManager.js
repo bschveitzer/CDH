@@ -93,12 +93,12 @@ saidamanager.prototype.getsaidabyentrada = function (msg) {
         });
 };
 
-saidamanager.prototype.buscasaida = function(msg){
-    var me = this;
-    var dado = msg.res;
-    var
-    console.log('BIRL', dado);
-};
+// saidamanager.prototype.buscasaida = function(msg){
+//     var me = this;
+//     var dado = msg.res;
+//     var
+//     console.log('BIRL', dado);
+// };
 
 saidamanager.prototype.wiring = function () {
     var me = this;
@@ -106,7 +106,7 @@ saidamanager.prototype.wiring = function () {
     me.listeners['rtc.registrasaida'] = me.registraprevisao.bind(me);
     me.listeners['relatorio.getsaida'] = me.getsaidabyentrada.bind(me);
     me.listeners['rtc.regsaida.update'] = me.registrasaida.bind(me);
-    me.listeners['verificasaidaexistente'] = me.buscasaida.bind(me);
+    // me.listeners['verificasaidaexistente'] = me.buscasaida.bind(me);
 
 
     for (var name in me.listeners) {
