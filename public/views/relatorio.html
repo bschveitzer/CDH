@@ -11,7 +11,7 @@
             <br>
         </div>
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-1" ng-show="ehroot">
                 <label class="control-label">Colaborador:</label>
                 <select name="userCombo" id="userCombo" ng-model="relatorio.usuario">
                     <option ng-repeat="usuario in usuarios" value="{{usuario}}">{{usuario.nome}}</option>
@@ -68,13 +68,13 @@
                 </tbody>
             </table>
         </div>
-        <div class="row" style="margin-left: 1em">
+        <div class="row" style="margin-left: 1em" >
             <button ng-click="trocaRota('home')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
                 <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
             </button>
-            <button ng-click="trocaRota('entidades')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
-                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-            </button>
+                <button ng-if="ehroot" ng-click="trocaRota('entidades')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                </button>
             <img style="width: 30em;" class="col-md-offset-7 col-md-2" src="../../imagens/CDHicon.png">
         </div>
     </div>

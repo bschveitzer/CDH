@@ -16,6 +16,14 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
     $scope.bdhhora = parseInt(((meses.bancodehoras/1000)/60)/60);
     $scope.bdhmin = parseInt(((meses.bancodehoras/1000)/60)%60);
     $scope.bancodehorasmensal = '';
+    $scope.ehroot = false;
+
+    var verificatipo = function () {
+        if($scope.logado.tipo == 0){
+            $scope.ehroot = true;
+        }
+    };
+
 
     var bancodehoras = function(){
         colocazero($scope.bdhhora, function (retBdHora) {
@@ -57,7 +65,6 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
     var saidaatualizada = function (msg) {
         var me = this;
         var dado = msg.getDado();
-        console.log('BIRL', dado);
         $scope.trocaRota('');
         location.reload();
 
@@ -76,10 +83,7 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         SIOM.emitirServer(msg);
 
     };
-
-
-
-
+    
     /** criado/modificado por: Gustavo, Bernardo
     /** criado/modificado por: Gustavo, Bernardo
      *  se hora invalida impede
@@ -91,8 +95,7 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
             $scope.saidaInvalida = true;
             $('#horaInvalida').modal();
             return;
-        };
-        console.log($scope.saida);
+        }
         data.setHours($scope.saida.getHours());
         data.setMinutes($scope.saida.getMinutes());
         var registro = {
@@ -154,6 +157,7 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
 
         setData();
         bancodehoras();
+        verificatipo();
     };
 
     me.wiring();

@@ -55,7 +55,7 @@
 				<button style="max-width: 5em;" type="button" data-target="#perfilUsuario" data-toggle="modal" class=" btn btn-primary btn-default btn-lg">
 					<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
 				</button>
-				<button ng-click="trocaRota('entidades')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
+				<button ng-if="ehroot" ng-click="trocaRota('entidades')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
 					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 				</button>
 				<button ng-click="trocaRota('relatorio')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">

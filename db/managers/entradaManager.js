@@ -35,7 +35,7 @@ entradamanager.prototype.executaCrud = function(msg){
 entradamanager.prototype.registraentrada = function (registro) {
     var me = this;
     var mes = registro.mes;
-    var versaida = {cb: registro.cb};
+    // var versaida = {cb: registro.cb};
 
     var entrada = {
         horaEntrada: registro.entrada,
@@ -84,16 +84,16 @@ entradamanager.prototype.getentradabydia = function (msg) {
     });
 };
 
-entradamanager.prototype.naoachousaida = function () {
-    console.log('CHEGOU CARAI');
-};
+// entradamanager.prototype.naoachousaida = function () {
+//     console.log('CHEGOU CARAI');
+// };
 
 entradamanager.prototype.wiring = function(){
     var me = this;
     me.listeners['banco.entrada.*'] = me.executaCrud.bind(me);
     me.listeners['entrada'] = me.registraentrada.bind(me);
     me.listeners['relatorio.getentrada'] = me.getentradabydia.bind(me);
-    me.listeners['naoachouhorasaida'] = me.naoachousaida.bind(me);
+    // me.listeners['naoachouhorasaida'] = me.naoachousaida.bind(me);
 
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);

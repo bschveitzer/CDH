@@ -1,6 +1,3 @@
-/**
- * Created by udesc on 21/05/2016.
- */
 app.controller("entidadesController",['$scope','$location', 'utilvalues','getUserLogado', function ($scope,$location, utilvalues,getUserLogado) {
     var me = this;
     me.listeners = [];
@@ -30,8 +27,6 @@ app.controller("entidadesController",['$scope','$location', 'utilvalues','getUse
         var entrada1 = new Date(utilvalues.entrada.horaEntrada);
         utilvalues.tempotrabalhado = utilvalues.saida.hora.getTime() - entrada1.getTime();
         
-        console.log('BIRL',utilvalues.tempotrabalhado);
-
         var msg = new Mensagem(me, 'regsaida.update', utilvalues.saida, 'saida');
         SIOM.emitirServer(msg);
 
@@ -55,8 +50,6 @@ app.controller("entidadesController",['$scope','$location', 'utilvalues','getUse
     };
 // REMOVER USUARIO
     $scope.removerusuario = function () {
-        console.log('destruindo usuario',me.userremover);
-
         var user = new Mensagem(me, 'usuario.destroy', me.userremover, 'usuario');
         SIOM.emitirServer(user);
     };
@@ -133,7 +126,6 @@ app.controller("entidadesController",['$scope','$location', 'utilvalues','getUse
         }
     };
     var usuarioeditado = function () {
-        console.log('editou aqui');
         $('#confirmacao').modal();
         $scope.$apply();
         ready();

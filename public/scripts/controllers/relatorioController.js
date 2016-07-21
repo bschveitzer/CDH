@@ -1,6 +1,3 @@
-/**
- * Created by labtic on 01/06/2016.
- */
 app.controller("relatorioController",['$scope','$location', '$window', 'utilvalues','getUserLogado', function ($scope,$location,$window, utilvalues,getUserLogado) {
 
     var me = this;
@@ -13,12 +10,11 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
 
     $scope.saidaregistrada = utilvalues.saidaregistrada;
     $scope.horasaida = utilvalues.horasaida;
-    
 
+    $scope.ehroot = false;
 
     $scope.classes = utilvalues.rotaatual;
     $scope.logado = getUserLogado.getLogado();
-    console.log('AQUUIIIII',  $scope.logado);
 
     $scope.meses = [
         'Janeiro',
@@ -34,6 +30,14 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
         'Novembro',
         'Dezembro'
     ];
+
+    var verificatipo = function () {
+        if ($scope.logado.tipo == 0) {
+            $scope.ehroot = true;
+        }
+
+    };
+
 
     $scope.trocaRota=function (local) {
         limpanav(local, function () {
@@ -54,11 +58,7 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
 
         utilvalues.saida.hora = new Date();
         var entrada1 = new Date(utilvalues.entrada.horaEntrada);
-
-        console.log('vou mandar', utilvalues.saida);
         utilvalues.tempotrabalhado = utilvalues.saida.hora.getTime() - entrada1.getTime();
-        console.log('BIRL',utilvalues.tempotrabalhado);
-
         var msg = new Mensagem(me, 'regsaida.update', utilvalues.saida, 'saida');
         SIOM.emitirServer(msg);
     };
@@ -66,7 +66,6 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
 
         $scope.trocaRota('');
         location.reload();
-
         $scope.$apply();
 
     };
@@ -74,13 +73,11 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
     $scope.buscarrelatorio = function () {
 
         if ($scope.logado.tipo != 0) {
-            $scope.relatorio.usuario = $scope.logado;
+            $scope.relatorio.usuario = JSON.stringify($scope.logado);
             var msg = new Mensagem(me, 'relatorio.read', $scope.relatorio, 'relatorio');
-            console.log('COMUM', $scope.relatorio);
             SIOM.emitirServer(msg);
         } else {
             var relatorio = new Mensagem(me, 'relatorio.read', $scope.relatorio, 'relatorio');
-            console.log('ROOT', $scope.relatorio);
             SIOM.emitirServer(relatorio);
         }
     };
@@ -88,11 +85,7 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
     var ready = function () {
         var msg = new Mensagem(me, 'usuario.read', {}, 'usuario');
         SIOM.emitirServer(msg);
-
-
     };
-
-    
 
 
 // RETORNOS
@@ -173,7 +166,8 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
             SIOM.on(name, me.listeners[name]);
 
         }
-        ready()
+        ready();
+        verificatipo();
     };
 
     me.wiring();
