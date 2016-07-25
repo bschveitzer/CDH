@@ -145,9 +145,15 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         }
     };
 
+    var tratacomparacao = function (msg) {
+        var dado = msg.getDado();
+        console.log('CHEGOU A COMPARACAO',dado);
+    };
+
     me.wiring = function(){
         me.listeners['saida.registrada'] = saidaregistrada.bind(me);
         me.listeners['saida.updated'] = saidaatualizada.bind(me);
+        me.listeners['comparou'] = tratacomparacao.bind(me);
 
         for(var name in me.listeners){
 

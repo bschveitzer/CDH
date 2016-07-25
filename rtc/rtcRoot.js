@@ -9,11 +9,13 @@ var basico = require('./basicRtc.js');
 var fs = require('fs');
 utility.inherits(RtcRoot, basico);
 
-function RtcRoot(conf){
+function RtcRoot(conf) {
     var me = this;
     me.config = conf;
     me.listeners = {};
     me.browserlisteners = {};
+
+    me.previsao = null;
 
     console.log('rtcRoottttt', me.config.socket.id);
 
@@ -23,24 +25,49 @@ function RtcRoot(conf){
     me.interfaceWiring();
 }
 
-RtcRoot.prototype.wiring = function(){
+RtcRoot.prototype.verificacao = function () {
+    var me = this;
+    // var timeout = function () {
+    // };
+    var horaprevisao = me.previsao.getHours();
+    var minprevisao = me.previsao.getMinutes();
+    var compara = new Date();
+    if(horaprevisao >= compara.getHours()){
+        if(minprevisao >= compara.getMinutes()){
+            var msg = new Mensagem(me, 'comparou', {}, 'verificado', me);
+            me.emitePraInterface(msg);
+            // timeout = false;
+        }
+    }
+
+};
+
+RtcRoot.prototype.setaPrevisao = function (msg) {
+    var me = this;
+    var dado = msg.getRes();
+    me.previsao = dado.previsao;
+    me.emitePraInterface(msg);
+    me.verificacao();
+};
+
+RtcRoot.prototype.wiring = function () {
     var me = this;
 
     me.listeners['usuario.created'] = me.emitePraInterface.bind(me);
     me.listeners['allmodels'] = me.emitePraInterface.bind(me);
-    me.listeners['saida.registrada'] = me.emitePraInterface.bind(me);
+    me.listeners['saida.registrada'] = me.setaPrevisao.bind(me);
     me.listeners['usuario.readed'] = me.emitePraInterface.bind(me);
     me.listeners['usuario.updated'] = me.emitePraInterface.bind(me);
     me.listeners['saida.updated'] = me.emitePraInterface.bind(me);
     me.listeners['usuario.destroied'] = me.emitePraInterface.bind(me);
     me.listeners['relatorio.readed'] = me.emitePraInterface.bind(me);
 
-    for(var name in me.listeners){
+    for (var name in me.listeners) {
         hub.on(name, me.listeners[name]);
     }
 };
 
-RtcRoot.prototype.interfaceWiring = function(){
+RtcRoot.prototype.interfaceWiring = function () {
     var me = this;
 
     me.browserlisteners['getallmodels'] = me.daInterface.bind(me);
@@ -51,8 +78,8 @@ RtcRoot.prototype.interfaceWiring = function(){
     me.browserlisteners['regsaida.update'] = me.daInterface.bind(me);
     me.browserlisteners['usuario.destroy'] = me.daInterface.bind(me);
     me.browserlisteners['relatorio.read'] = me.daInterface.bind(me);
-
-    for(var name in me.browserlisteners){
+    me.browserlisteners['enviarelatorio'] = me.daInterface.bind(me);
+    for (var name in me.browserlisteners) {
         me.config.socket.on(name, me.browserlisteners[name]);
     }
 };

@@ -87,6 +87,12 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
         SIOM.emitirServer(msg);
     };
 
+    $scope.mandarelatorio = function () {
+        var msg = new Mensagem(me, 'enviarelatorio', $scope.relatorioretornado, 'relatoriopronto');
+        console.log('Vou enviar o relatorio', msg);
+        SIOM.emitirServer(msg);
+    };
+
 
 // RETORNOS
     var retusers = function (msg) {
