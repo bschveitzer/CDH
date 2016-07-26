@@ -15,8 +15,6 @@ function RtcRoot(conf) {
     me.listeners = {};
     me.browserlisteners = {};
 
-    me.previsao = null;
-
     console.log('rtcRoottttt', me.config.socket.id);
 
     hub.emit('rtcLogin.destroy');
@@ -25,19 +23,23 @@ function RtcRoot(conf) {
     me.interfaceWiring();
 }
 
-RtcRoot.prototype.verificacao = function () {
+RtcRoot.prototype.verificacao = function (timeprevisao) {
     var me = this;
     // var timeout = function () {
     // };
-    var horaprevisao = me.previsao.getHours();
-    var minprevisao = me.previsao.getMinutes();
-    var compara = new Date();
-    if(horaprevisao >= compara.getHours()){
-        if(minprevisao >= compara.getMinutes()){
-            var msg = new Mensagem(me, 'comparou', {}, 'verificado', me);
-            me.emitePraInterface(msg);
-            // timeout = false;
-        }
+    console.log('previsao', timeprevisao);
+    var data = new Date();
+    var compara = data.getTime();
+
+    if (timeprevisao <= compara) {
+        console.log('deu boa');
+        var msg = new Mensagem(me, 'comparou', {}, 'verificado', me);
+        me.emitePraInterface(msg);
+    } else {
+        console.log('vou chamar de novo');
+        setTimeout(function () {
+            me.verificacao(timeprevisao);
+        }, 1000);
     }
 
 };
@@ -45,9 +47,10 @@ RtcRoot.prototype.verificacao = function () {
 RtcRoot.prototype.setaPrevisao = function (msg) {
     var me = this;
     var dado = msg.getRes();
-    me.previsao = dado.previsao;
     me.emitePraInterface(msg);
-    me.verificacao();
+    console.log('AQUIIII', msg,dado);
+    var timeprevisao = dado.previsao.getTime() -60000;
+    me.verificacao(timeprevisao);
 };
 
 RtcRoot.prototype.wiring = function () {
@@ -61,6 +64,7 @@ RtcRoot.prototype.wiring = function () {
     me.listeners['saida.updated'] = me.emitePraInterface.bind(me);
     me.listeners['usuario.destroied'] = me.emitePraInterface.bind(me);
     me.listeners['relatorio.readed'] = me.emitePraInterface.bind(me);
+    me.listeners['previsao.updated'] = me.setaPrevisao.bind(me);
 
     for (var name in me.listeners) {
         hub.on(name, me.listeners[name]);
@@ -79,6 +83,8 @@ RtcRoot.prototype.interfaceWiring = function () {
     me.browserlisteners['usuario.destroy'] = me.daInterface.bind(me);
     me.browserlisteners['relatorio.read'] = me.daInterface.bind(me);
     me.browserlisteners['enviarelatorio'] = me.daInterface.bind(me);
+    me.browserlisteners['previsao.update'] = me.daInterface.bind(me);
+
     for (var name in me.browserlisteners) {
         me.config.socket.on(name, me.browserlisteners[name]);
     }

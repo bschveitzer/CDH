@@ -100,12 +100,35 @@ saidamanager.prototype.getsaidabyentrada = function (msg) {
 //     console.log('BIRL', dado);
 // };
 
+saidamanager.prototype.atualizaprevisao = function (msg) {
+    var me = this;
+    var dados = msg.getRes();
+    console.log('chegou no manager', dados);
+    this.model.findByIdAndUpdate(dados.antiga._id, {$set: {previsao: dados.saida}}, function(err, res){
+        if(res){
+            me.model.findById(dados.antiga._id, function(err, res){
+                if(res){
+                    me.emitManager(msg, '.updated', {res: res});
+                    console.log('vou enviar', msg, res);
+                } else{
+                    me.emitManager(msg, '.error.readedupdated', {err: err});
+                }
+            });
+        } else{
+            me.emitManager(msg, '.error.updated', {err: err});
+        }
+    })
+
+};
+
 saidamanager.prototype.wiring = function () {
     var me = this;
     me.listeners['banco.saida.*'] = me.executaCrud.bind(me);
     me.listeners['rtc.registrasaida'] = me.registraprevisao.bind(me);
     me.listeners['relatorio.getsaida'] = me.getsaidabyentrada.bind(me);
     me.listeners['rtc.regsaida.update'] = me.registrasaida.bind(me);
+    me.listeners['rtc.previsao.update'] = me.atualizaprevisao.bind(me);
+
     // me.listeners['verificasaidaexistente'] = me.buscasaida.bind(me);
 
 

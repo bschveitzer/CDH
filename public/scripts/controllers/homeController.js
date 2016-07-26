@@ -17,6 +17,8 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
     $scope.bdhmin = parseInt(((meses.bancodehoras/1000)/60)%60);
     $scope.bancodehorasmensal = '';
     $scope.ehroot = false;
+    $scope.novaprevisao = '';
+    $scope.possuinovaprevisao = false;
 
     var verificatipo = function () {
         if($scope.logado.tipo == 0){
@@ -108,6 +110,24 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
 
     };
 
+    $scope.atualizaprevisao = function () {
+        if ($scope.novaprevisao.getHours() <= $scope.hora.slice(0,2) && $scope.novaprevisao.getMinutes() <= $scope.hora.slice(3,5)){
+            $('#horaInvalida').modal();
+            return;
+        }
+        data.setHours($scope.novaprevisao.getHours());
+        data.setMinutes($scope.novaprevisao.getMinutes());
+        var dado = {
+            antiga: utilvalues.saida,
+            saida: data,
+            entrada: entrada
+        };
+
+        var msg = new Mensagem(me, 'previsao.update', dado, 'previsao');
+        SIOM.emitirServer(msg);
+
+    };
+
     var setData = function () {
         colocazero(data.getDate(), function (retData) {
             colocazero(data.getHours() , function (retHora) {
@@ -123,7 +143,6 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
        var dado = msg.getDado();
         utilvalues.saida = dado;
         var s = new Date(dado.previsao);
-
         colocazero(s.getMinutes(), function (retMinutos) {
             colocazero(s.getHours(), function (retHoras) {
 
@@ -145,15 +164,19 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         }
     };
 
-    var tratacomparacao = function (msg) {
-        var dado = msg.getDado();
-        console.log('CHEGOU A COMPARACAO',dado);
+    var tratacomparacao = function () {
+        console.log('CHEGOU A COMPARACAO');
+        $scope.possuinovaprevisao = true;
+        $('#confirmacao').modal();
     };
+
+
 
     me.wiring = function(){
         me.listeners['saida.registrada'] = saidaregistrada.bind(me);
         me.listeners['saida.updated'] = saidaatualizada.bind(me);
         me.listeners['comparou'] = tratacomparacao.bind(me);
+        me.listeners['previsao.updated'] = saidaregistrada.bind(me);
 
         for(var name in me.listeners){
 
