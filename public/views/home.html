@@ -75,8 +75,8 @@
 				<h4 class="modal-title text-center">Confirmação de saída</h4>
 			</div>
 			<div class="modal-body text-center">
-				<div ng-if="!possuinovaprevisao"><p>Você sairá às {{saida}}?</p></div>
-				<div ng-if="possuinovaprevisao"><p>Você sairá às {{novaprevisao}}?</p></div>
+				<div ng-if="!possuinovaprevisao"><p>Você sairá às {{saidashow}}?</p></div>
+				<div ng-if="possuinovaprevisao"><p>Você sairá às {{novaprevisaoshow}}?</p></div>
 				<p><button type="button" class="btn btn-default btn-primary" data-toggle="modal" data-target="#Sim" data-dismiss="modal">Sim</button>
 					<button type="button" class="btn btn-default btn-danger" data-toggle="modal" data-target="#Nao" data-dismiss="modal">Não</button></p>
 			</div>
@@ -88,7 +88,6 @@
 	<div class="modal-dialog" >
 		<div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title text-center">Confirmação de saída</h4>
 			</div>
 			<div class="modal-body text-center">

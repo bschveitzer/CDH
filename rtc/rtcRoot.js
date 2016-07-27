@@ -25,8 +25,6 @@ function RtcRoot(conf) {
 
 RtcRoot.prototype.verificacao = function (timeprevisao) {
     var me = this;
-    // var timeout = function () {
-    // };
     console.log('previsao', timeprevisao);
     var data = new Date();
     var compara = data.getTime();
@@ -39,7 +37,7 @@ RtcRoot.prototype.verificacao = function (timeprevisao) {
         console.log('vou chamar de novo');
         setTimeout(function () {
             me.verificacao(timeprevisao);
-        }, 1000);
+        }, 60000);
     }
 
 };
@@ -48,8 +46,7 @@ RtcRoot.prototype.setaPrevisao = function (msg) {
     var me = this;
     var dado = msg.getRes();
     me.emitePraInterface(msg);
-    console.log('AQUIIII', msg,dado);
-    var timeprevisao = dado.previsao.getTime() -60000;
+    var timeprevisao = dado.previsao.getTime() - 60000;
     me.verificacao(timeprevisao);
 };
 

@@ -19,6 +19,8 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
     $scope.ehroot = false;
     $scope.novaprevisao = '';
     $scope.possuinovaprevisao = false;
+    $scope.novaprevisaoshow = '';
+    $scope.saidashow = utilvalues.saidamostra;
 
     var verificatipo = function () {
         if($scope.logado.tipo == 0){
@@ -65,8 +67,6 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
     };
 
     var saidaatualizada = function (msg) {
-        var me = this;
-        var dado = msg.getDado();
         $scope.trocaRota('');
         location.reload();
 
@@ -105,6 +105,8 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
             entrada: entrada
         };
 
+        utilvalues.saidamostra = $scope.saida.getHours() + ':' + $scope.saida.getMinutes();
+        
         var msg = new Mensagem(me, 'registrasaida', registro, 'saida');
         SIOM.emitirServer(msg);
 
@@ -122,6 +124,8 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
             saida: data,
             entrada: entrada
         };
+
+        $scope.novaprevisaoshow = $scope.novaprevisao.getHours() + ':' + $scope.novaprevisao.getMinutes();
 
         var msg = new Mensagem(me, 'previsao.update', dado, 'previsao');
         SIOM.emitirServer(msg);

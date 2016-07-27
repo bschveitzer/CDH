@@ -79,3 +79,53 @@
         </div>
     </div>
 </div>
+
+<!--MODAL CONFIRMAÇÃO-->
+<div id="confirmacao" class="modal fade" role="dialog">
+    <div class="modal-dialog" >
+        <div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
+            <div class="modal-header">
+                <h4 class="modal-title text-center">Confirmação de saída</h4>
+            </div>
+            <div class="modal-body text-center">
+                <div ng-if="!possuinovaprevisao"><p>Você sairá às {{saidashow}}?</p></div>
+                <div ng-if="possuinovaprevisao"><p>Você sairá às {{novaprevisaoshow}}?</p></div>
+                <p><button type="button" class="btn btn-default btn-primary" data-toggle="modal" data-target="#Sim" data-dismiss="modal">Sim</button>
+                    <button type="button" class="btn btn-default btn-danger" data-toggle="modal" data-target="#Nao" data-dismiss="modal">Não</button></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL NAO-->
+<div id="Nao" class="modal fade" role="dialog">
+    <div class="modal-dialog" >
+        <div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
+            <div class="modal-header">
+                <h4 class="modal-title text-center">Confirmação de saída</h4>
+            </div>
+            <div class="modal-body text-center">
+                <p>Novo horário de saída:
+                    <input type="time" style="max-width: 8em" ng-model="novaprevisao">
+                    <button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-dismiss="modal" ng-click="atualizaprevisao()">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </button>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL SIM-->
+<div id="Sim" class="modal fade" role="dialog">
+    <div class="modal-dialog" >
+        <div class="modal-content" style="background-color:green; border-style: solid; border-color:black;">
+            <div class="modal-body text-center">
+                <p>Horário salvo. Até amanhã!
+                    <button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-dismiss="modal" ng-click="sair()">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

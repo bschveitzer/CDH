@@ -10,11 +10,22 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
 
     $scope.saidaregistrada = utilvalues.saidaregistrada;
     $scope.horasaida = utilvalues.horasaida;
-
+    $scope.saidaInvalida = false;
+    $scope.dataEscrita = '';
+    
     $scope.ehroot = false;
 
     $scope.classes = utilvalues.rotaatual;
     $scope.logado = getUserLogado.getLogado();
+
+    $scope.novaprevisao = '';
+    $scope.possuinovaprevisao = false;
+    $scope.novaprevisaoshow = '';
+    $scope.saidashow = utilvalues.saidamostra;
+    $scope.hora = '';
+    $scope.saida = '';
+    var entrada = utilvalues.entrada;
+    var data = new Date(utilvalues.entrada.horaEntrada);
 
     $scope.meses = [
         'Janeiro',
@@ -59,14 +70,10 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
         utilvalues.saida.hora = new Date();
         var entrada1 = new Date(utilvalues.entrada.horaEntrada);
         utilvalues.tempotrabalhado = utilvalues.saida.hora.getTime() - entrada1.getTime();
+
+
         var msg = new Mensagem(me, 'regsaida.update', utilvalues.saida, 'saida');
         SIOM.emitirServer(msg);
-    };
-    var saidaatualizada = function () {
-
-        $scope.trocaRota('');
-        location.reload();
-        $scope.$apply();
 
     };
 
@@ -81,6 +88,80 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
             SIOM.emitirServer(relatorio);
         }
     };
+
+    // TRATAMENTO SAIDA
+    $scope.atualizaprevisao = function () {
+        if ($scope.novaprevisao.getHours() <= $scope.hora.slice(0,2) && $scope.novaprevisao.getMinutes() <= $scope.hora.slice(3,5)){
+            $('#horaInvalida').modal();
+            return;
+        }
+        data.setHours($scope.novaprevisao.getHours());
+        data.setMinutes($scope.novaprevisao.getMinutes());
+        var dado = {
+            antiga: utilvalues.saida,
+            saida: data,
+            entrada: entrada
+        };
+
+        $scope.novaprevisaoshow = $scope.novaprevisao.getHours() + ':' + $scope.novaprevisao.getMinutes();
+
+        var msg = new Mensagem(me, 'previsao.update', dado, 'previsao');
+        SIOM.emitirServer(msg);
+
+    };
+    
+    var saidaregistrada = function (msg) {
+        var dado = msg.getDado();
+        utilvalues.saida = dado;
+        var s = new Date(dado.previsao);
+        colocazero(s.getMinutes(), function (retMinutos) {
+            colocazero(s.getHours(), function (retHoras) {
+
+                utilvalues.horasaida = retHoras+ ":" + retMinutos;
+                utilvalues.saidaregistrada = true;
+                $scope.saidaregistrada = utilvalues.saidaregistrada;
+                $scope.horasaida = utilvalues.horasaida;
+                $scope.$apply();
+
+            });
+        });
+
+    };
+
+    $scope.sair = function () {
+
+        utilvalues.saida.hora = new Date();
+        var entrada1 = new Date(utilvalues.entrada.horaEntrada);
+        utilvalues.tempotrabalhado = utilvalues.saida.hora.getTime() - entrada1.getTime();
+
+        var msg = new Mensagem(me, 'regsaida.update', utilvalues.saida, 'saida');
+        SIOM.emitirServer(msg);
+
+    };
+    var saidaatualizada = function () {
+
+        $scope.trocaRota('');
+        location.reload();
+        $scope.$apply();
+
+    };
+
+    var colocazero = function (n, callback) {
+        if (n <= 9) {
+            callback('0' + n);
+        }else{
+            callback(n);
+        }
+    };
+    var tratacomparacao = function () {
+        console.log('CHEGOU A COMPARACAO');
+        $scope.possuinovaprevisao = true;
+        $('#confirmacao').modal();
+    };
+
+
+
+
 // ENVIOS
     var ready = function () {
         var msg = new Mensagem(me, 'usuario.read', {}, 'usuario');
@@ -166,6 +247,8 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
         me.listeners['saida.updated'] = saidaatualizada.bind(me);
         me.listeners['usuario.readed'] = retusers.bind(me);
         me.listeners['relatorio.readed'] = retrelatorios.bind(me);
+        me.listeners['comparou'] = tratacomparacao.bind(me);
+        me.listeners['previsao.updated'] = saidaregistrada.bind(me);
 
         for (var name in me.listeners) {
 

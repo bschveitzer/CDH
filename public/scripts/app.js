@@ -6,6 +6,6 @@ var app = angular.module('agere', [
     'ngMask'
 ]);
 
-window.onbeforeunload = function () {
-    return '';
-};
+// window.onbeforeunload = function () {
+//     return '';
+// };

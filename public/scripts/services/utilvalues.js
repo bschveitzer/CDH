@@ -12,5 +12,6 @@ app.value('utilvalues', {
     horasaida: null,
     saida: null,
     mes: null,
-    tempotrabalhado: ''
+    tempotrabalhado: '',
+    saidamostra: ''
 });
