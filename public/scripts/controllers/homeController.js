@@ -17,10 +17,10 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
     $scope.bdhmin = parseInt(((meses.bancodehoras/1000)/60)%60);
     $scope.bancodehorasmensal = '';
     $scope.ehroot = false;
+    $scope.saidashow = utilvalues.saidamostra;
     $scope.novaprevisao = '';
     $scope.possuinovaprevisao = false;
     $scope.novaprevisaoshow = '';
-    $scope.saidashow = utilvalues.saidamostra;
 
     var verificatipo = function () {
         if($scope.logado.tipo == 0){
@@ -66,7 +66,7 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         cb();
     };
 
-    var saidaatualizada = function (msg) {
+    var saidaatualizada = function () {
         $scope.trocaRota('');
         location.reload();
 
@@ -149,7 +149,6 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         var s = new Date(dado.previsao);
         colocazero(s.getMinutes(), function (retMinutos) {
             colocazero(s.getHours(), function (retHoras) {
-
                 utilvalues.horasaida = retHoras+ ":" + retMinutos;
                 utilvalues.saidaregistrada = true;
                 $scope.saidaregistrada = utilvalues.saidaregistrada;
@@ -160,6 +159,20 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         });
 
     };
+
+    var varificasesaida = function () {
+        if(utilvalues.saida){
+            var s = new Date(utilvalues.saida.previsao);
+            colocazero(s.getMinutes(), function (retMinutos) {
+                colocazero(s.getHours(), function (retHoras) {
+                    utilvalues.horasaida = retHoras+ ":" + retMinutos;
+                    utilvalues.saidaregistrada = true;
+                    $scope.horasaida = utilvalues.horasaida;
+                });
+            });
+        }
+    };
+
     var colocazero = function (n, callback) {
         if (n <= 9) {
             callback('0' + n);
@@ -191,6 +204,7 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         setData();
         bancodehoras();
         verificatipo();
+        varificasesaida();
     };
 
     me.wiring();

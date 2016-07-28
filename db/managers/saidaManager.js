@@ -93,12 +93,30 @@ saidamanager.prototype.getsaidabyentrada = function (msg) {
         });
 };
 
-// saidamanager.prototype.buscasaida = function(msg){
-//     var me = this;
-//     var dado = msg.res;
-//     var
-//     console.log('BIRL', dado);
-// };
+saidamanager.prototype.buscasaida = function(obj){
+    var me = this;
+
+    this.model.find({entrada: obj.versaida._id}, function (err, res) {
+        if(res){
+            var saidaverificada = res[res.length -1];
+            var essahora = new Date();
+            var essemilisecond = essahora.getTime();
+            var previstomilisecond = saidaverificada.previsao.getTime();
+            if(saidaverificada.hora || essemilisecond > previstomilisecond){
+                obj.cb();
+            } else {
+                var entrada = {
+                    entrada: obj.versaida,
+                    saida: saidaverificada
+                };
+                obj.cbjaentrada(entrada, obj.mes);
+            }
+        }else{
+            console.log('deu erro', err);
+        }
+    });
+
+};
 
 saidamanager.prototype.atualizaprevisao = function (msg) {
     var me = this;
@@ -128,8 +146,7 @@ saidamanager.prototype.wiring = function () {
     me.listeners['relatorio.getsaida'] = me.getsaidabyentrada.bind(me);
     me.listeners['rtc.regsaida.update'] = me.registrasaida.bind(me);
     me.listeners['rtc.previsao.update'] = me.atualizaprevisao.bind(me);
-
-    // me.listeners['verificasaidaexistente'] = me.buscasaida.bind(me);
+    me.listeners['verificasaida'] = me.buscasaida.bind(me);
 
 
     for (var name in me.listeners) {

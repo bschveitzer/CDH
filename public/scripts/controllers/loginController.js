@@ -17,7 +17,13 @@ app.controller("loginController",['$scope', '$location', 'setUserLogado', '$rout
     me.logou = function(msg){
         var dado = msg.getDado();
         setUserLogado.setLogado(dado.logado);
-        utilvalues.entrada = dado.entrada;
+        if(dado.entrada.saida){
+            utilvalues.entrada = dado.entrada.entrada;
+            utilvalues.saida = dado.entrada.saida;
+            utilvalues.saidaregistrada = true;
+        } else {
+            utilvalues.entrada = dado.entrada;
+        }
         utilvalues.mes = dado.mes;
         SIOM.emit('setarota', dado.logado.tipo);
     };
