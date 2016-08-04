@@ -102,9 +102,7 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
             saida: data,
             entrada: entrada
         };
-
         $scope.novaprevisaoshow = $scope.novaprevisao.getHours() + ':' + $scope.novaprevisao.getMinutes();
-
         var msg = new Mensagem(me, 'previsao.update', dado, 'previsao');
         SIOM.emitirServer(msg);
 
@@ -139,7 +137,6 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
 
     };
     var saidaatualizada = function () {
-
         $scope.trocaRota('');
         location.reload();
         $scope.$apply();
@@ -154,7 +151,6 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
         }
     };
     var tratacomparacao = function () {
-        console.log('CHEGOU A COMPARACAO');
         $scope.possuinovaprevisao = true;
         $('#confirmacao').modal();
     };
@@ -170,7 +166,6 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
 
     $scope.mandarelatorio = function () {
         var msg = new Mensagem(me, 'enviarelatorio', $scope.relatorioretornado, 'relatoriopronto');
-        console.log('Vou enviar o relatorio', msg);
         SIOM.emitirServer(msg);
     };
 

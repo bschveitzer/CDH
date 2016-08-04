@@ -24,16 +24,13 @@ function RtcComum(conf){
 
 RtcComum.prototype.verificacao = function (timeprevisao) {
     var me = this;
-    console.log('previsao', timeprevisao);
     var data = new Date();
     var compara = data.getTime();
 
     if (timeprevisao <= compara) {
-        console.log('deu boa');
         var msg = new Mensagem(me, 'comparou', {}, 'verificado', me);
         me.emitePraInterface(msg);
     } else {
-        console.log('vou chamar de novo');
         setTimeout(function () {
             me.verificacao(timeprevisao);
         }, 60000);
@@ -78,12 +75,21 @@ RtcComum.prototype.interfaceWiring = function(){
     me.browserlisteners['relatorio.read'] = me.daInterface.bind(me);
     me.browserlisteners['enviarelatorio'] = me.daInterface.bind(me);
     me.browserlisteners['previsao.update'] = me.daInterface.bind(me);
+    me.browserlisteners['disconnect'] = me.destruir.bind(me);
 
 
     for(var name in me.browserlisteners){
         me.config.socket.on(name, me.browserlisteners[name]);
     }
 };
-
+RtcComum.prototype.destruir = function () {
+    var me = this;
+    for(var name in me.browserlisteners){
+        me.config.socket.removeListener(name, me.browserlisteners[name]);
+    }
+    for(var list in me.listeners){
+        hub.removeListener(list, me.listeners[list]);
+    }
+};
 
 module.exports = RtcComum;

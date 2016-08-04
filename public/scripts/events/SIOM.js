@@ -11,12 +11,10 @@
         };
 
         me.emitirServer = function(mensagem){
-            console.log('pedindo', mensagem.getEvento());
             socket.emit(mensagem.getEvento(), mensagem.toServer());
         };
 
         me.trataEventoRecebido = function(ms){
-            console.log('escutei evento', ms.evento);
             var mensagem  = new Mensagem(me);
             mensagem.fromServer(ms);
             me.emit(mensagem.getEvento(), mensagem);

@@ -100,7 +100,6 @@ app.controller("entidadesController",['$scope','$location', 'utilvalues','getUse
         }
     };
     var tratacomparacao = function () {
-        console.log('CHEGOU A COMPARACAO');
         $scope.possuinovaprevisao = true;
         $('#confirmacao').modal();
     };

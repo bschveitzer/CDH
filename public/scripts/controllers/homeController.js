@@ -181,7 +181,6 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
     };
 
     var tratacomparacao = function () {
-        console.log('CHEGOU A COMPARACAO');
         $scope.possuinovaprevisao = true;
         $('#confirmacao').modal();
     };
