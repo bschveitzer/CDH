@@ -2,14 +2,16 @@
  * Created by Osvaldo on 05/10/15.
  */
 
-app.controller("loginController",['$scope', '$location', 'setUserLogado', '$route', 'utilvalues',function ($scope, $location, setUserLogado, $route, utilvalues) {
+app.controller("loginController",['$scope', '$location', 'setUserLogado', '$route', 'utilvalues', 'md5',function ($scope, $location, setUserLogado, $route, utilvalues, md5) {
     var me = this;
     me.listeners = {};
 
     me.wind = "/home";
+    $scope.usuario = {};
 
     $scope.logar = function(){
         var msg = new Mensagem(me, 'logar', $scope.usuario, 'usuario');
+        msg._dado.senha = md5.createHash(msg._dado.senha);
         SIOM.logar(msg);
 
     };

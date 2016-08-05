@@ -88,7 +88,7 @@ RtcRoot.prototype.interfaceWiring = function () {
 RtcRoot.prototype.destruir = function () {
     var me = this;
 
-    for(var name in me.browserlisteners){ console.log('BIRL', name);
+    for(var name in me.browserlisteners){
         me.config.socket.removeListener(name, me.browserlisteners[name]);
     }
     for(var list in me.listeners){

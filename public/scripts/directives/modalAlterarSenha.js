@@ -1,7 +1,7 @@
 /**
  * Created by labtic on 30/06/2016.
  */
-app.directive('modalalterarsenha', ['getUserLogado', function(getUserLogado) {
+app.directive('modalalterarsenha', ['getUserLogado','md5', function(getUserLogado, md5) {
     return {
         restrict: 'E',
         transclude: true,
@@ -12,8 +12,9 @@ app.directive('modalalterarsenha', ['getUserLogado', function(getUserLogado) {
             me.listeners = {};
             scope.logado = getUserLogado.getLogado();
 
+
             scope.trocasenha = function () {
-                if (scope.logado.senha != scope.logado.senhaantiga) {
+                if (scope.logado.senha != md5.createHash(scope.logado.senhaantiga)) {
                     $('#erroUm').modal();
                     return;
                 }
@@ -23,7 +24,10 @@ app.directive('modalalterarsenha', ['getUserLogado', function(getUserLogado) {
                 }
                 scope.logado.senha = scope.logado.novasenha;
                 var user = new Mensagem(me, 'usuario.update', scope.logado, 'usuario');
-                console.log('entrou aqui');
+                user._dado.senha = md5.createHash(user._dado.senha);
+                user._dado.senhaantiga = md5.createHash(user._dado.senhaantiga);
+                user._dado.novasenha = md5.createHash(user._dado.novasenha);
+                user._dado.novasenha1 = md5.createHash(user._dado.novasenha1);
                 SIOM.emitirServer(user);
             };
 

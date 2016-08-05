@@ -1,7 +1,7 @@
 /**
  * Created by labtic on 10/06/2016.
  */
-app.directive('modaladicionarusuario', ['$location', '$route', function($location, $route){
+app.directive('modaladicionarusuario', ['$location', '$route','md5', function($location, $route, md5){
     return {
         restrict: 'E',
         transclude: true,
@@ -66,6 +66,9 @@ app.directive('modaladicionarusuario', ['$location', '$route', function($locatio
 
             scope.adicionarusuario = function(){
                 var user = new Mensagem(me, 'usuario.create', scope.adicionaUsuario, 'usuario');
+                console.log('BIRL', user._dado.senha);
+                user._dado.senha = md5.createHash(user._dado.senha);
+                console.log('VOU ENVIAR', user);
                 SIOM.emitirServer(user);
             };
         }

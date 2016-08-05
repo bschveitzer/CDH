@@ -3,7 +3,8 @@
 var app = angular.module('agere', [
     'ngAnimate',
     'ngRoute',
-    'ngMask'
+    'ngMask',
+    'angular-md5'
 ]);
 
 // window.onbeforeunload = function () {
