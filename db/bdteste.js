@@ -27,38 +27,16 @@ bdteste.prototype.criaUser = function () {
     var me = this;
     var users = [];
     var userRoot = {
-        nome: 'O',
+        nome: 'admin',
         sobrenome: 'Criador',
-        email: 'root',
-        senha: 'root',
+        email: 'admin',
+        senha: '21232f297a57a5a743894a0e4a801fc3',
         numerocelular: '(48) 96198272',
         foto: 'caminhodafoto',
         tipo: 0
     };
     users.push(userRoot);
-
-    var userAdmin = {
-        nome: 'admin',
-        sobrenome: 'admin',
-        email: 'admin',
-        senha: 'admin',
-        numerocelular: '(48) 99476823',
-        foto: 'caminhodafoto',
-        tipo: 1
-    };
-    users.push(userAdmin);
-
-    var userComum = {
-        nome: 'comum',
-        sobrenome: 'comum',
-        email: 'comum',
-        senha: 'comum',
-        numerocelular: '(48) 99476823',
-        foto: 'caminhodafoto',
-        tipo: 2
-    };
-    users.push(userComum);
-
+    
     var msg = new Mensagem(me, 'banco.usuario.create', {res: users}, 'usuario');
     hub.emit(msg.getEvento(), msg);
 };

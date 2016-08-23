@@ -212,6 +212,7 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
             rel.dia = reg.entrada.dia.data;
             $scope.relatorioretornado.push(rel);
             minhaPrimeiraBitoca(registros, quantidade-1);
+            utilvalues.relatorioJSON = rel;
         } else {
             $scope.$apply();
         }
@@ -232,10 +233,6 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
 
         minhaPrimeiraBitoca(dado, dado.length);
 
-    };
-
-    $scope.imprimerelatorio = function () {
-        $window.open('/download');
     };
 
     me.wiring = function() {

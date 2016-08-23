@@ -4,7 +4,8 @@ var app = angular.module('agere', [
     'ngAnimate',
     'ngRoute',
     'ngMask',
-    'angular-md5'
+    'angular-md5',
+    'ngJsonExportExcel'
 ]);
 
 // window.onbeforeunload = function () {

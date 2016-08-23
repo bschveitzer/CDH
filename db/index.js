@@ -1,7 +1,7 @@
 /**
  * Created by Osvaldo on 13/03/15.
  */
- //require('./bdteste.js');
+ // require('./bdteste.js');
 var hub = require('../hub/hub.js');
 var Managers = null;
 
@@ -10,12 +10,10 @@ var Managers = null;
  * pronto.
  */
 hub.on('banco.status.ready', function(){
-    console.log('vou chamar os managers');
 
     Managers = require('./managers/');
 
     process.nextTick(function(){
-        console.log('banco finalizado');
         hub.emit('banco.ready');
     });
 });

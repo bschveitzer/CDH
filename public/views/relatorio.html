@@ -33,7 +33,9 @@
                 </button>
             </div>
             <div class="">
-                <button type="button" class="btn btn-default btn-success btn-lg" ng-click="mandarelatorio()">
+                <button class="btn btn-default btn-success btn-lg" ng-json-export-excel data="relatorioretornado"
+                        report-fields="{dia: 'Dia', horaentrada: 'Horário de entrada', horasaida: 'Horário de saída', horatrabalhada: 'Horas trabalhadas'}"
+                        filename=" 'Relatório de Horas - ' + relatorio.mes + ' ' + relatorio.ano">
                     <span class="glyphicon glyphicon-download-alt" aria-hidden="true" ></span>
                 </button>
             </div>
