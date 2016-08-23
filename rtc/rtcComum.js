@@ -13,9 +13,6 @@ function RtcComum(conf){
     me.config = conf;
     me.listeners = {};
     me.browserlisteners = {};
-
-    console.log('RTC COMUM', me.config.socket.id);
-
     hub.emit('rtcLogin.destroy');
 
     me.wiring();

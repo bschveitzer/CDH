@@ -1,6 +1,3 @@
-/**
- * Created by Bernardo on 25/05/2016.
- */
 var Manager = require('./manager.js');
 var utility = require('util');
 var Model = require('../model/entrada.js');
@@ -90,16 +87,12 @@ entradamanager.prototype.getentradabydia = function (msg) {
     });
 };
 
-// entradamanager.prototype.naoachousaida = function () {
-//     console.log('CHEGOU CARAI');
-// };
 
 entradamanager.prototype.wiring = function () {
     var me = this;
     me.listeners['banco.entrada.*'] = me.executaCrud.bind(me);
     me.listeners['entrada'] = me.registraentrada.bind(me);
     me.listeners['relatorio.getentrada'] = me.getentradabydia.bind(me);
-    // me.listeners['naoachouhorasaida'] = me.naoachousaida.bind(me);
 
     for (var name in me.listeners) {
         hub.on(name, me.listeners[name]);

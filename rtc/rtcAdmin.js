@@ -14,9 +14,6 @@ function RtcAdmin(conf){
     me.config = conf;
     me.listeners = {};
     me.browserlisteners = {};
-
-    console.log('RTC ADMIN', me.config.socket.id);
-
     hub.emit('rtcLogin.destroy');
 
     me.wiring();

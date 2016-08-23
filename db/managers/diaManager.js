@@ -1,6 +1,3 @@
-/**
- * Created by Bernardo on 25/05/2016.
- */
 var Manager = require('./manager.js');
 var utility = require('util');
 var Model = require('../model/dia.js');

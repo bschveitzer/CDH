@@ -14,9 +14,6 @@ function RtcRoot(conf) {
     me.config = conf;
     me.listeners = {};
     me.browserlisteners = {};
-
-    console.log('rtcRoottttt', me.config.socket.id);
-
     hub.emit('rtcLogin.destroy');
 
     me.wiring();

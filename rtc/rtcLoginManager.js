@@ -16,9 +16,6 @@ function RtcLoginManager(conf){
     me.config = conf;
     me.listeners = {};
     me.interfaceListeners = {};
-
-    console.log('estou no novo rtcLogin', me.config.socket.id);
-
     me.wiring();
     me.interfaceWiring();
 }

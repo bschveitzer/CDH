@@ -121,13 +121,11 @@ saidamanager.prototype.buscasaida = function(obj){
 saidamanager.prototype.atualizaprevisao = function (msg) {
     var me = this;
     var dados = msg.getRes();
-    console.log('chegou no manager', dados);
     this.model.findByIdAndUpdate(dados.antiga._id, {$set: {previsao: dados.saida}}, function(err, res){
         if(res){
             me.model.findById(dados.antiga._id, function(err, res){
                 if(res){
                     me.emitManager(msg, '.updated', {res: res});
-                    console.log('vou enviar', msg, res);
                 } else{
                     me.emitManager(msg, '.error.readedupdated', {err: err});
                 }

@@ -1,6 +1,3 @@
-/**
- * Created by Osvaldo on 06/10/15.
- */
 var hub = require('../../hub/hub.js');
 
 var types = require('../Banco.js').mongoose.Schema.Types;
