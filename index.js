@@ -19,8 +19,8 @@ io.on('connection',function(socket){
     new rtcLogin({socket: socket});
 });
 
-http.listen(80, function(err){
-    console.log("Rodando na porta 80", err);
+http.listen(1337, function(err){
+    console.log("Rodando na porta 1337", err);
 });
 
 app.use('/imagens', express.static(path.resolve(__dirname + '/imagens/')));
