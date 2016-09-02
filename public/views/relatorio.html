@@ -33,9 +33,9 @@
                 </button>
             </div>
             <div class="">
-                <button class="btn btn-default btn-success btn-lg" ng-json-export-excel data="relatorioretornado"
+                <button class="btn btn-default btn-success btn-lg" ng-if="!naotemrelatorio" ng-json-export-excel data="relatorioretornado"
                         report-fields="{dia: 'Dia', horaentrada: 'Horário de entrada', horasaida: 'Horário de saída', horatrabalhada: 'Horas trabalhadas'}"
-                        filename=" 'Relatório de Horas - ' + relatorio.mes + ' ' + relatorio.ano">
+                        filename=" 'Relatório de Horas - ' + mostrausuario + ' - ' + relatorio.mes + ' ' + relatorio.ano">
                     <span class="glyphicon glyphicon-download-alt" aria-hidden="true" ></span>
                 </button>
             </div>
@@ -44,6 +44,9 @@
         <div class="panel panel-primary" style="height:45em; line-height:3em;overflow:auto;padding:5px;">
             <table class="table table-hover">
                 <thead>
+                <tr>
+                    <label>Colaborador: {{mostrausuario}}</label>
+                </tr>
                 <tr>
                     <th class="text-center">Dia</th>
                     <th class="text-center">Hora de entrada</th>

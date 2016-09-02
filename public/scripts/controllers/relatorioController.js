@@ -24,6 +24,10 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
     $scope.saidashow = utilvalues.saidamostra;
     $scope.hora = '';
     $scope.saida = '';
+    $scope.mostrausuario = '';
+
+    $scope.naotemrelatorio = true;
+
     var entrada = utilvalues.entrada;
     var data = new Date(utilvalues.entrada.horaEntrada);
 
@@ -83,9 +87,14 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
             $scope.relatorio.usuario = JSON.stringify($scope.logado);
             var msg = new Mensagem(me, 'relatorio.read', $scope.relatorio, 'relatorio');
             SIOM.emitirServer(msg);
+            $scope.mostrausuario = $scope.logado.nome + ' ' + $scope.logado.sobrenome;
+            $scope.naotemrelatorio = false;
         } else {
             var relatorio = new Mensagem(me, 'relatorio.read', $scope.relatorio, 'relatorio');
             SIOM.emitirServer(relatorio);
+            var user = JSON.parse($scope.relatorio.usuario);
+            $scope.mostrausuario = user.nome + ' ' + user.sobrenome;
+            $scope.naotemrelatorio = false;
         }
     };
 
@@ -208,7 +217,6 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
             }else{
                 rel.horasaida = '';
             }
-
             rel.dia = reg.entrada.dia.data;
             $scope.relatorioretornado.push(rel);
             minhaPrimeiraBitoca(registros, quantidade-1);
@@ -228,6 +236,7 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
     var retrelatorios = function (msg) {
 
         $scope.relatorioretornado = [];
+
 
         var dado = msg.getDado();
 
