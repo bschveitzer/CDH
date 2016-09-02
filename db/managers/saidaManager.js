@@ -98,19 +98,24 @@ saidamanager.prototype.buscasaida = function(obj){
 
     this.model.find({entrada: obj.versaida._id}, function (err, res) {
         if(res){
-            var saidaverificada = res[res.length -1];
-            var essahora = new Date();
-            var essemilisecond = essahora.getTime();
-            var previstomilisecond = saidaverificada.previsao.getTime();
-            if(saidaverificada.hora || essemilisecond > previstomilisecond){
+            if(res.length == 0){
                 obj.cb();
-            } else {
-                var entrada = {
-                    entrada: obj.versaida,
-                    saida: saidaverificada
-                };
-                obj.cbjaentrada(entrada, obj.mes);
+            }else{
+                var saidaverificada = res[res.length -1];
+                var previstomilisecond = saidaverificada.previsao.getTime();
+                var essahora = new Date();
+                var essemilisecond = essahora.getTime();
+                if(saidaverificada.hora || essemilisecond > previstomilisecond){
+                    obj.cb();
+                } else {
+                    var entrada = {
+                        entrada: obj.versaida,
+                        saida: saidaverificada
+                    };
+                    obj.cbjaentrada(entrada, obj.mes);
+                }
             }
+
         }else{
             console.log('deu erro', err);
         }
