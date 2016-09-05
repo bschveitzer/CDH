@@ -92,8 +92,11 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
      *  registra hora escolhida
      */
     $scope.registrasaida = function () {
-        
-        if ($scope.saida.getHours() <= $scope.hora.slice(0,2) && $scope.saida.getMinutes() <= $scope.hora.slice(3,5)){
+        if($scope.saida == undefined || $scope.saida == ''){
+            $scope.saidaInvalida = true;
+            $('#horaInvalida').modal();
+            return;
+        }else if ($scope.saida.getHours() <= $scope.hora.slice(0,2) && $scope.saida.getMinutes() <= $scope.hora.slice(3,5)){
             $scope.saidaInvalida = true;
             $('#horaInvalida').modal();
             return;
@@ -112,8 +115,13 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
     };
 
     $scope.atualizaprevisao = function () {
-        if ($scope.novaprevisao.getHours() <= $scope.hora.slice(0,2) && $scope.novaprevisao.getMinutes() <= $scope.hora.slice(3,5)){
+        if($scope.novaprevisao == undefined || $scope.novaprevisao == ''){
             $('#horaInvalida').modal();
+            $('#confirmacao').modal();
+            return;
+        }else if ($scope.novaprevisao.getHours() <= $scope.hora.slice(0,2) && $scope.novaprevisao.getMinutes() <= $scope.hora.slice(3,5)){
+            $('#horaInvalida').modal();
+            $('#confirmacao').modal();
             return;
         }
         data.setHours($scope.novaprevisao.getHours());
@@ -124,7 +132,12 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
             entrada: entrada
         };
 
-        $scope.novaprevisaoshow = $scope.novaprevisao.getHours() + ':' + $scope.novaprevisao.getMinutes();
+        colocazero($scope.novaprevisao.getHours(), function(hora){
+            colocazero($scope.novaprevisao.getMinutes(), function(minuto){
+                $scope.novaprevisaoshow = hora + ':' + minuto;
+                $scope.$apply();
+            });
+        });
 
         var msg = new Mensagem(me, 'previsao.update', dado, 'previsao');
         SIOM.emitirServer(msg);

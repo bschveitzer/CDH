@@ -36,8 +36,13 @@ app.controller("entidadesController",['$scope','$location', 'utilvalues','getUse
     };
 // TRATAMENTO SAIDA
     $scope.atualizaprevisao = function () {
-        if ($scope.novaprevisao.getHours() <= $scope.hora.slice(0,2) && $scope.novaprevisao.getMinutes() <= $scope.hora.slice(3,5)){
+        if($scope.novaprevisao == undefined || $scope.novaprevisao == ''){
             $('#horaInvalida').modal();
+            $('#confirmacao').modal();
+            return;
+        }else if ($scope.novaprevisao.getHours() <= $scope.hora.slice(0,2) && $scope.novaprevisao.getMinutes() <= $scope.hora.slice(3,5)){
+            $('#horaInvalida').modal();
+            $('#confirmacao').modal();
             return;
         }
         data.setHours($scope.novaprevisao.getHours());
@@ -48,7 +53,12 @@ app.controller("entidadesController",['$scope','$location', 'utilvalues','getUse
             entrada: entrada
         };
 
-        $scope.novaprevisaoshow = $scope.novaprevisao.getHours() + ':' + $scope.novaprevisao.getMinutes();
+        colocazero($scope.novaprevisao.getHours(), function(hora){
+            colocazero($scope.novaprevisao.getMinutes(), function(minuto){
+                $scope.novaprevisaoshow = hora + ':' + minuto;
+                $scope.$apply();
+            });
+        });
 
         var msg = new Mensagem(me, 'previsao.update', dado, 'previsao');
         SIOM.emitirServer(msg);
