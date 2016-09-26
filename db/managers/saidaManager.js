@@ -105,7 +105,7 @@ saidamanager.prototype.buscasaida = function(obj){
                 var previstomilisecond = saidaverificada.previsao.getTime();
                 var essahora = new Date();
                 var essemilisecond = essahora.getTime();
-                if(saidaverificada.hora || essemilisecond > previstomilisecond){
+                if(saidaverificada.hora || essemilisecond > previstomilisecond + 600000){
                     obj.cb();
                 } else {
                     var entrada = {
