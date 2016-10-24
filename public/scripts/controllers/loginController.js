@@ -9,6 +9,10 @@ app.controller("loginController",['$scope', '$location', 'setUserLogado', '$rout
     me.wind = "/home";
     $scope.usuario = {};
 
+    $scope.validoSenha = true;
+    $scope.validoEmailCadastrado = true;
+    $scope.validoServer = true;
+
     $scope.logar = function(){
         var msg = new Mensagem(me, 'logar', $scope.usuario, 'usuario');
         msg._dado.senha = md5.createHash(msg._dado.senha);
@@ -36,18 +40,18 @@ app.controller("loginController",['$scope', '$location', 'setUserLogado', '$rout
     };
 
     me.serverError = function(msg){
-        //todo criar um box de aviso que informa erros e sucessos
-        console.log('error', msg);
+        $scope.validoServer = false;
+        $scope.$apply();
     };
 
     me.invalidUser = function(msg){
-        //todo criar um box de aviso que informa erros e sucessos
-        console.log('email não cadastrado', msg);
+        $scope.validoEmailCadastrado = false;
+        $scope.$apply();
     };
 
     me.senhaincorreta = function (msg) {
-        //todo criar um mensagem pra avisar que a senha está incorreta
-        console.log('senha incorreta', msg)
+        $scope.validoSenha = false;
+        $scope.$apply();
     };
 
     me.wiring = function(){

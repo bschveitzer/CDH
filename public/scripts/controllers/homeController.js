@@ -135,7 +135,6 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         colocazero($scope.novaprevisao.getHours(), function(hora){
             colocazero($scope.novaprevisao.getMinutes(), function(minuto){
                 $scope.novaprevisaoshow = hora + ':' + minuto;
-                $scope.$apply();
             });
         });
 

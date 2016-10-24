@@ -47,15 +47,6 @@ RtcLoginManager.prototype.trataLogin = function(msg){
     }
 };
 
-RtcLoginManager.prototype.loginError = function(msg){
-    var me = this;
-    me.emitePraInterface(msg);
-};
-
-RtcLoginManager.prototype.invaliduser = function(msg){
-    var me = this;
-    me.emitePraInterface(msg);
-};
 
 RtcLoginManager.prototype.interfaceWiring = function(){
     var me = this;
@@ -77,8 +68,9 @@ RtcLoginManager.prototype.destroy = function(){
 RtcLoginManager.prototype.wiring = function(){
     var me = this;
 
-    me.listeners['usuario.error.logar'] = me.loginError.bind(me);
-    me.listeners['usuario.invaliduser'] = me.invaliduser.bind(me);
+    me.listeners['usuario.error.logar'] = me.emitePraInterface.bind(me);
+    me.listeners['usuario.emailnaocadastrado'] = me.emitePraInterface.bind(me);
+    me.listeners['usuario.senhaincorreta'] = me.emitePraInterface.bind(me);
     me.listeners['usuario.login'] = me.trataLogin.bind(me);
     me.listeners['rtcLogin.destroy'] = me.destroy.bind(me);
 
