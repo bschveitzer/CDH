@@ -121,7 +121,6 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
         colocazero($scope.novaprevisao.getHours(), function(hora){
             colocazero($scope.novaprevisao.getMinutes(), function(minuto){
                 $scope.novaprevisaoshow = hora + ':' + minuto;
-                $scope.$apply();
             });
         });
 

@@ -56,7 +56,6 @@ app.controller("entidadesController",['$scope','$location', 'utilvalues','getUse
         colocazero($scope.novaprevisao.getHours(), function(hora){
             colocazero($scope.novaprevisao.getMinutes(), function(minuto){
                 $scope.novaprevisaoshow = hora + ':' + minuto;
-                $scope.$apply();
             });
         });
 
