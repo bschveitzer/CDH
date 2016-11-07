@@ -62,6 +62,29 @@ usuariomanager.prototype.trataLogin = function(msg){
     });
 };
 
+usuariomanager.prototype.trataLoginRelat = function(msg){
+    var me = this;
+    var dado = msg.getRes();
+
+    this.model.findOne({'email': dado.email}, function(err, res){
+        if(res){
+            if(dado.senha == res.senha){
+                var logado = {
+                    logado: res
+                };
+                me.emitManager(msg, '.loginRelat', {res: logado});
+
+                }else{
+                me.emitManager(msg, '.senhaincorreta', {res: null});
+            }
+        } else if(err){
+            me.emitManager(msg, '.error.logar', {err: err});
+        } else{
+            me.emitManager(msg, '.emailnaocadastrado', {res: res});
+        }
+    });
+};
+
 usuariomanager.prototype.getAllRootLess = function(msg){
     var me = this;
     var retorno = [];
@@ -83,6 +106,7 @@ usuariomanager.prototype.wiring = function(){
     var me = this;
     me.listeners['banco.usuario.*'] = me.executaCrud.bind(me);
     me.listeners['rtc.logar'] = me.trataLogin.bind(me);
+    me.listeners['rtc.loginrelatorio'] = me.trataLoginRelat.bind(me);
     me.listeners['rtc.cadastrados'] = me.getAllRootLess.bind(me);
 
     for(var name in me.listeners){

@@ -1,57 +1,45 @@
 <div class="container">
 	<div class="row panel panel-primary container">
 		<div class="row">
-			<h1 class=" col-md-offset-4 col-md-8"><span class="glyphicon glyphicon-time"></span>   Controle de horas</h1>
+			<h1 style="text-align: center"><span class="glyphicon glyphicon-time"></span>   Controle de horas</h1>
 		</div>
 		<div class="row">
-			<div class=" col-md-offset-8 col-md-3" style="font-size: 1em; text-align: right;">Bem vindo {{logado.nome}} {{logado.sobrenome}}!</div>
-			<button ng-click="sair()" style="max-width: 6em; min-width: 2em; min-height: 1.7em" type="button" class="btn btn-danger btn-default btn-xs" ng-hide="!saidaregistrada">
+			<div class=" col-md-offset-7 col-md-4" style="font-size: 1.4em; text-align: right;">Bem vindo <label>{{logado.nome}} {{logado.sobrenome}}</label>!</div>
+			<button ng-click="minimizar()" type="button" class="btn btn-danger btn-default btn-s" ng-show="saidaregistrada">
 				<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+			</button>
+			<button ng-click="sair()" type="button" class="btn btn-warning btn-default btn-s" ng-show="saidaregistrada">
+				<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
 			</button>
 			<br>
 		</div>
-		<div style="margin-top: 2%;" class="panel panel-primary">
+		<div style="font-size: 1.1em;margin-top: 2%;" class="panel panel-primary">
+			<br>
 			<div class="form-group" style="background-color: #e3f2fd;">
-				<div align="left" style="position:absolute">
-					<label class="">Data:</label>
-				</div>
-				<div class="col-md-offset-2">
-					<label> {{dataEscrita}}</label>
-				</div>
+					<label>Data:</label>
+				<span> {{dataEscrita}}</span>
 			</div>
 			<div class="form-group" style="background-color: #e3f2fd;">
-				<div align="left" style="position:absolute">
-					<label class="">Horário de entrada:</label>
-				</div>
-				<div class="col-md-offset-2">
-					<label class="">{{hora}}</label>
-				</div>
+					<label>Horário de entrada:</label>
+				<span> {{hora}}</span>
 			</div>
 			<div class="form-group" style="background-color: #e3f2fd;">
-				<div align="left" style="position:absolute">
-					<label class="">Previsão de saída:</label>
-				</div>
-				<div class="col-md-offset-2" ng-show="saidaregistrada">
-					<label class="">{{horasaida}}</label>
-				</div>
-				<div class="col-md-offset-2" ng-show="!saidaregistrada">
-					<input type="time" class="" style="max-width: 8em" ng-model="saida">
-					<button type="button" style="margin-left: 1em; width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs" ng-click="registrasaida()">
+					<label>Previsão de saída:</label>
+				<span ng-show="saidaregistrada"> {{horasaida}}</span>
+				<span ng-show="!saidaregistrada">
+					<input type="time" ng-model="saida">
+					<button type="button" style="margin-left: 1em;" class="btn btn-default btn-primary btn-s" ng-click="registrasaida()">
 						<span class="glyphicon glyphicon-ok" aria-hidden="true" ></span>
 					</button>
-				</div>
+				</span>
 			</div>
 			<div class="form-group" style="background-color: #e3f2fd;">
-				<div align="left" style="position:absolute">
-					<label class="">Banco de horas mensal:</label>
-				</div>
-				<div class="col-md-offset-2">
-					<label class="">{{bancodehorasmensal}}</label>
-				</div>
+					<label>Banco de horas mensal:</label>
+				<span> {{bancodehorasmensal}}</span>
 			</div>
 		</div>
-		<div style="margin-left: 1em">
-			<div class="row" ng-hide="!saidaregistrada">
+		<div style="margin-left: 1em; margin-bottom: 1em" ng-show="saidaregistrada">
+			<div class="row">
 				<button style="max-width: 5em;" type="button" data-target="#perfilUsuario" data-toggle="modal" class=" btn btn-primary btn-default btn-lg">
 					<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
 				</button>
@@ -61,7 +49,6 @@
 				<button ng-click="trocaRota('relatorio')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
 					<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
 				</button>
-				<img style="width: 30em;" class="col-md-offset-7 col-md-2" src="../../imagens/CDHicon.png">
 			</div>
 		</div>
 	</div>

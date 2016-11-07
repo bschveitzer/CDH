@@ -113,10 +113,11 @@ app.controller("entidadesController",['$scope','$location', 'utilvalues','getUse
         $('#confirmacao').modal();
     };
 
-
-
-
-
+    $scope.minimizar = function () {
+        $scope.trocaRota('');
+        location.reload();
+        $scope.$apply();
+    };
 
 
     var ready = function () {

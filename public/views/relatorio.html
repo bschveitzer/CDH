@@ -1,12 +1,15 @@
 <div class="container">
     <div class="row panel panel-primary container">
         <div class="row">
-            <h1 class=" col-md-offset-4 col-md-8"><span class="glyphicon glyphicon-time"></span>   Controle de horas</h1>
+            <h1 style="text-align: center"><span class="glyphicon glyphicon-time"></span>   Controle de horas</h1>
         </div>
         <div class="row">
-            <div class=" col-md-offset-8 col-md-3" style="font-size: 1em; text-align: right;">Bem vindo {{logado.nome}} {{logado.sobrenome}}!</div>
-            <button ng-click="sair()" style="max-width: 6em; min-width: 2em; min-height: 1.7em" type="button" class="btn btn-danger btn-default btn-xs">
+            <div class=" col-md-offset-7 col-md-4" style="font-size: 1.4em; text-align: right;">Bem vindo <label>{{logado.nome}} {{logado.sobrenome}}</label>!</div>
+            <button ng-click="minimizar()" type="button" class="btn btn-danger btn-default btn-s">
                 <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+            </button>
+            <button ng-click="sair()" type="button" class="btn btn-warning btn-default btn-s" ng-if="!sohrelat">
+                <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
             </button>
             <br>
         </div>
@@ -33,7 +36,7 @@
                 </button>
 
             </div>
-            <div class="">
+            <div>
                 <button class="btn btn-default btn-success btn-lg" ng-if="!naotemrelatorio" ng-json-export-excel data="relatorioretornado"
                         report-fields="{dia: 'Dia', horaentrada: 'Horário de entrada', horasaida: 'Horário de saída', horatrabalhada: 'Horas trabalhadas'}"
                         filename=" 'Relatório de Horas - ' + mostrausuario + ' - ' + relatorio.mes + ' ' + relatorio.ano">
@@ -46,7 +49,7 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <label>Colaborador: {{mostrausuario}}</label>
+                    <label>Colaborador: <span>{{mostrausuario}}</span></label>
                 </tr>
                 <tr>
                     <th class="text-center">Dia</th>
@@ -74,14 +77,13 @@
                 </tbody>
             </table>
         </div>
-        <div class="row" style="margin-left: 1em" >
+        <div class="row" style="margin-left: 1em; margin-bottom: 1em"  ng-show="!sohrelat">
             <button ng-click="trocaRota('home')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
                 <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
             </button>
                 <button ng-if="ehroot" ng-click="trocaRota('entidades')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 </button>
-            <img style="width: 30em;" class="col-md-offset-7 col-md-2" src="../../imagens/CDHicon.png">
         </div>
     </div>
 </div>

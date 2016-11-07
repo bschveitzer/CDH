@@ -19,6 +19,12 @@ app.controller("loginController",['$scope', '$location', 'setUserLogado', '$rout
         SIOM.logar(msg);
 
     };
+    $scope.logarRelat = function(){
+        var msg = new Mensagem(me, 'loginrelatorio', $scope.usuario, 'usuario');
+        msg._dado.senha = md5.createHash(msg._dado.senha);
+        SIOM.logar(msg);
+
+    };
 
     me.logou = function(msg){
         var dado = msg.getDado();
@@ -32,6 +38,12 @@ app.controller("loginController",['$scope', '$location', 'setUserLogado', '$rout
         }
         utilvalues.mes = dado.mes;
         SIOM.emit('setarota', dado.logado.tipo);
+    };
+
+    me.logouRelat = function(msg){
+        var dado = msg.getDado();
+        setUserLogado.setLogado(dado.logado);
+        SIOM.emit('setarotaRelat', dado.logado.tipo);
     };
 
     me.nextView = function(){
@@ -56,6 +68,7 @@ app.controller("loginController",['$scope', '$location', 'setUserLogado', '$rout
 
     me.wiring = function(){
         me.listeners['usuario.login'] = me.logou.bind(me);
+        me.listeners['usuario.loginRelat'] = me.logouRelat.bind(me);
         me.listeners['usuario.error.logar'] = me.serverError.bind(me);
         me.listeners['usuario.emailnaocadastrado'] = me.invalidUser.bind(me);
         me.listeners['usuario.senhaincorreta'] = me.senhaincorreta.bind(me);

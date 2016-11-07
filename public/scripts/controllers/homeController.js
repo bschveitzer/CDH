@@ -66,10 +66,15 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         cb();
     };
 
+    $scope.minimizar = function () {
+        $scope.trocaRota('');
+        location.reload();
+        $scope.$apply();
+    };
+
     var saidaatualizada = function () {
         $scope.trocaRota('');
         location.reload();
-
         $scope.$apply();
         
     };
@@ -112,6 +117,8 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         var msg = new Mensagem(me, 'registrasaida', registro, 'saida');
         SIOM.emitirServer(msg);
 
+        console.log('REGISTROU SAIDA', $scope.saida, utilvalues.saidamostra);
+
     };
 
     $scope.atualizaprevisao = function () {
@@ -138,8 +145,13 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
             });
         });
 
+        $scope.possuinovaprevisao = true;
+
         var msg = new Mensagem(me, 'previsao.update', dado, 'previsao');
         SIOM.emitirServer(msg);
+
+
+        console.log('REGISTROU previsao', $scope.novaprevisao, $scope.novaprevisaoshow);
 
     };
 
@@ -192,9 +204,11 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         }
     };
 
-    var tratacomparacao = function () {
-        $scope.possuinovaprevisao = true;
-        $('#confirmacao').modal();
+    var tratacomparacao = function (msg) {
+        var dado = msg.getDado();
+
+            $('#confirmacao').modal();
+
     };
 
 

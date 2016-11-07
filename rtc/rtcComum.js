@@ -26,7 +26,6 @@ RtcComum.prototype.verificacao = function (timeprevisao) {
     if (timeprevisao <= compara) {
         var msg = new Mensagem(me, 'comparou', {}, 'verificado', me);
         me.emitePraInterface(msg);
-        console.log('ENVIOU INTERFACE', compara, timeprevisao);
     } else {
         setTimeout(function () {
             me.verificacao(timeprevisao);

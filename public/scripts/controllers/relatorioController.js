@@ -27,9 +27,17 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
     $scope.mostrausuario = '';
 
     $scope.naotemrelatorio = true;
+    $scope.sohrelat = false;
 
     var entrada = utilvalues.entrada;
-    var data = new Date(utilvalues.entrada.horaEntrada);
+
+    if(entrada != null){
+        var data = new Date(utilvalues.entrada.horaEntrada);
+    }else{
+        $scope.sohrelat = true;
+    }
+
+
 
     $scope.meses = [
         'Janeiro',
@@ -68,7 +76,6 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
         cb();
     };
 
-
     $scope.sair = function () {
 
         utilvalues.saida.hora = new Date();
@@ -97,6 +104,12 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
             $scope.naotemrelatorio = false;
         }
 
+    };
+
+    $scope.minimizar = function () {
+        $scope.trocaRota('');
+        location.reload();
+        $scope.$apply();
     };
 
     // TRATAMENTO SAIDA

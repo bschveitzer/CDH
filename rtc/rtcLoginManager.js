@@ -52,6 +52,7 @@ RtcLoginManager.prototype.interfaceWiring = function(){
     var me = this;
 
     me.interfaceListeners['logar'] = me.daInterface.bind(me);
+    me.interfaceListeners['loginrelatorio'] = me.daInterface.bind(me);
 
     for(var name in me.interfaceListeners){
         me.config.socket.on(name, me.interfaceListeners[name]);
@@ -72,6 +73,7 @@ RtcLoginManager.prototype.wiring = function(){
     me.listeners['usuario.emailnaocadastrado'] = me.emitePraInterface.bind(me);
     me.listeners['usuario.senhaincorreta'] = me.emitePraInterface.bind(me);
     me.listeners['usuario.login'] = me.trataLogin.bind(me);
+    me.listeners['usuario.loginRelat'] = me.trataLogin.bind(me);
     me.listeners['rtcLogin.destroy'] = me.destroy.bind(me);
 
     for(var name in me.listeners){
