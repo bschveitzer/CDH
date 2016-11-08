@@ -116,9 +116,6 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         utilvalues.saidamostra = $scope.saida.getHours() + ':' + $scope.saida.getMinutes();
         var msg = new Mensagem(me, 'registrasaida', registro, 'saida');
         SIOM.emitirServer(msg);
-
-        console.log('REGISTROU SAIDA', $scope.saida, utilvalues.saidamostra);
-
     };
 
     $scope.atualizaprevisao = function () {

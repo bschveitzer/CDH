@@ -90,19 +90,29 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
 
     $scope.buscarrelatorio = function () {
 
-        if ($scope.logado.tipo != 0) {
-            $scope.relatorio.usuario = JSON.stringify($scope.logado);
-            var msg = new Mensagem(me, 'relatorio.read', $scope.relatorio, 'relatorio');
-            SIOM.emitirServer(msg);
-            $scope.mostrausuario = $scope.logado.nome + ' ' + $scope.logado.sobrenome;
-            $scope.naotemrelatorio = false;
-        } else {
-            var relatorio = new Mensagem(me, 'relatorio.read', $scope.relatorio, 'relatorio');
-            SIOM.emitirServer(relatorio);
-            var user = JSON.parse($scope.relatorio.usuario);
-            $scope.mostrausuario = user.nome + ' ' + user.sobrenome;
-            $scope.naotemrelatorio = false;
+        if($scope.relatorio == null) {
+            $('#Relatoriovazio').modal();
+            return;
+        }else{
+            if ($scope.logado.tipo != 0) {
+                $scope.relatorio.usuario = JSON.stringify($scope.logado);
+                var msg = new Mensagem(me, 'relatorio.read', $scope.relatorio, 'relatorio');
+                SIOM.emitirServer(msg);
+                $scope.mostrausuario = $scope.logado.nome + ' ' + $scope.logado.sobrenome;
+                $scope.naotemrelatorio = false;
+            } else {
+                var relatorio = new Mensagem(me, 'relatorio.read', $scope.relatorio, 'relatorio');
+                SIOM.emitirServer(relatorio);
+                var user = JSON.parse($scope.relatorio.usuario);
+                $scope.mostrausuario = user.nome + ' ' + user.sobrenome;
+                $scope.naotemrelatorio = false;
+            }
         }
+
+
+
+
+
 
     };
 

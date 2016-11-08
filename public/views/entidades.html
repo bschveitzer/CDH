@@ -4,7 +4,7 @@
 			<h1 style="text-align: center"><span class="glyphicon glyphicon-time"></span>   Controle de horas</h1>
 		</div>
 		<div class="row">
-			<div class=" col-md-offset-7 col-md-4" style="font-size: 1.4em; text-align: right;">Bem vindo <label>{{logado.nome}} {{logado.sobrenome}}</label>!</div>
+			<div class="col-md-offset-4 col-md-7" style="font-size: 1.4em; text-align: right;">Bem vindo <label>{{logado.nome}} {{logado.sobrenome}}</label>!</div>
 			<button ng-click="minimizar()" type="button" class="btn btn-danger btn-default btn-s">
 				<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
 			</button>
@@ -77,7 +77,7 @@
 <!--MODAL CERTEZA-->
 <div id="certeza" class="modal fade" role="dialog">
 	<div class="modal-dialog" >
-		<div class="modal-content" style="background-color:green; border-style: solid; border-color:black;">
+		<div class="modal-content" style="background-color:#80ff80; border-style: solid; border-color:black;">
 			<div class="modal-body">
 				<h4>Usuário removido com sucesso!
 					<button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-dismiss="modal">
@@ -97,7 +97,7 @@
 <div id="usuarioEditado" class="modal fade" role="dialog">
 	<div class="modal-dialog" >
 		<div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color: #2b669a;">
-			<div class="modal-header" style="background-color: #2b669a">
+			<div class="modal-header" style="background-color: #3399ff">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h2 class="modal-title" style="text-align: center"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Editar usuário</h2>
 			</div>
@@ -204,7 +204,7 @@
 <!--MODAL CONFIRMAÇÃO EDITAR-->
 <div id="confirmacaouser" class="modal fade" role="dialog">
 	<div class="modal-dialog">
-		<div class="modal-content" style="background-color:green; border-style: solid; border-color:black;">
+		<div class="modal-content" style="background-color:#80ff80; border-style: solid; border-color:black;">
 			<div class="modal-dialog">
 				<h4 class="modal-title" style="text-align: center">Usuário atualizado.</h4>
 				<button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-dismiss="modal">
@@ -218,7 +218,7 @@
 <!--MODAL ERRO EDITAR-->
 <div id="erroeditar" class="modal fade" role="dialog">
 	<div class="modal-dialog">
-		<div class="modal-content" style="background-color:indianred; border-style: solid; border-color:black;">
+		<div class="modal-content" style="background-color:#ff4d4d; border-style: solid; border-color:black;">
 			<div class="modal-dialog">
 				<h4 class="modal-title" style="text-align: center">Erro ao editar. Verifique as informações.</h4>
 				<button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-target="#usuarioEditado" data-toggle="modal" data-dismiss="modal">
@@ -268,7 +268,7 @@
 <!--MODAL SIM-->
 <div id="Sim" class="modal fade" role="dialog">
 	<div class="modal-dialog" >
-		<div class="modal-content" style="background-color:green; border-style: solid; border-color:black;">
+		<div class="modal-content" style="background-color:#80ff80; border-style: solid; border-color:black;">
 			<div class="modal-body text-center">
 				<p>Horário salvo. Até amanhã!
 					<button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-dismiss="modal" ng-click="sair()">

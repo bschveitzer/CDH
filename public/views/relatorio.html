@@ -4,7 +4,7 @@
             <h1 style="text-align: center"><span class="glyphicon glyphicon-time"></span>   Controle de horas</h1>
         </div>
         <div class="row">
-            <div class=" col-md-offset-7 col-md-4" style="font-size: 1.4em; text-align: right;">Bem vindo <label>{{logado.nome}} {{logado.sobrenome}}</label>!</div>
+            <div class="col-md-offset-4 col-md-7" style="font-size: 1.4em; text-align: right;">Bem vindo <label>{{logado.nome}} {{logado.sobrenome}}</label>!</div>
             <button ng-click="minimizar()" type="button" class="btn btn-danger btn-default btn-s">
                 <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
             </button>
@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-md-1" ng-show="ehroot">
                 <label class="control-label">Colaborador:</label>
-                <select name="userCombo" id="userCombo" ng-model="relatorio.usuario">
+                <select class="col-md-12" name="userCombo" id="userCombo" ng-model="relatorio.usuario">
                     <option ng-repeat="usuario in usuarios" value="{{usuario}}">{{usuario.nome}}</option>
                 </select>
             </div>
@@ -45,7 +45,7 @@
             </div>
         </div>
         <br>
-        <div class="panel panel-primary" style="height:45em; line-height:3em;overflow:auto;padding:5px;">
+        <div class="panel panel-primary" style="height:30em; line-height:3em;overflow:auto;padding:5px;">
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -125,12 +125,26 @@
 </div>
 <!--MODAL SIM-->
 <div id="Sim" class="modal fade" role="dialog">
-    <div class="modal-dialog" >
-        <div class="modal-content" style="background-color:green; border-style: solid; border-color:black;">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color:#80ff80; border-style: solid; border-color:black;">
             <div class="modal-body text-center">
                 <p>Horário salvo. Até amanhã!
                     <button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-dismiss="modal" ng-click="sair()">
                         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL RELATORIO VAZIO-->
+<div id="Relatoriovazio" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color:#ff4d4d; border-style: solid; border-color:black;">
+            <div class="modal-body text-center">
+                <p>Selecione um relatório válido!
+                    <button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-toggle="modal" data-dismiss="modal" >
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                     </button>
                 </p>
             </div>
