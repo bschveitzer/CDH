@@ -148,7 +148,6 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         SIOM.emitirServer(msg);
 
 
-        console.log('REGISTROU previsao', $scope.novaprevisao, $scope.novaprevisaoshow);
 
     };
 
@@ -201,9 +200,7 @@ app.controller("homeController",['$scope','$location', 'utilvalues', 'getUserLog
         }
     };
 
-    var tratacomparacao = function (msg) {
-        var dado = msg.getDado();
-
+    var tratacomparacao = function () {
             $('#confirmacao').modal();
 
     };

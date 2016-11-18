@@ -36,10 +36,12 @@ RtcComum.prototype.verificacao = function (timeprevisao) {
 
 RtcComum.prototype.setaPrevisao = function (msg) {
     var me = this;
-    var dado = msg.getRes();
-    me.emitePraInterface(msg);
-    var timeprevisao = dado.previsao.getTime() - 60000;
-    me.verificacao(timeprevisao);
+    if(msg.getRtc() == me){
+        var dado = msg.getRes();
+        me.emitePraInterface(msg);
+        var timeprevisao = dado.previsao.getTime() - 60000;
+        me.verificacao(timeprevisao);
+    }
 };
 
 RtcComum.prototype.wiring = function(){
