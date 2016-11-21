@@ -55,6 +55,7 @@ RtcComum.prototype.wiring = function(){
     me.listeners['saida.updated'] = me.emitePraInterface.bind(me);
     me.listeners['relatorio.readed'] = me.emitePraInterface.bind(me);
     me.listeners['previsao.updated'] = me.setaPrevisao.bind(me);
+    me.listeners['relatorio.bancomensal'] = me.emitePraInterface.bind(me);
 
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);
