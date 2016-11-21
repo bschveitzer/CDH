@@ -38,7 +38,7 @@
             </div>
             <div>
                 <button class="btn btn-default btn-success btn-lg" ng-if="!naotemrelatorio" ng-json-export-excel data="relatorioretornado"
-                        report-fields="{dia: 'Dia', horaentrada: 'Horário de entrada', horasaida: 'Horário de saída', horatrabalhada: 'Horas trabalhadas'}"
+                        report-fields="{dia: 'Dia', horaentrada: 'Horário de entrada', horasaida: 'Horário de saída', horatrabalhada: 'Horas trabalhadas', bancohorames:'Banco de Horas Mensal'}"
                         filename=" 'Relatório de Horas - ' + mostrausuario + ' - ' + relatorio.mes + ' ' + relatorio.ano">
                     <span class="glyphicon glyphicon-download-alt" aria-hidden="true" ></span>
                 </button>
@@ -50,6 +50,7 @@
                 <thead>
                 <tr>
                     <label>Colaborador: <span>{{mostrausuario}}</span></label>
+                    <label class="col-md-offset-3">Banco de Horas Mensal: <span>{{bancomes}}</span></label>
                 </tr>
                 <tr>
                     <th class="text-center">Dia</th>

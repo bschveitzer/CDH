@@ -94,6 +94,7 @@ mesmanager.prototype.findMesEscolhido = function (msg) {
             msg.setRes(res);
             msg.setEvento('relatorio.getdias');
             hub.emit(msg.getEvento(), msg);
+            me.emitManager(msg, '.bancomensal',{res: res});
         } else {
             me.emitManager(msg, '.error.readed', {err: err});
         }

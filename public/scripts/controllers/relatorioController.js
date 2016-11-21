@@ -15,6 +15,8 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
     
     $scope.ehroot = false;
 
+    $scope.bancomes = '';
+
     $scope.classes = utilvalues.rotaatual;
     $scope.logado = getUserLogado.getLogado();
 
@@ -253,6 +255,7 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
                 rel.horasaida = '';
             }
             rel.dia = reg.entrada.dia.data;
+            rel.bancohorames = $scope.bancomes;
             $scope.relatorioretornado.push(rel);
             minhaPrimeiraBitoca(registros, quantidade-1);
             utilvalues.relatorioJSON = rel;
@@ -279,12 +282,26 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
 
     };
 
+    var setabancomensal = function (msg) {
+        var dado = msg.getDado();
+        var bdhhora = parseInt(((dado.bancodehoras/1000)/60)/60);
+        var bdhmin = parseInt(((dado.bancodehoras/1000)/60)%60);
+
+        colocazero(bdhhora, function (retBdHora) {
+            colocazero(bdhmin , function (retBdhMin) {
+              $scope.bancomes = retBdHora + ':' + retBdhMin;
+            });
+        });
+
+    };
+
     me.wiring = function() {
         me.listeners['saida.updated'] = saidaatualizada.bind(me);
         me.listeners['usuario.readed'] = retusers.bind(me);
         me.listeners['relatorio.readed'] = retrelatorios.bind(me);
         me.listeners['comparou'] = tratacomparacao.bind(me);
         me.listeners['previsao.updated'] = saidaregistrada.bind(me);
+        me.listeners['relatorio.bancomensal'] = setabancomensal.bind(me);
 
         for (var name in me.listeners) {
 
