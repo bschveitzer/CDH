@@ -14,7 +14,7 @@
             <br>
         </div>
         <div class="row">
-            <div class="col-md-1" ng-show="ehroot">
+            <div class="col-md-2" ng-show="ehroot">
                 <label class="control-label">Colaborador:</label>
                 <select class="col-md-12" name="userCombo" id="userCombo" ng-model="relatorio.usuario">
                     <option ng-repeat="usuario in usuarios" value="{{usuario}}">{{usuario.nome}}</option>
@@ -34,8 +34,16 @@
                 <button type="button" class="btn btn-default btn-primary btn-lg" ng-click="buscarrelatorio()">
                     <span class="glyphicon glyphicon-search" aria-hidden="true" ></span>
                 </button>
-
             </div>
+
+            <button type="button"
+                    class="btn btn-default btn-primary btn-lg"
+                    ng-if="ehroot"
+                    data-toggle="modal"
+                    data-target="#addHoras">
+                Adicionar horas
+            </button>
+
             <div>
                 <button class="btn btn-default btn-success btn-lg" ng-if="!naotemrelatorio" ng-json-export-excel data="relatorioretornado"
                         report-fields="{dia: 'Dia', horaentrada: 'Horário de entrada', horasaida: 'Horário de saída', horatrabalhada: 'Horas trabalhadas', bancohorames:'Banco de Horas Mensal'}"
@@ -85,6 +93,59 @@
                 <button ng-if="ehroot" ng-click="trocaRota('entidades')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 </button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="addHoras" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Adicionar Horas</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group" style="max-width: 15em; margin: auto; margin-top: 1ex;">
+                        <label class="control-label">Colaborador:</label>
+                        <select class="form-control" name="userCombo" ng-model="addhora.usuario">
+                            <option ng-repeat="usuario in usuarios">{{usuario.nome}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="max-width: 15em; margin: auto; margin-top: 1ex;">
+                        <label class="control-label">Data:</label>
+                        <input class="form-control" type="date" ng-model="addhora.data">
+                    </div>
+
+                    <div class="form-group" style="max-width: 15em; margin: auto; margin-top: 1ex;">
+                        <label class="control-label">Quantidade(horas):</label>
+                        <input class="form-control" type="number" ng-model="addhora.valor">
+                    </div>
+
+                    <div class="form-group" style="max-width: 15em; margin: auto; margin-top: 1ex;">
+                        <label class="control-label">Quantidade(minutos):</label>
+                        <input class="form-control" type="number" ng-model="addhora.valor">
+                    </div>
+
+                    <div style="max-width: 15em; margin: auto; margin-top: 1ex;">
+                        <button class="btn btn-primary">
+                            Salvar
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-default"
+                            data-dismiss="modal"
+                            ng-click="addHoraUser()">
+                        Close
+                    </button>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

@@ -31,6 +31,12 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
     $scope.naotemrelatorio = true;
     $scope.sohrelat = false;
 
+    $scope.addhora = {
+        usuario: null,
+        data: null,
+        valor: null
+    };
+
     var entrada = utilvalues.entrada;
 
     if(entrada != null){
@@ -61,6 +67,10 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
             $scope.ehroot = true;
         }
 
+    };
+
+    $scope.addHoraUser = function() {
+        console.log('salvar', $scope.addhora);
     };
 
 
