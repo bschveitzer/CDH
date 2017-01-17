@@ -34,7 +34,8 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
     $scope.addhora = {
         usuario: null,
         data: null,
-        valor: null
+        valor: null,
+        justi: null
     };
 
     var entrada = utilvalues.entrada;
