@@ -18,6 +18,8 @@ var options = {
 var obj = Mongoose.Schema({
     nome: {type: types.String, required: true},
     data: {type: types.Number, required: true},
+    minutojusti: {type: types.Number, required: false},
+    comentariojusti: {type: types.String, required: false},
     mes: {type: types.ObjectId, ref: 'mes', require: true}
 });
 
