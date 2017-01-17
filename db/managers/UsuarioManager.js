@@ -102,6 +102,53 @@ usuariomanager.prototype.getAllRootLess = function(msg){
     })
 };
 
+usuariomanager.prototype.init = function() {
+
+    var array = [];
+
+    var objRoot = {
+        nome: 'root',
+        sobrenome: 'root',
+        email: 'root',
+        senha: '63a9f0ea7bb98050796b649e85481845',
+        numerocelular: '',
+        foto: '',
+        tipo: 0
+    };
+
+    var objAdmin = {
+        nome: 'admin',
+        sobrenome: 'admin',
+        email: 'admin',
+        senha: '21232f297a57a5a743894a0e4a801fc3',
+        numerocelular: '',
+        foto: '',
+        tipo: 1
+    };
+
+    var objComum = {
+        nome: 'comum',
+        sobrenome: 'comum',
+        email: 'comum',
+        senha: '6d769ecb25444b49111b669de9ec6104',
+        numerocelular: '',
+        foto: '',
+        tipo: 2
+    };
+
+    array.push(objAdmin);
+    array.push(objComum);
+    array.push(objRoot);
+
+    this.model.create(array, function(err, res){
+        if(res){
+            console.log('deu boa create user', res);
+        } else{
+            console.log('erro no create', err);
+        }
+    })
+};
+
 usuariomanager.prototype.wiring = function(){
     var me = this;
     me.listeners['banco.usuario.*'] = me.executaCrud.bind(me);
@@ -112,6 +159,8 @@ usuariomanager.prototype.wiring = function(){
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);
     }
+
+    //me.init();
 };
 
 module.exports = new usuariomanager();
