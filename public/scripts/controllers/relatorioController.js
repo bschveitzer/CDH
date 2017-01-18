@@ -32,7 +32,7 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
     $scope.sohrelat = false;
 
     $scope.addhora = {
-        usuario: null,
+        idusuario: null,
         data: null,
         valor: null,
         justi: null
@@ -70,8 +70,12 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
 
     };
 
-    $scope.addHoraUser = function() {
-        console.log('salvar', $scope.addhora);
+  /**
+   * Adiciona horas justificadas a um usuario
+   */
+  $scope.addHoraUser = function() {
+        var msg = new Mensagem(me, 'horadia.ajuste', $scope.addhora, 'horadia');
+        SIOM.emitirServer(msg);
     };
 
 

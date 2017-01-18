@@ -18,3 +18,9 @@ img {
 .centralize{
     text-align: center;
 }
+
+.input-addhora {
+    max-width: 15em;
+    margin: auto;
+    margin-top: 1ex;
+}

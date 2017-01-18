@@ -108,30 +108,30 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class="form-group" style="max-width: 15em; margin: auto; margin-top: 1ex;">
+                    <div class="form-group input-addhora">
                         <label class="control-label">Colaborador:</label>
-                        <select class="form-control" name="userCombo" ng-model="addhora.usuario">
-                            <option ng-repeat="usuario in usuarios">{{usuario.nome}}</option>
+                        <select class="form-control" ng-model="addhora.idusuario">
+                            <option ng-repeat="usuario in usuarios" value="{{usuario._id}}">{{usuario.nome}}</option>
                         </select>
                     </div>
 
-                    <div class="form-group" style="max-width: 15em; margin: auto; margin-top: 1ex;">
+                    <div class="form-group input-addhora">
                         <label class="control-label">Data:</label>
                         <input class="form-control" type="date" ng-model="addhora.data">
                     </div>
 
-                    <div class="form-group" style="max-width: 15em; margin: auto; margin-top: 1ex;">
+                    <div class="form-group input-addhora">
                         <label class="control-label">Quantidade(minutos):</label>
                         <input class="form-control" type="number" ng-model="addhora.valor">
                     </div>
 
-                    <div class="form-group" style="max-width: 15em; margin: auto; margin-top: 1ex;">
+                    <div class="form-group input-addhora">
                         <label class="control-label">Justificativa:</label>
-                        <textarea  class="form-control" type="text" ng-model="addhora.justi"></textarea>
+                        <textarea  class="form-control" ng-model="addhora.justi"></textarea>
                     </div>
 
-                    <div style="max-width: 15em; margin: auto; margin-top: 1ex;">
-                        <button class="btn btn-primary">
+                    <div class="input-addhora">
+                        <button class="btn btn-primary" ng-click="addHoraUser()">
                             Salvar
                         </button>
                     </div>
@@ -139,8 +139,7 @@
                 <div class="modal-footer">
                     <button type="button"
                             class="btn btn-default"
-                            data-dismiss="modal"
-                            ng-click="addHoraUser()">
+                            data-dismiss="modal">
                         Close
                     </button>
                 </div>

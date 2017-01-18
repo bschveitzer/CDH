@@ -78,6 +78,7 @@ RtcRoot.prototype.interfaceWiring = function () {
     me.browserlisteners['relatorio.read'] = me.daInterface.bind(me);
     me.browserlisteners['enviarelatorio'] = me.daInterface.bind(me);
     me.browserlisteners['previsao.update'] = me.daInterface.bind(me);
+    me.browserlisteners['horadia.ajuste'] = me.daInterface.bind(me);
     me.browserlisteners['disconnect'] = me.destruir.bind(me);
 
     for (var name in me.browserlisteners) {

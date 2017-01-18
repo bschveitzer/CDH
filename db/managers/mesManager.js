@@ -119,12 +119,21 @@ mesmanager.prototype.updatebancodehoras = function(msg){
     })
 };
 
+mesmanager.prototype.addhoradia = function(msg) {
+
+    var me = this;
+    var dados = msg.getRes();
+    
+    console.log('aquiiiiiiiiiiii', msg.getRes());
+};
+
 mesmanager.prototype.wiring = function(){
     var me = this;
     me.listeners['banco.mes.*'] = me.executaCrud.bind(me);
     me.listeners['bateuponto'] = me.entrada.bind(me);
     me.listeners['rtc.relatorio.read'] = me.findMesEscolhido.bind(me);
     me.listeners['bancodehoras.update'] = me.updatebancodehoras.bind(me);
+    me.listeners['rtc.horadia.ajuste'] = me.addhoradia.bind(me);
 
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);
