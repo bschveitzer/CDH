@@ -74,7 +74,16 @@ app.controller("relatorioController",['$scope','$location', '$window', 'utilvalu
    * Adiciona horas justificadas a um usuario
    */
   $scope.addHoraUser = function() {
-        var msg = new Mensagem(me, 'horadia.ajuste', $scope.addhora, 'horadia');
+
+        var dado = angular.copy($scope.addhora);
+        dado.data = {
+            dia: dado.data.getDate(),
+            mes: dado.data.getMonth(),
+            ano: dado.data.getFullYear(),
+            diasemana: dado.data.getDay(),
+        };
+
+        var msg = new Mensagem(me, 'horadia.ajuste', dado, 'horadia');
         SIOM.emitirServer(msg);
     };
 
