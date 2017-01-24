@@ -31,14 +31,6 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
   $scope.naotemrelatorio = true;
   $scope.sohrelat = false;
 
-  $scope.addhora = {
-    idusuario: null,
-    data: null,
-    valor: null,
-    justi: null
-  };
-  $scope.msgBanco = '';
-
   var entrada = utilvalues.entrada;
 
   if (entrada != null) {
@@ -62,6 +54,18 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
     'Novembro',
     'Dezembro'
   ];
+
+  $scope.addhora = {
+    idusuario: null,
+    data: null,
+    valor: null,
+    justi: null
+  };
+  $scope.msgBanco = '';
+  $scope.totalHorasJusti = {
+    horas: null,
+    minutos: null
+  };
 
   var verificatipo = function () {
     if ($scope.logado.tipo == 0) {
@@ -303,7 +307,7 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
 
   var setabancomensal = function (msg) {
     var dado = msg.getDado();
-    console.log('dados', dado);
+
     var bdhhora = parseInt(((dado.bancodehoras / 1000) / 60) / 60);
     var bdhmin = parseInt(((dado.bancodehoras / 1000) / 60) % 60);
 
@@ -312,6 +316,9 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
         $scope.bancomes = retBdHora + ':' + retBdhMin;
       });
     });
+
+    $scope.totalHorasJusti.horas = parseInt(dado.bancodehorasjusti/60);
+    $scope.totalHorasJusti.minutos = dado.bancodehorasjusti%60;
 
   };
 
