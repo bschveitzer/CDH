@@ -20,7 +20,8 @@ var obj = Mongoose.Schema({
     ano: {type: types.Number, required: true},
     fechado: {type: types.Boolean},
     usuario: {type: types.ObjectId, ref:'usuario', require: true},
-    bancodehoras: {type: types.Number, require: true}
+    bancodehoras: {type: types.Number, require: true},
+    bancodehorasjusti: {type: types.Number, require: false}
 });
 
 new ctrbd(obj, 'mes');

@@ -134,25 +134,53 @@ mesmanager.prototype.updatebancodehoras = function (msg) {
 };
 
 /**
+ * Calcula o total de horas justificadas e salva
+ *
+ * @param dados
+ * @param mes
+ * @param msg
+ * @param dia
+ */
+mesmanager.prototype.meshorajusti = function (dados, mes, msg, dia) {
+
+  var me = this;
+
+  var novosdados = {};
+  novosdados.bancodehorasjusti = (mes.bancodehorasjusti) ?
+  mes.bancodehorasjusti + dados.valor : dados.valor;
+  if (dia.minutojusti > 0)  novosdados.bancodehorasjusti -= dia.minutojusti;
+
+  me.model.findByIdAndUpdate(mes._id, {$set: novosdados}, function (err, res) {
+    if (err) {
+      console.log('erroa ao atualizar bancodehorasjusti do mes', err);
+      me.emitManager(msg, '.error.ajustada', {err: err});
+    } else {
+      me.emitManager(msg, '.ajustada', {res: res});
+    }
+  });
+};
+
+/**
  * Encontra/cria dia para adicionar horas justificadas
  *
  * @param dados
- * @param idMes
+ * @param mes
+ * @param msg
  */
-mesmanager.prototype.addhoradia = function (dados, idMes) {
+mesmanager.prototype.addhoradia = function (dados, mes, msg) {
 
   var me = this;
   me.modeldia = require('../model/dia.js');
 
   var querydia = {
     data: dados.data.dia,
-    mes: idMes,
+    mes: mes._id
   };
 
   me.modeldia.findOne(querydia).exec(function (errDia, resDia) {
-    console.log('res', resDia, errDia);
     if (errDia) {
-      console.log('erro ao buscar dia do mes')
+      console.log('erro ao buscar dia do mes');
+      me.emitManager(msg, '.error.ajustada', {err: errDia});
     } else {
       if (resDia === null) {//Precisa criar dia
 
@@ -161,31 +189,31 @@ mesmanager.prototype.addhoradia = function (dados, idMes) {
           data: dados.data.dia,
           minutojusti: dados.valor,
           comentariojusti: dados.justi,
-          mes: idMes,
+          mes: mes._id
         };
 
         me.modeldia.create(novodia, function (errDiaNovo, resDiaNovo) {
           if (errDiaNovo) {
             console.log('erro ao criar dia novo');
+            me.emitManager(msg, '.error.ajustada', {err: errDiaNovo});
           } else {
-            console.log('resCri', resDiaNovo, errDiaNovo);
-            //todo mandar msg de retorno
+            me.meshorajusti(dados, mes, msg, {});
           }
         });
       } else {//Precisa atualizar dia
 
         var setDia = {
           minutojusti: dados.valor,
-          comentariojusti: dados.justi,
+          comentariojusti: dados.justi
         };
 
         me.modeldia.findByIdAndUpdate(resDia._id, {$set: setDia},
           function (errDiaAtu, resDiaAtu) {
             if (errDiaAtu) {
               console.log('erro ao atualizar dia novo');
+              me.emitManager(msg, '.error.ajustada', {err: errDiaAtu});
             } else {
-              console.log('resAtu', resDiaAtu, errDiaAtu);
-              //todo mandar msg de retorno
+              me.meshorajusti(dados, mes, msg, resDiaAtu);
             }
           });
       }
@@ -203,17 +231,16 @@ mesmanager.prototype.addhorames = function (msg) {
   var me = this;
   var dados = msg.getRes();
 
-  console.log('aquiiiiiiiiiiii', msg.getRes());
-
   var querymes = {
     nome: me.mes[dados.data.mes],
     ano: dados.data.ano,
-    usuario: dados.idusuario,
+    usuario: dados.idusuario
   };
 
   this.model.findOne(querymes).exec(function (errMes, resMes) {
     if (errMes) {
       console.log('erro ao buscar mes', errMes);
+      me.emitManager(msg, '.error.ajustada', {err: errMes});
     } else {
       if (resMes === null) {//Precisa criar mes
 
@@ -228,13 +255,14 @@ mesmanager.prototype.addhorames = function (msg) {
         me.model.create(novomes, function (errMesNovo, resMesNovo) {
           if (errMesNovo) {
             console.log('erro ao criar mes novo', errMesNovo);
+            me.emitManager(msg, '.error.ajustada', {err: errMesNovo});
           } else {
-            console.log('resCri', errMesNovo, resMesNovo);
+            me.addhoradia(dados, resMesNovo, msg);
           }
         });
 
       } else {
-        me.addhoradia(dados, resMes._id);
+        me.addhoradia(dados, resMes, msg);
       }
     }
   });

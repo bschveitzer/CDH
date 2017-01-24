@@ -1,340 +1,360 @@
-app.controller("relatorioController",['$scope','$location', '$window', 'utilvalues','getUserLogado', function ($scope,$location,$window, utilvalues,getUserLogado) {
+app.controller("relatorioController", ['$scope', '$location', '$window', 'utilvalues', 'getUserLogado', function ($scope, $location, $window, utilvalues, getUserLogado) {
 
-    var me = this;
-    me.listeners = [];
+  var me = this;
+  me.listeners = [];
 
-    $scope.usuarios = [];
-    $scope.relatorioretornado = [];
+  $scope.usuarios = [];
+  $scope.relatorioretornado = [];
 
-    $scope.relatorio = null;
+  $scope.relatorio = null;
 
-    $scope.saidaregistrada = utilvalues.saidaregistrada;
-    $scope.horasaida = utilvalues.horasaida;
-    $scope.saidaInvalida = false;
-    $scope.dataEscrita = '';
-    
-    $scope.ehroot = false;
+  $scope.saidaregistrada = utilvalues.saidaregistrada;
+  $scope.horasaida = utilvalues.horasaida;
+  $scope.saidaInvalida = false;
+  $scope.dataEscrita = '';
 
-    $scope.bancomes = '';
+  $scope.ehroot = false;
 
-    $scope.classes = utilvalues.rotaatual;
-    $scope.logado = getUserLogado.getLogado();
+  $scope.bancomes = '';
 
-    $scope.novaprevisao = '';
-    $scope.possuinovaprevisao = false;
-    $scope.novaprevisaoshow = '';
-    $scope.saidashow = utilvalues.saidamostra;
-    $scope.hora = '';
-    $scope.saida = '';
-    $scope.mostrausuario = '';
+  $scope.classes = utilvalues.rotaatual;
+  $scope.logado = getUserLogado.getLogado();
 
-    $scope.naotemrelatorio = true;
-    $scope.sohrelat = false;
+  $scope.novaprevisao = '';
+  $scope.possuinovaprevisao = false;
+  $scope.novaprevisaoshow = '';
+  $scope.saidashow = utilvalues.saidamostra;
+  $scope.hora = '';
+  $scope.saida = '';
+  $scope.mostrausuario = '';
 
-    $scope.addhora = {
-        idusuario: null,
-        data: null,
-        valor: null,
-        justi: null
-    };
+  $scope.naotemrelatorio = true;
+  $scope.sohrelat = false;
 
-    var entrada = utilvalues.entrada;
+  $scope.addhora = {
+    idusuario: null,
+    data: null,
+    valor: null,
+    justi: null
+  };
+  $scope.msgBanco = '';
 
-    if(entrada != null){
-        var data = new Date(utilvalues.entrada.horaEntrada);
-    }else{
-        $scope.sohrelat = true;
+  var entrada = utilvalues.entrada;
+
+  if (entrada != null) {
+    var data = new Date(utilvalues.entrada.horaEntrada);
+  } else {
+    $scope.sohrelat = true;
+  }
+
+
+  $scope.meses = [
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro'
+  ];
+
+  var verificatipo = function () {
+    if ($scope.logado.tipo == 0) {
+      $scope.ehroot = true;
     }
 
-
-
-    $scope.meses = [
-        'Janeiro',
-        'Fevereiro',
-        'Março',
-        'Abril',
-        'Maio',
-        'Junho',
-        'Julho',
-        'Agosto',
-        'Setembro',
-        'Outubro',
-        'Novembro',
-        'Dezembro'
-    ];
-
-    var verificatipo = function () {
-        if ($scope.logado.tipo == 0) {
-            $scope.ehroot = true;
-        }
-
-    };
+  };
 
   /**
    * Adiciona horas justificadas a um usuario
    */
-  $scope.addHoraUser = function() {
+  $scope.addHoraUser = function () {
 
-        var dado = angular.copy($scope.addhora);
-        dado.data = {
-            dia: dado.data.getDate(),
-            mes: dado.data.getMonth(),
-            ano: dado.data.getFullYear(),
-            diasemana: dado.data.getDay(),
-        };
+    var dado = angular.copy($scope.addhora);
+    dado.data = {
+      dia: dado.data.getDate(),
+      mes: dado.data.getMonth(),
+      ano: dado.data.getFullYear(),
+      diasemana: dado.data.getDay(),
+    };
 
-        var msg = new Mensagem(me, 'horadia.ajuste', dado, 'horadia');
+    var msg = new Mensagem(me, 'horadia.ajuste', dado, 'horadia');
+    SIOM.emitirServer(msg);
+  };
+
+
+  $scope.trocaRota = function (local) {
+    limpanav(local, function () {
+      utilvalues.rotaatual[local] = 'active';
+      $location.path('/' + local);
+    });
+  };
+
+  var limpanav = function (local, cb) {
+    for (var id in $scope.classes) {
+      utilvalues.rotaatual[id] = '';
+    }
+    cb();
+  };
+
+  $scope.sair = function () {
+
+    utilvalues.saida.hora = new Date();
+    var entrada1 = new Date(utilvalues.entrada.horaEntrada);
+    utilvalues.tempotrabalhado = utilvalues.saida.hora.getTime() - entrada1.getTime();
+
+
+    var msg = new Mensagem(me, 'regsaida.update', utilvalues.saida, 'saida');
+    SIOM.emitirServer(msg);
+
+  };
+
+  $scope.buscarrelatorio = function () {
+
+    if ($scope.relatorio == null) {
+      $('#Relatoriovazio').modal();
+      return;
+    } else {
+      if ($scope.logado.tipo != 0) {
+        $scope.relatorio.usuario = JSON.stringify($scope.logado);
+        var msg = new Mensagem(me, 'relatorio.read', $scope.relatorio, 'relatorio');
         SIOM.emitirServer(msg);
+        $scope.mostrausuario = $scope.logado.nome + ' ' + $scope.logado.sobrenome;
+        $scope.naotemrelatorio = false;
+      } else {
+        var relatorio = new Mensagem(me, 'relatorio.read', $scope.relatorio, 'relatorio');
+        SIOM.emitirServer(relatorio);
+        var user = JSON.parse($scope.relatorio.usuario);
+        $scope.mostrausuario = user.nome + ' ' + user.sobrenome;
+        $scope.naotemrelatorio = false;
+      }
+    }
+
+
+  };
+
+  $scope.minimizar = function () {
+    $scope.trocaRota('');
+    location.reload();
+    $scope.$apply();
+  };
+
+  // TRATAMENTO SAIDA
+  $scope.atualizaprevisao = function () {
+    if ($scope.novaprevisao == undefined || $scope.novaprevisao == '') {
+      $('#horaInvalida').modal();
+      $('#confirmacao').modal();
+      return;
+    } else if ($scope.novaprevisao.getHours() <= $scope.hora.slice(0, 2) && $scope.novaprevisao.getMinutes() <= $scope.hora.slice(3, 5)) {
+      $('#horaInvalida').modal();
+      $('#confirmacao').modal();
+      return;
+    }
+    data.setHours($scope.novaprevisao.getHours());
+    data.setMinutes($scope.novaprevisao.getMinutes());
+    var dado = {
+      antiga: utilvalues.saida,
+      saida: data,
+      entrada: entrada
     };
 
+    colocazero($scope.novaprevisao.getHours(), function (hora) {
+      colocazero($scope.novaprevisao.getMinutes(), function (minuto) {
+        $scope.novaprevisaoshow = hora + ':' + minuto;
+      });
+    });
 
-    $scope.trocaRota=function (local) {
-        limpanav(local, function () {
-            utilvalues.rotaatual[local] = 'active';
-            $location.path('/'+local);
-        });
-    };
+    var msg = new Mensagem(me, 'previsao.update', dado, 'previsao');
+    SIOM.emitirServer(msg);
 
-    var limpanav = function (local, cb) {
-        for(var id in $scope.classes){
-            utilvalues.rotaatual[id] = '';
-        }
-        cb();
-    };
+  };
 
-    $scope.sair = function () {
+  var saidaregistrada = function (msg) {
+    var dado = msg.getDado();
+    utilvalues.saida = dado;
+    var s = new Date(dado.previsao);
+    colocazero(s.getMinutes(), function (retMinutos) {
+      colocazero(s.getHours(), function (retHoras) {
 
-        utilvalues.saida.hora = new Date();
-        var entrada1 = new Date(utilvalues.entrada.horaEntrada);
-        utilvalues.tempotrabalhado = utilvalues.saida.hora.getTime() - entrada1.getTime();
-
-
-        var msg = new Mensagem(me, 'regsaida.update', utilvalues.saida, 'saida');
-        SIOM.emitirServer(msg);
-
-    };
-
-    $scope.buscarrelatorio = function () {
-
-        if($scope.relatorio == null) {
-            $('#Relatoriovazio').modal();
-            return;
-        }else{
-            if ($scope.logado.tipo != 0) {
-                $scope.relatorio.usuario = JSON.stringify($scope.logado);
-                var msg = new Mensagem(me, 'relatorio.read', $scope.relatorio, 'relatorio');
-                SIOM.emitirServer(msg);
-                $scope.mostrausuario = $scope.logado.nome + ' ' + $scope.logado.sobrenome;
-                $scope.naotemrelatorio = false;
-            } else {
-                var relatorio = new Mensagem(me, 'relatorio.read', $scope.relatorio, 'relatorio');
-                SIOM.emitirServer(relatorio);
-                var user = JSON.parse($scope.relatorio.usuario);
-                $scope.mostrausuario = user.nome + ' ' + user.sobrenome;
-                $scope.naotemrelatorio = false;
-            }
-        }
-
-
-
-
-
-
-    };
-
-    $scope.minimizar = function () {
-        $scope.trocaRota('');
-        location.reload();
-        $scope.$apply();
-    };
-
-    // TRATAMENTO SAIDA
-    $scope.atualizaprevisao = function () {
-        if($scope.novaprevisao == undefined || $scope.novaprevisao == ''){
-            $('#horaInvalida').modal();
-            $('#confirmacao').modal();
-            return;
-        }else if ($scope.novaprevisao.getHours() <= $scope.hora.slice(0,2) && $scope.novaprevisao.getMinutes() <= $scope.hora.slice(3,5)){
-            $('#horaInvalida').modal();
-            $('#confirmacao').modal();
-            return;
-        }
-        data.setHours($scope.novaprevisao.getHours());
-        data.setMinutes($scope.novaprevisao.getMinutes());
-        var dado = {
-            antiga: utilvalues.saida,
-            saida: data,
-            entrada: entrada
-        };
-
-        colocazero($scope.novaprevisao.getHours(), function(hora){
-            colocazero($scope.novaprevisao.getMinutes(), function(minuto){
-                $scope.novaprevisaoshow = hora + ':' + minuto;
-            });
-        });
-
-        var msg = new Mensagem(me, 'previsao.update', dado, 'previsao');
-        SIOM.emitirServer(msg);
-
-    };
-    
-    var saidaregistrada = function (msg) {
-        var dado = msg.getDado();
-        utilvalues.saida = dado;
-        var s = new Date(dado.previsao);
-        colocazero(s.getMinutes(), function (retMinutos) {
-            colocazero(s.getHours(), function (retHoras) {
-
-                utilvalues.horasaida = retHoras+ ":" + retMinutos;
-                utilvalues.saidaregistrada = true;
-                $scope.saidaregistrada = utilvalues.saidaregistrada;
-                $scope.horasaida = utilvalues.horasaida;
-                $scope.$apply();
-
-            });
-        });
-
-    };
-
-    $scope.sair = function () {
-
-        utilvalues.saida.hora = new Date();
-        var entrada1 = new Date(utilvalues.entrada.horaEntrada);
-        utilvalues.tempotrabalhado = utilvalues.saida.hora.getTime() - entrada1.getTime();
-
-        var msg = new Mensagem(me, 'regsaida.update', utilvalues.saida, 'saida');
-        SIOM.emitirServer(msg);
-
-    };
-    var saidaatualizada = function () {
-        $scope.trocaRota('');
-        location.reload();
+        utilvalues.horasaida = retHoras + ":" + retMinutos;
+        utilvalues.saidaregistrada = true;
+        $scope.saidaregistrada = utilvalues.saidaregistrada;
+        $scope.horasaida = utilvalues.horasaida;
         $scope.$apply();
 
-    };
+      });
+    });
 
-    var colocazero = function (n, callback) {
-        if (n <= 9) {
-            callback('0' + n);
-        }else{
-            callback(n);
-        }
-    };
-    var tratacomparacao = function () {
-        $scope.possuinovaprevisao = true;
-        $('#confirmacao').modal();
-    };
+  };
 
+  $scope.sair = function () {
 
+    utilvalues.saida.hora = new Date();
+    var entrada1 = new Date(utilvalues.entrada.horaEntrada);
+    utilvalues.tempotrabalhado = utilvalues.saida.hora.getTime() - entrada1.getTime();
+
+    var msg = new Mensagem(me, 'regsaida.update', utilvalues.saida, 'saida');
+    SIOM.emitirServer(msg);
+
+  };
+  var saidaatualizada = function () {
+    $scope.trocaRota('');
+    location.reload();
+    $scope.$apply();
+
+  };
+
+  var colocazero = function (n, callback) {
+    if (n <= 9) {
+      callback('0' + n);
+    } else {
+      callback(n);
+    }
+  };
+  var tratacomparacao = function () {
+    $scope.possuinovaprevisao = true;
+    $('#confirmacao').modal();
+  };
 
 
 // ENVIOS
-    var ready = function () {
-        var msg = new Mensagem(me, 'usuario.read', {}, 'usuario');
-        SIOM.emitirServer(msg);
-    };
+  var ready = function () {
+    var msg = new Mensagem(me, 'usuario.read', {}, 'usuario');
+    SIOM.emitirServer(msg);
+  };
 
-    $scope.mandarelatorio = function () {
-        var msg = new Mensagem(me, 'enviarelatorio', $scope.relatorioretornado, 'relatoriopronto');
-        SIOM.emitirServer(msg);
-    };
+  $scope.mandarelatorio = function () {
+    var msg = new Mensagem(me, 'enviarelatorio', $scope.relatorioretornado, 'relatoriopronto');
+    SIOM.emitirServer(msg);
+  };
 
 
 // RETORNOS
-    var retusers = function (msg) {
-        $scope.usuarios = msg.getDado();
-        $scope.$apply();
-    };
+  var retusers = function (msg) {
+    $scope.usuarios = msg.getDado();
+    $scope.$apply();
+  };
 
-    var minhaPrimeiraBitoca = function (registros, quantidade) {
-        if(quantidade > 0){
-            var rel = {};
-            var reg = registros[quantidade - 1];
-            var dataentrada = new Date(reg.entrada.horaEntrada);
-            var datasaida = new Date(reg.hora);
+  var minhaPrimeiraBitoca = function (registros, quantidade) {
 
-            var dif = datasaida.getTime()- dataentrada.getTime();
-            var difhora = parseInt(((dif/1000)/60)/60);
-            var difmin = parseInt(((dif/1000)/60)%60);
+    if (quantidade > 0) {
+      var rel = {};
+      var reg = registros[quantidade - 1];
+      var dataentrada = new Date(reg.entrada.horaEntrada);
+      var datasaida = new Date(reg.hora);
 
-            colocazero(difhora, function (retHora) {
-                colocazero(difmin, function (retMinutos) {
-                    rel.horatrabalhada = retHora+":"+retMinutos;
-                })
-            });
-            
+      var dif = datasaida.getTime() - dataentrada.getTime();
+      var difhora = parseInt(((dif / 1000) / 60) / 60);
+      var difmin = parseInt(((dif / 1000) / 60) % 60);
 
-            colocazero(dataentrada.getHours(), function (retHours) {
-                colocazero(dataentrada.getMinutes(), function (retMin) {
-                    rel.horaentrada = retHours+':'+retMin;
-                })
-            });
-            if (reg.hora){
-                colocazero(datasaida.getHours(),function (retHoursSaida) {
-                    colocazero(datasaida.getMinutes(), function (retMinSaida) {
-                        rel.horasaida = retHoursSaida+':'+ retMinSaida;
-                    })
-                });
-            }else{
-                rel.horasaida = '';
-            }
-            rel.dia = reg.entrada.dia.data;
-            rel.bancohorames = $scope.bancomes;
-            $scope.relatorioretornado.push(rel);
-            minhaPrimeiraBitoca(registros, quantidade-1);
-            utilvalues.relatorioJSON = rel;
-        } else {
-            $scope.$apply();
-        }
-    };
-    var colocazero = function (n, callback) {
-        if (n <= 9) {
-            callback('0' + n);
-        }else{
-            callback(n);
-        }
-    };
-
-    var retrelatorios = function (msg) {
-
-        $scope.relatorioretornado = [];
+      colocazero(difhora, function (retHora) {
+        colocazero(difmin, function (retMinutos) {
+          rel.horatrabalhada = retHora + ":" + retMinutos;
+        })
+      });
 
 
-        var dado = msg.getDado();
-
-        minhaPrimeiraBitoca(dado, dado.length);
-
-    };
-
-    var setabancomensal = function (msg) {
-        var dado = msg.getDado();
-        var bdhhora = parseInt(((dado.bancodehoras/1000)/60)/60);
-        var bdhmin = parseInt(((dado.bancodehoras/1000)/60)%60);
-
-        colocazero(bdhhora, function (retBdHora) {
-            colocazero(bdhmin , function (retBdhMin) {
-              $scope.bancomes = retBdHora + ':' + retBdhMin;
-            });
+      colocazero(dataentrada.getHours(), function (retHours) {
+        colocazero(dataentrada.getMinutes(), function (retMin) {
+          rel.horaentrada = retHours + ':' + retMin;
+        })
+      });
+      if (reg.hora) {
+        colocazero(datasaida.getHours(), function (retHoursSaida) {
+          colocazero(datasaida.getMinutes(), function (retMinSaida) {
+            rel.horasaida = retHoursSaida + ':' + retMinSaida;
+          })
         });
+      } else {
+        rel.horasaida = '';
+      }
+      rel.dia = reg.entrada.dia.data;
+      rel.bancohorames = $scope.bancomes;
+      $scope.relatorioretornado.push(rel);
+      minhaPrimeiraBitoca(registros, quantidade - 1);
+      utilvalues.relatorioJSON = rel;
+    } else {
+      $scope.$apply();
+    }
+  };
+  var colocazero = function (n, callback) {
+    if (n <= 9) {
+      callback('0' + n);
+    } else {
+      callback(n);
+    }
+  };
 
-    };
+  var retrelatorios = function (msg) {
 
-    me.wiring = function() {
-        me.listeners['saida.updated'] = saidaatualizada.bind(me);
-        me.listeners['usuario.readed'] = retusers.bind(me);
-        me.listeners['relatorio.readed'] = retrelatorios.bind(me);
-        me.listeners['comparou'] = tratacomparacao.bind(me);
-        me.listeners['previsao.updated'] = saidaregistrada.bind(me);
-        me.listeners['relatorio.bancomensal'] = setabancomensal.bind(me);
+    $scope.relatorioretornado = [];
 
-        for (var name in me.listeners) {
 
-            SIOM.on(name, me.listeners[name]);
+    var dado = msg.getDado();
 
-        }
-        ready();
-        verificatipo();
-    };
+    minhaPrimeiraBitoca(dado, dado.length);
 
-    me.wiring();
+  };
+
+  var setabancomensal = function (msg) {
+    var dado = msg.getDado();
+    console.log('dados', dado);
+    var bdhhora = parseInt(((dado.bancodehoras / 1000) / 60) / 60);
+    var bdhmin = parseInt(((dado.bancodehoras / 1000) / 60) % 60);
+
+    colocazero(bdhhora, function (retBdHora) {
+      colocazero(bdhmin, function (retBdhMin) {
+        $scope.bancomes = retBdHora + ':' + retBdhMin;
+      });
+    });
+
+  };
+
+  /**
+   * Abre o modal desejado
+   *
+   * @param modal
+   */
+  $scope.voltarmodal = function (modal) {
+    $('#' + modal).modal();
+  };
+
+  /**
+   * Retorno do banco ao adicionar horas
+   *
+   * @param msg
+   */
+  var retHoraAjuste = function (msg) {
+
+    $scope.msgBanco = (msg.isSuccess()) ? 'Sucesso' : 'Erro';
+    $('#addHoras').modal('hide');
+    $('#retMsgBanco').modal();
+    $scope.$apply();
+
+  };
+
+  me.wiring = function () {
+    me.listeners['saida.updated'] = saidaatualizada.bind(me);
+    me.listeners['usuario.readed'] = retusers.bind(me);
+    me.listeners['relatorio.readed'] = retrelatorios.bind(me);
+    me.listeners['comparou'] = tratacomparacao.bind(me);
+    me.listeners['previsao.updated'] = saidaregistrada.bind(me);
+    me.listeners['relatorio.bancomensal'] = setabancomensal.bind(me);
+    me.listeners['horadia.ajustada'] = retHoraAjuste.bind(me);
+
+    for (var name in me.listeners) {
+
+      SIOM.on(name, me.listeners[name]);
+
+    }
+    ready();
+    verificatipo();
+  };
+
+  me.wiring();
 }]);
