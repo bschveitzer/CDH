@@ -66,12 +66,20 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
     horas: null,
     minutos: null
   };
+  $scope.diasJustificados = [];
 
   var verificatipo = function () {
     if ($scope.logado.tipo == 0) {
       $scope.ehroot = true;
     }
 
+  };
+
+  $scope.minutoHora = function(minutos) {
+    return {
+      horas: parseInt(minutos/60),
+      minutos: (minutos%60 < 10) ? '0'+minutos%60 : minutos%60
+    };
   };
 
   /**
@@ -137,8 +145,30 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
         $scope.mostrausuario = user.nome + ' ' + user.sobrenome;
         $scope.naotemrelatorio = false;
       }
+
     }
 
+    buscaRelatorioJusti();
+
+  };
+
+  /**
+   * Manda msg para pegar dias com horas justificadas
+   */
+  var buscaRelatorioJusti = function() {
+
+    var i = null;
+
+    for(var index in $scope.meses) {
+      if ($scope.meses[index] === $scope.relatorio.mes) i = index;
+    }
+
+    var dado = angular.copy($scope.relatorio);
+    dado.mes = i;
+    dado.usuario = JSON.parse(dado.usuario);
+
+    var msg = new Mensagem(me, 'relatoriojusti.read', dado, 'relatoriojusti');
+    SIOM.emitirServer(msg);
 
   };
 
@@ -345,10 +375,23 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
 
   };
 
+  /**
+   * Retorno com dias justificados
+   * @param msg
+   */
+  var retRelatoriosJusti = function(msg) {
+
+    $scope.diasJustificados = msg.getDado();
+    $scope.$apply();
+
+    console.log('msg', $scope.diasJustificados);
+  };
+
   me.wiring = function () {
     me.listeners['saida.updated'] = saidaatualizada.bind(me);
     me.listeners['usuario.readed'] = retusers.bind(me);
     me.listeners['relatorio.readed'] = retrelatorios.bind(me);
+    me.listeners['relatoriojusti.readed'] = retRelatoriosJusti.bind(me);
     me.listeners['comparou'] = tratacomparacao.bind(me);
     me.listeners['previsao.updated'] = saidaregistrada.bind(me);
     me.listeners['relatorio.bancomensal'] = setabancomensal.bind(me);

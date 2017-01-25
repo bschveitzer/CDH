@@ -60,6 +60,7 @@ RtcRoot.prototype.wiring = function () {
     me.listeners['previsao.updated'] = me.setaPrevisao.bind(me);
     me.listeners['relatorio.bancomensal'] = me.emitePraInterface.bind(me);
     me.listeners['horadia.ajustada'] = me.emitePraInterface.bind(me);
+    me.listeners['relatoriojusti.readed'] = me.emitePraInterface.bind(me);
 
     for (var name in me.listeners) {
         hub.on(name, me.listeners[name]);
@@ -77,6 +78,7 @@ RtcRoot.prototype.interfaceWiring = function () {
     me.browserlisteners['regsaida.update'] = me.daInterface.bind(me);
     me.browserlisteners['usuario.destroy'] = me.daInterface.bind(me);
     me.browserlisteners['relatorio.read'] = me.daInterface.bind(me);
+    me.browserlisteners['relatoriojusti.read'] = me.daInterface.bind(me);
     me.browserlisteners['enviarelatorio'] = me.daInterface.bind(me);
     me.browserlisteners['previsao.update'] = me.daInterface.bind(me);
     me.browserlisteners['horadia.ajuste'] = me.daInterface.bind(me);

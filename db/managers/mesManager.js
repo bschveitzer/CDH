@@ -268,11 +268,48 @@ mesmanager.prototype.addhorames = function (msg) {
   });
 };
 
+/**
+ * Pega todos os dias com minutos justificados
+ * @param msg
+ */
+mesmanager.prototype.encontraMesJusti = function (msg) {
+
+  var me = this;
+  var dados = msg.getRes();
+  me.modeldia = require('../model/dia.js');
+
+  var querymes = {
+    nome: me.mes[dados.mes],
+    ano: dados.ano,
+    usuario: dados.usuario._id
+  };
+
+  this.model.findOne(querymes).exec(function(err, res) {
+    if (err) {
+      console.log('erro ao buscar mes', err);
+      me.emitManager(msg, '.error.readed', {err: err});
+    } else {
+      me.modeldia.find({
+        mes: res._id,
+        minutojusti: {$ne:null}
+      }, function(errDia, resDia) {
+        if (errDia) {
+          console.log('erro ao buscar dia', errDia);
+          me.emitManager(msg, '.error.readed', {err: errDia});
+        } else {
+          me.emitManager(msg, '.readed', {res: resDia});
+        }
+      });
+    }
+  });
+};
+
 mesmanager.prototype.wiring = function () {
   var me = this;
   me.listeners['banco.mes.*'] = me.executaCrud.bind(me);
   me.listeners['bateuponto'] = me.entrada.bind(me);
   me.listeners['rtc.relatorio.read'] = me.findMesEscolhido.bind(me);
+  me.listeners['rtc.relatoriojusti.read'] = me.encontraMesJusti.bind(me);
   me.listeners['bancodehoras.update'] = me.updatebancodehoras.bind(me);
   me.listeners['rtc.horadia.ajuste'] = me.addhorames.bind(me);
 

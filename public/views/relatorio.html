@@ -1,10 +1,12 @@
 <div class="container">
     <div class="row panel panel-primary container">
         <div class="row">
-            <h1 style="text-align: center"><span class="glyphicon glyphicon-time"></span>   Controle de horas</h1>
+            <h1 style="text-align: center"><span class="glyphicon glyphicon-time"></span> Controle de horas</h1>
         </div>
         <div class="row">
-            <div class="col-md-offset-4 col-md-7" style="font-size: 1.4em; text-align: right;">Bem vindo <label>{{logado.nome}} {{logado.sobrenome}}</label>!</div>
+            <div class="col-md-offset-4 col-md-7" style="font-size: 1.4em; text-align: right;">Bem vindo <label>{{logado.nome}}
+                {{logado.sobrenome}}</label>!
+            </div>
             <button ng-click="minimizar()" type="button" class="btn btn-danger btn-default btn-s">
                 <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
             </button>
@@ -22,17 +24,18 @@
             </div>
             <div class="col-md-1">
                 <label class="control-label">Mês:</label>
-                <select name="mesCombo" id="mesCombo" ng-model="relatorio.mes" >
-                    <option ng-repeat="mes in meses" value="{{mes}}">{{mes}}</option>
+                <select name="mesCombo" id="mesCombo" ng-model="relatorio.mes">
+                    <option ng-repeat="mes in meses track by $index" value="{{mes}}">{{mes}}</option>
                 </select>
             </div>
             <div class="col-md-1">
                 <label class="control-label">Ano:</label>
-                <input type="text" class="form-control" ng-model="relatorio.ano" name="ano"  mask="9999" placeholder="2020">
+                <input type="text" class="form-control" ng-model="relatorio.ano" name="ano" mask="9999"
+                       placeholder="2020">
             </div>
             <div class="col-md-1">
                 <button type="button" class="btn btn-default btn-primary btn-lg" ng-click="buscarrelatorio()">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true" ></span>
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                 </button>
             </div>
 
@@ -45,57 +48,103 @@
             </button>
 
             <div>
-                <button class="btn btn-default btn-success btn-lg" ng-if="!naotemrelatorio" ng-json-export-excel data="relatorioretornado"
+                <button class="btn btn-default btn-success btn-lg" ng-if="!naotemrelatorio" ng-json-export-excel
+                        data="relatorioretornado"
                         report-fields="{dia: 'Dia', horaentrada: 'Horário de entrada', horasaida: 'Horário de saída', horatrabalhada: 'Horas trabalhadas', bancohorames:'Banco de Horas Mensal'}"
                         filename=" 'Relatório de Horas - ' + mostrausuario + ' - ' + relatorio.mes + ' ' + relatorio.ano">
-                    <span class="glyphicon glyphicon-download-alt" aria-hidden="true" ></span>
+                    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
                 </button>
             </div>
         </div>
         <br>
         <div class="panel panel-primary" style="height:30em; line-height:3em;overflow:auto;padding:5px;">
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <label>Colaborador: <span>{{mostrausuario}}</span></label>
-                    <label class="col-md-offset-3">
-                        Horas Mensais Restantes: <span>{{bancomes}}</span> <br>
-                        Horas Mensais Justificadas: {{totalHorasJusti.horas}}:{{totalHorasJusti.minutos}}
-                    </label>
-                </tr>
-                <tr>
-                    <th class="text-center">Dia</th>
-                    <th class="text-center">Hora de entrada</th>
-                    <th class="text-center">Hora de saída</th>
-                    <th class="text-center">Horas trabalhadas</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="relat in relatorioretornado">
-                    <td align="center">
-                        {{relat.dia}}
-                    </td>
-                    <td align="center">
-                        {{relat.horaentrada}}
-                    </td>
-                    <td align="center">
-                        {{relat.horasaida}}
-                    </td>
-                    <td align="center">
-                        <span ng-if="!relat.horasaida">Incompleto</span>
-                        <span ng-if="relat.horasaida">{{relat.horatrabalhada}}</span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+
+            <div>
+                <label>Colaborador:</label> {{mostrausuario}} <br>
+                <label>Horas Mensais Restantes:</label> {{bancomes}} <br>
+                <label>Horas Mensais Justificadas:</label> {{totalHorasJusti.horas}}:{{totalHorasJusti.minutos}}
+            </div>
+
+            <ul class="nav nav-tabs" role="tablist">
+
+                <li role="presentation" class="active">
+                    <a href="" data-target="#relatorio" data-toggle="tab" role="tab">Relatorio</a>
+                </li>
+
+                <li role="presentation" ng-if="diasJustificados.length > 0">
+                    <a href="" data-target="#diasjusti" data-toggle="tab" role="tab">Dias Justificados</a>
+                </li>
+
+            </ul>
+
+            <div class="tab-content">
+                <!--TAB RELATORIO-->
+                <div class="tab-pane fade in active" id="relatorio" role="tabpanel">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th class="text-center">Dia</th>
+                            <th class="text-center">Hora de entrada</th>
+                            <th class="text-center">Hora de saída</th>
+                            <th class="text-center">Horas trabalhadas</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="relat in relatorioretornado">
+                            <td align="center">
+                                {{relat.dia}}
+                            </td>
+                            <td align="center">
+                                {{relat.horaentrada}}
+                            </td>
+                            <td align="center">
+                                {{relat.horasaida}}
+                            </td>
+                            <td align="center">
+                                <span ng-if="!relat.horasaida">Incompleto</span>
+                                <span ng-if="relat.horasaida">{{relat.horatrabalhada}}</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--TAB DIAS JUSTIFICADOS-->
+                <div class="tab-pane fade" id="diasjusti" role="tabpanel">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th class="text-center">Dia</th>
+                            <th class="text-center">Horas justificadas</th>
+                            <th class="text-center">Comentario</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="dia in diasJustificados">
+                            <td align="center">
+                                {{dia.data}}
+                            </td>
+                            <td align="center">
+                                {{minutoHora(dia.minutojusti).horas}}:{{minutoHora(dia.minutojusti).minutos}}
+                            </td>
+                            <td align="center">
+                                {{dia.comentariojusti}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="row" style="margin-left: 1em; margin-bottom: 1em"  ng-show="!sohrelat">
-            <button ng-click="trocaRota('home')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
+
+        <div class="row" style="margin-left: 1em; margin-bottom: 1em" ng-show="!sohrelat">
+            <button ng-click="trocaRota('home')" style="max-width: 5em;" type="button"
+                    class=" btn btn-primary btn-default btn-lg">
                 <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
             </button>
-                <button ng-if="ehroot" ng-click="trocaRota('entidades')" style="max-width: 5em;" type="button" class=" btn btn-primary btn-default btn-lg">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                </button>
+            <button ng-if="ehroot" ng-click="trocaRota('entidades')" style="max-width: 5em;" type="button"
+                    class=" btn btn-primary btn-default btn-lg">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            </button>
         </div>
     </div>
 
@@ -130,7 +179,7 @@
 
                     <div class="form-group input-addhora">
                         <label class="control-label">Justificativa:</label>
-                        <textarea  class="form-control" ng-model="addhora.justi"></textarea>
+                        <textarea class="form-control" ng-model="addhora.justi"></textarea>
                     </div>
 
                     <div class="input-addhora">
@@ -178,7 +227,7 @@
 
 <!--MODAL CONFIRMAÇÃO-->
 <div id="confirmacao" class="modal fade" role="dialog">
-    <div class="modal-dialog" >
+    <div class="modal-dialog">
         <div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
             <div class="modal-header">
                 <h4 class="modal-title text-center">Confirmação de saída</h4>
@@ -186,15 +235,21 @@
             <div class="modal-body text-center">
                 <div ng-if="!possuinovaprevisao"><p>Você sairá às {{saidashow}}?</p></div>
                 <div ng-if="possuinovaprevisao"><p>Você sairá às {{novaprevisaoshow}}?</p></div>
-                <p><button type="button" class="btn btn-default btn-primary" data-toggle="modal" data-target="#Sim" data-dismiss="modal">Sim</button>
-                    <button type="button" class="btn btn-default btn-danger" data-toggle="modal" data-target="#Nao" data-dismiss="modal">Não</button></p>
+                <p>
+                    <button type="button" class="btn btn-default btn-primary" data-toggle="modal" data-target="#Sim"
+                            data-dismiss="modal">Sim
+                    </button>
+                    <button type="button" class="btn btn-default btn-danger" data-toggle="modal" data-target="#Nao"
+                            data-dismiss="modal">Não
+                    </button>
+                </p>
             </div>
         </div>
     </div>
 </div>
 <!--MODAL NAO-->
 <div id="Nao" class="modal fade" role="dialog">
-    <div class="modal-dialog" >
+    <div class="modal-dialog">
         <div class="modal-content" style="background-color:#e3f2fd; border-style: solid; border-color:black;">
             <div class="modal-header">
                 <h4 class="modal-title text-center">Confirmação de saída</h4>
@@ -202,7 +257,9 @@
             <div class="modal-body text-center">
                 <p>Novo horário de saída:
                     <input type="time" style="max-width: 8em" ng-model="novaprevisao">
-                    <button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-dismiss="modal" ng-click="atualizaprevisao()">
+                    <button type="button" style="width: 2.5em; height: 2.2em;"
+                            class="btn btn-default btn-primary btn-xs close" data-dismiss="modal"
+                            ng-click="atualizaprevisao()">
                         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                     </button>
                 </p>
@@ -217,7 +274,8 @@
         <div class="modal-content" style="background-color:#80ff80; border-style: solid; border-color:black;">
             <div class="modal-body text-center">
                 <p>Horário salvo. Até amanhã!
-                    <button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-dismiss="modal" ng-click="sair()">
+                    <button type="button" style="width: 2.5em; height: 2.2em;"
+                            class="btn btn-default btn-primary btn-xs close" data-dismiss="modal" ng-click="sair()">
                         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                     </button>
                 </p>
@@ -231,8 +289,9 @@
         <div class="modal-content" style="background-color:#ff4d4d; border-style: solid; border-color:black;">
             <div class="modal-body text-center">
                 <p>Selecione um relatório válido!
-                    <button type="button" style="width: 2.5em; height: 2.2em;" class="btn btn-default btn-primary btn-xs close" data-toggle="modal" data-dismiss="modal" >
-                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    <button type="button" style="width: 2.5em; height: 2.2em;"
+                            class="btn btn-default btn-primary btn-xs close" data-toggle="modal" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                     </button>
                 </p>
             </div>
