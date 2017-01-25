@@ -231,6 +231,10 @@ mesmanager.prototype.addhorames = function (msg) {
   var me = this;
   var dados = msg.getRes();
 
+  if (dados.idusuario == null || dados.idusuario == undefined ||
+    dados.data.mes == null || dados.data.mes == undefined ||
+    dados.data.ano == null || dados.data.ano == undefined) return;
+
   var querymes = {
     nome: me.mes[dados.data.mes],
     ano: dados.data.ano,
@@ -288,10 +292,15 @@ mesmanager.prototype.encontraMesJusti = function (msg) {
     if (err) {
       console.log('erro ao buscar mes', err);
       me.emitManager(msg, '.error.readed', {err: err});
-    } else {
-      me.modeldia.find({
-        mes: res._id,
-        minutojusti: {$ne:null}
+    } else if (res != null) {
+      me.modeldia.find( {
+        "$query": {
+          mes: res._id,
+          minutojusti: {$ne:null}
+        },
+        "$orderby": {
+          data: -1
+        }
       }, function(errDia, resDia) {
         if (errDia) {
           console.log('erro ao buscar dia', errDia);

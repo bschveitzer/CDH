@@ -128,6 +128,10 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
 
   $scope.buscarrelatorio = function () {
 
+    $scope.relatorioretornado = [];
+    $scope.diasJustificados = [];
+    $scope.totalHorasJusti = {};
+
     if ($scope.relatorio == null) {
       $('#Relatoriovazio').modal();
       return;
