@@ -179,7 +179,7 @@ mesmanager.prototype.addhoradia = function (dados, mes, msg) {
 
   me.modeldia.findOne(querydia).exec(function (errDia, resDia) {
     if (errDia) {
-      console.log('erro ao buscar dia do mes');
+      console.log('erro ao buscar dia do mes', errDia);
       me.emitManager(msg, '.error.ajustada', {err: errDia});
     } else {
       if (resDia === null) {//Precisa criar dia
@@ -194,7 +194,7 @@ mesmanager.prototype.addhoradia = function (dados, mes, msg) {
 
         me.modeldia.create(novodia, function (errDiaNovo, resDiaNovo) {
           if (errDiaNovo) {
-            console.log('erro ao criar dia novo');
+            console.log('erro ao criar dia novo', errDiaNovo);
             me.emitManager(msg, '.error.ajustada', {err: errDiaNovo});
           } else {
             me.meshorajusti(dados, mes, msg, {});
@@ -210,7 +210,7 @@ mesmanager.prototype.addhoradia = function (dados, mes, msg) {
         me.modeldia.findByIdAndUpdate(resDia._id, {$set: setDia},
           function (errDiaAtu, resDiaAtu) {
             if (errDiaAtu) {
-              console.log('erro ao atualizar dia novo');
+              console.log('erro ao atualizar dia novo', errDiaAtu);
               me.emitManager(msg, '.error.ajustada', {err: errDiaAtu});
             } else {
               me.meshorajusti(dados, mes, msg, resDiaAtu);

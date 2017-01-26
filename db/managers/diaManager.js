@@ -109,12 +109,36 @@ diamanager.prototype.diminuirHoras = function (msg) {
 
 };
 
+/**
+ * Zera hora justificada
+ * @param msg
+ */
+diamanager.prototype.zeraHoraJusti = function (msg) {
+    var me = this;
+    var dado = msg.getRes();
+
+    var horazero = {
+        minutojusti: null,
+        comentariojusti: null
+    };
+
+    me.model.findByIdAndUpdate(dado._id, {$set: horazero}, function(err, res) {
+        if (err) {
+            console.log('erro ao zerar hora justificada', err);
+            me.emitManager(msg, '.error.removed', {err: err});
+        } else {
+            me.emitManager(msg, '.removed', {res: res});
+        }
+    });
+};
+
 diamanager.prototype.wiring = function(){
     var me = this;
     me.listeners['banco.dia.*'] = me.executaCrud.bind(me);
     me.listeners['pontosemana'] = me.entrada.bind(me);
     me.listeners['relatorio.getdias'] = me.diabymes.bind(me);
     me.listeners['entradamaissaida'] = me.diminuirHoras.bind(me);
+    me.listeners['rtc.horadia.remove'] = me.zeraHoraJusti.bind(me);
 
     for(var name in me.listeners){
         hub.on(name, me.listeners[name]);

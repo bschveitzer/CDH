@@ -61,12 +61,17 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
     valor: null,
     justi: null
   };
-  $scope.msgBanco = '';
+  $scope.msgBanco = {
+    result: '',
+    msg: '',
+    voltar: false
+  };
   $scope.totalHorasJusti = {
     horas: null,
     minutos: null
   };
   $scope.diasJustificados = [];
+  $scope.diaSelecionado = {};
 
   var verificatipo = function () {
     if ($scope.logado.tipo == 0) {
@@ -80,6 +85,23 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
       horas: parseInt(minutos/60),
       minutos: (minutos%60 < 10) ? '0'+minutos%60 : minutos%60
     };
+  };
+
+  /**
+   * Salva em uma variavel dados do dia
+   */
+  $scope.selecionaHoraJusti = function(dia, index) {
+    $scope.diaSelecionado = angular.copy(dia);
+    $scope.diaSelecionado.index = index;
+  };
+
+  /**
+   * Manda msg para zerar hora jusatificada
+   */
+  $scope.removeHoraJusti = function() {
+    $('#modalConfirmaDel').modal('hide');
+    var msg = new Mensagem(me, 'horadia.remove', $scope.diaSelecionado, 'horadia');
+    SIOM.emitirServer(msg);
   };
 
   /**
@@ -387,13 +409,22 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
   };
 
   /**
-   * Retorno do banco ao adicionar horas
+   * Retorno do banco ao adicionar/remover horas justificadas
    *
    * @param msg
    */
-  var retHoraAjuste = function (msg) {
+  var retMsgBanco = function (msg) {
 
-    $scope.msgBanco = (msg.isSuccess()) ? 'Sucesso' : 'Erro';
+    $scope.msgBanco.result = (msg.isSuccess()) ? 'Sucesso' : 'Erro';
+    if (msg.getEvento() === 'horadia.ajustada') {
+      $scope.msgBanco.voltar = true;
+      $scope.msgBanco.msg = 'ao adicionar horas.';
+    } else {
+      $scope.diasJustificados.splice($scope.diaSelecionado.index, 1);
+      $scope.msgBanco.voltar = false;
+      $scope.msgBanco.msg = 'ao remover horas.';
+    }
+
     $('#addHoras').modal('hide');
     $('#retMsgBanco').modal();
     $scope.$apply();
@@ -420,7 +451,8 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
     me.listeners['comparou'] = tratacomparacao.bind(me);
     me.listeners['previsao.updated'] = saidaregistrada.bind(me);
     me.listeners['relatorio.bancomensal'] = setabancomensal.bind(me);
-    me.listeners['horadia.ajustada'] = retHoraAjuste.bind(me);
+    me.listeners['horadia.ajustada'] = retMsgBanco.bind(me);
+    me.listeners['horadia.removed'] = retMsgBanco.bind(me);
 
     for (var name in me.listeners) {
 

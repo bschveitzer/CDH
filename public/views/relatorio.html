@@ -116,10 +116,11 @@
                             <th class="text-center">Dia</th>
                             <th class="text-center">Horas justificadas</th>
                             <th class="text-center">Comentario</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="dia in diasJustificados">
+                        <tr ng-repeat="dia in diasJustificados track by $index">
                             <td align="center">
                                 {{dia.data}} ({{dia.nome}})
                             </td>
@@ -128,6 +129,14 @@
                             </td>
                             <td align="center">
                                 {{dia.comentariojusti}}
+                            </td>
+                            <td align="center">
+                                <button class="btn btn-danger"
+                                        data-toggle="modal"
+                                        data-target="#modalConfirmaDel"
+                                        ng-click="selecionaHoraJusti(dia, $index)">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
                             </td>
                         </tr>
                         </tbody>
@@ -178,7 +187,7 @@
                         <input class="form-control" type="number" ng-model="addhora.valor">
                     </div>
 
-                    <div class="form-group input-addhora" style="max-width: inherit;">
+                    <div class="form-group input-addhora">
                         <label class="control-label">Justificativa:</label>
                         <textarea class="form-control" ng-model="addhora.justi"></textarea>
                     </div>
@@ -203,6 +212,31 @@
 </div>
 
 <!-- Modal -->
+<div id="modalConfirmaDel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Você tem certeza que deseja remover?</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="" ng-repeat="(key, value) in diaSelecionado">
+                    <div ng-if="key != '_id' && key != '__v' && key != 'index'">
+                        {{key}}: {{value}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-danger" ng-click="removeHoraJusti()">Sim</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--MODAL RETORNO HORAS JUSTIFICADA-->
 <div id="retMsgBanco" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -213,10 +247,14 @@
                 <h4 class="modal-title">Retorno horas justificadas</h4>
             </div>
             <div class="modal-body">
-                <p>{{msgBanco}} ao adicionar horas.</p>
+                <p>{{msgBanco.result}} {{msgBanco.msg}}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="voltarmodal('addHoras')">
+                <button type="button"
+                        class="btn btn-default"
+                        data-dismiss="modal"
+                        ng-click="voltarmodal('addHoras')"
+                        ng-if="msgBanco.voltar">
                     <i class="glyphicon glyphicon-repeat"></i>Voltar
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
