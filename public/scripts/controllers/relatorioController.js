@@ -86,17 +86,38 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
    * Adiciona horas justificadas a um usuario
    */
   $scope.addHoraUser = function () {
+    if ( $scope.addhora.idusuario === 'todos') {
 
-    var dado = angular.copy($scope.addhora);
-    dado.data = {
-      dia: dado.data.getDate(),
-      mes: dado.data.getMonth(),
-      ano: dado.data.getFullYear(),
-      diasemana: dado.data.getDay(),
-    };
+      var dado = angular.copy($scope.addhora);
+      dado.data = {
+        dia: dado.data.getDate(),
+        mes: dado.data.getMonth(),
+        ano: dado.data.getFullYear(),
+        diasemana: dado.data.getDay(),
+      };
 
-    var msg = new Mensagem(me, 'horadia.ajuste', dado, 'horadia');
-    SIOM.emitirServer(msg);
+      for(var indexuser in $scope.usuarios) {
+
+        dado.idusuario = $scope.usuarios[indexuser]._id;
+        var msg = new Mensagem(me, 'horadia.ajuste', dado, 'horadia');
+        SIOM.emitirServer(msg);
+
+      }
+
+    } else {
+
+      var dado = angular.copy($scope.addhora);
+      dado.data = {
+        dia: dado.data.getDate(),
+        mes: dado.data.getMonth(),
+        ano: dado.data.getFullYear(),
+        diasemana: dado.data.getDay(),
+      };
+
+      var msg = new Mensagem(me, 'horadia.ajuste', dado, 'horadia');
+      SIOM.emitirServer(msg);
+
+    }
   };
 
 
@@ -352,7 +373,7 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
     });
 
     $scope.totalHorasJusti.horas = parseInt(dado.bancodehorasjusti/60);
-    $scope.totalHorasJusti.minutos = dado.bancodehorasjusti%60;
+    $scope.totalHorasJusti.minutos = (dado.bancodehorasjusti%60 < 10) ? '0'+dado.bancodehorasjusti%60 : dado.bancodehorasjusti%60;
 
   };
 

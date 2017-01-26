@@ -109,7 +109,7 @@
                     </table>
                 </div>
                 <!--TAB DIAS JUSTIFICADOS-->
-                <div class="tab-pane fade" id="diasjusti" role="tabpanel">
+                <div class="tab-pane fade" id="diasjusti" role="tabpanel" ng-if="diasJustificados.length > 0">
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -121,7 +121,7 @@
                         <tbody>
                         <tr ng-repeat="dia in diasJustificados">
                             <td align="center">
-                                {{dia.data}}
+                                {{dia.data}} ({{dia.nome}})
                             </td>
                             <td align="center">
                                 {{minutoHora(dia.minutojusti).horas}}:{{minutoHora(dia.minutojusti).minutos}}
@@ -164,6 +164,7 @@
                         <label class="control-label">Colaborador:</label>
                         <select class="form-control" ng-model="addhora.idusuario">
                             <option ng-repeat="usuario in usuarios" value="{{usuario._id}}">{{usuario.nome}}</option>
+                            <option value="todos">Todos</option>
                         </select>
                     </div>
 
@@ -177,7 +178,7 @@
                         <input class="form-control" type="number" ng-model="addhora.valor">
                     </div>
 
-                    <div class="form-group input-addhora">
+                    <div class="form-group input-addhora" style="max-width: inherit;">
                         <label class="control-label">Justificativa:</label>
                         <textarea class="form-control" ng-model="addhora.justi"></textarea>
                     </div>
