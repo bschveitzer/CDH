@@ -84,11 +84,7 @@ app.controller("entidadesController",['$scope','$location', 'utilvalues','getUse
     };
     
     $scope.sair = function () {
-
-        utilvalues.saida.hora = new Date();
-        var entrada1 = new Date(utilvalues.entrada.horaEntrada);
-        utilvalues.tempotrabalhado = utilvalues.saida.hora.getTime() - entrada1.getTime();
-        
+        utilvalues.saida.hora = '';
         var msg = new Mensagem(me, 'regsaida.update', utilvalues.saida, 'saida');
         SIOM.emitirServer(msg);
 

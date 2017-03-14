@@ -38,12 +38,19 @@ RtcRoot.prototype.verificacao = function (timeprevisao) {
 
 RtcRoot.prototype.setaPrevisao = function (msg) {
     var me = this;
-    if(msg.getRtc() == me){
+    if (msg.getRtc() == me) {
         var dado = msg.getRes();
         me.emitePraInterface(msg);
         var timeprevisao = dado.previsao.getTime() - 60000;
         me.verificacao(timeprevisao);
     }
+};
+
+RtcRoot.prototype.setaSaida = function (msg) {
+    var me = this;
+    msg.dados.hora = new Date();
+    me.daInterface(msg);
+
 };
 
 RtcRoot.prototype.wiring = function () {
@@ -76,7 +83,7 @@ RtcRoot.prototype.interfaceWiring = function () {
     me.browserlisteners['usuario.create'] = me.daInterface.bind(me);
     me.browserlisteners['usuario.read'] = me.daInterface.bind(me);
     me.browserlisteners['usuario.update'] = me.daInterface.bind(me);
-    me.browserlisteners['regsaida.update'] = me.daInterface.bind(me);
+    me.browserlisteners['regsaida.update'] = me.setaSaida.bind(me);
     me.browserlisteners['usuario.destroy'] = me.daInterface.bind(me);
     me.browserlisteners['relatorio.read'] = me.daInterface.bind(me);
     me.browserlisteners['relatoriojusti.read'] = me.daInterface.bind(me);
@@ -94,10 +101,10 @@ RtcRoot.prototype.interfaceWiring = function () {
 RtcRoot.prototype.destruir = function () {
     var me = this;
 
-    for(var name in me.browserlisteners){
+    for (var name in me.browserlisteners) {
         me.config.socket.removeListener(name, me.browserlisteners[name]);
     }
-    for(var list in me.listeners){
+    for (var list in me.listeners) {
         hub.removeListener(list, me.listeners[list]);
     }
 };

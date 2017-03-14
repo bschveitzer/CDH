@@ -44,6 +44,13 @@ RtcComum.prototype.setaPrevisao = function (msg) {
     }
 };
 
+RtcComum.prototype.setaSaida = function (msg) {
+    var me = this;
+    msg.dados.hora = new Date();
+    me.daInterface(msg);
+
+};
+
 RtcComum.prototype.wiring = function(){
     var me = this;
 
@@ -70,7 +77,7 @@ RtcComum.prototype.interfaceWiring = function(){
     me.browserlisteners['usuario.create'] = me.daInterface.bind(me);
     me.browserlisteners['usuario.read'] = me.daInterface.bind(me);
     me.browserlisteners['usuario.update'] = me.daInterface.bind(me);
-    me.browserlisteners['regsaida.update'] = me.daInterface.bind(me);
+    me.browserlisteners['regsaida.update'] = me.setaSaida.bind(me);
     me.browserlisteners['relatorio.read'] = me.daInterface.bind(me);
     me.browserlisteners['enviarelatorio'] = me.daInterface.bind(me);
     me.browserlisteners['previsao.update'] = me.daInterface.bind(me);
