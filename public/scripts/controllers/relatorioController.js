@@ -6,7 +6,11 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
   $scope.usuarios = [];
   $scope.relatorioretornado = [];
 
-  $scope.relatorio = null;
+  $scope.relatorio = {
+    usuario: null,
+    mes: null,
+    ano: null
+  };
 
   $scope.saidaregistrada = utilvalues.saidaregistrada;
   $scope.horasaida = utilvalues.horasaida;
@@ -430,7 +434,11 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
     $('#addHoras').modal('hide');
     $('#retMsgBanco').modal();
 
-    $scope.buscarrelatorio();
+    if ($scope.relatorio.mes != null && $scope.relatorio.mes != null && $scope.relatorio.usuario != null) {
+        $scope.buscarrelatorio();
+    } else {
+      $scope.$apply();
+    }
   };
 
   /**

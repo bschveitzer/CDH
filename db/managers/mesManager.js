@@ -40,6 +40,35 @@ function mesmanager() {
 utility.inherits(mesmanager, Manager);
 
 /**
+ * Calcula o numero de horas que devem ser trabalhadas no mes e retorna o valor em milisegundos
+ *
+ * @param ano
+ * @param mes
+ * @returns {number}
+ */
+mesmanager.prototype.calc_total_horas = function (ano, mes) {
+
+  let me = this;
+  let num_mes;
+  for(let index_mes in me.mes) {//Encontra mes
+    if (me.mes.hasOwnProperty(index_mes)) {
+        if (me.mes[index_mes] === mes) num_mes = parseInt(index_mes);
+    }
+  }
+
+  let total_horas = 0;
+  let total_dias =  new Date(ano, num_mes+1, 0).getDate();
+
+  for(let dia = 1; dia <= total_dias; dia++) {
+      let novo_dia = new Date(ano, num_mes, dia);
+      if (novo_dia.getDay() != 0 && novo_dia.getDay() != 6) total_horas+=4;
+  }
+
+  return total_horas*3600000;
+};
+
+
+/**
  * Inicia o tratamento dos namespace dos eventos, method recebe o nome da função
  * que vai ser executada por meio da herança.
  */
@@ -72,7 +101,7 @@ mesmanager.prototype.entrada = function (ponto) {
         ano: ano,
         fechado: false,
         usuario: usuario,
-        bancodehoras: 288000000
+        bancodehoras: me.calc_total_horas(ano, mes)
       };
       me.model.create(novomes, function (err, res) {
         if (res) {
@@ -253,7 +282,7 @@ mesmanager.prototype.addhorames = function (msg) {
           ano: dados.data.ano,
           fechado: false,
           usuario: dados.idusuario,
-          bancodehoras: 288000000
+          bancodehoras: me.calc_total_horas(dados.data.ano, me.mes[dados.data.mes]),
         };
 
         me.model.create(novomes, function (errMesNovo, resMesNovo) {
