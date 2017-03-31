@@ -390,8 +390,14 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
       });
     });
 
-    $scope.totalHorasJusti.horas = parseInt(dado.bancodehorasjusti/60);
-    $scope.totalHorasJusti.minutos = (dado.bancodehorasjusti%60 < 10) ? '0'+dado.bancodehorasjusti%60 : dado.bancodehorasjusti%60;
+    if (dado.bancodehorasjusti > 0) {
+        $scope.totalHorasJusti.horas = parseInt(dado.bancodehorasjusti/60);
+        $scope.totalHorasJusti.minutos = (dado.bancodehorasjusti%60 < 10) ? '0'+dado.bancodehorasjusti%60 : dado.bancodehorasjusti%60;
+    } else {
+        $scope.totalHorasJusti.horas = '00';
+        $scope.totalHorasJusti.minutos = '00';
+    }
+
 
   };
 
