@@ -114,6 +114,7 @@ diamanager.prototype.diminuirHoras = function (msg) {
  * @param msg
  */
 diamanager.prototype.zeraHoraJusti = function (msg) {
+
     var me = this;
     var dado = msg.getRes();
 
@@ -124,12 +125,36 @@ diamanager.prototype.zeraHoraJusti = function (msg) {
 
     me.model.findByIdAndUpdate(dado._id, {$set: horazero}, function(err, res) {
         if (err) {
-            console.log('erro ao zerar hora justificada', err);
+            console.log('erro ao zerar minutojusti do dia', err);
             me.emitManager(msg, '.error.removed', {err: err});
         } else {
-            me.emitManager(msg, '.removed', {res: res});
+
+            me.modelmes = require('../model/mes.js');
+            var querymes = {_id: dado.mes};
+            me.modelmes.findOne(querymes).exec(function (err_find_mes, res_find_mes) {
+                if (err_find_mes) {
+                    console.log('erro ao pegar mes', err_find_mes);
+                    me.emitManager(msg, '.error.removed', {err: err_find_mes});
+                } else {
+                    var novomes = {
+                        bancodehorasjusti: res_find_mes.bancodehorasjusti - dado.minutojusti
+                    };
+
+                    me.modelmes.findByIdAndUpdate(dado.mes, {$set: novomes}, function(err_mes, res_mes) {
+                        if (err_mes) {
+                            console.log('erro ao zerar bancodehorasjusti do mes', err_mes);
+                            me.emitManager(msg, '.error.removed', {err: err_mes});
+                        } else {
+                            me.emitManager(msg, '.removed', {res: res_mes});
+                        }
+                    });
+                }
+            });
+
         }
     });
+
+
 };
 
 diamanager.prototype.wiring = function(){

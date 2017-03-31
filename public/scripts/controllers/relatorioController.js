@@ -429,8 +429,8 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
 
     $('#addHoras').modal('hide');
     $('#retMsgBanco').modal();
-    $scope.$apply();
 
+    $scope.buscarrelatorio();
   };
 
   /**
