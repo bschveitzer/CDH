@@ -71,6 +71,7 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
     voltar: false
   };
   $scope.totalHorasJusti = {
+    positividade: null,
     horas: null,
     minutos: null
   };
@@ -85,9 +86,11 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
   };
 
   $scope.minutoHora = function(minutos) {
+    var valor = Math.abs(minutos);
+    var positividade = (minutos > 0) ? null : '-';
     return {
-      horas: parseInt(minutos/60),
-      minutos: (minutos%60 < 10) ? '0'+minutos%60 : minutos%60
+      horas: positividade + parseInt(valor/60),
+      minutos: (valor%60 < 10) ? '0'+valor%60 : valor%60
     };
   };
 
@@ -394,10 +397,17 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
       });
     });
 
-    if (dado.bancodehorasjusti > 0) {
-        $scope.totalHorasJusti.horas = parseInt(dado.bancodehorasjusti/60);
-        $scope.totalHorasJusti.minutos = (dado.bancodehorasjusti%60 < 10) ? '0'+dado.bancodehorasjusti%60 : dado.bancodehorasjusti%60;
+    if (dado.bancodehorasjusti > 0 || dado.bancodehorasjusti < 0) {
+
+        //Ajuste para valores negativos
+        $scope.totalHorasJusti.positividade = (dado.bancodehorasjusti < 0) ? '-' : null;
+        var horas_justi = Math.abs(dado.bancodehorasjusti);
+
+        //Calculo de horas
+        $scope.totalHorasJusti.horas = parseInt(horas_justi/60);
+        $scope.totalHorasJusti.minutos = (horas_justi%60 < 10) ? '0'+horas_justi%60 : horas_justi%60;
     } else {
+        $scope.totalHorasJusti.positividade = null;
         $scope.totalHorasJusti.horas = '00';
         $scope.totalHorasJusti.minutos = '00';
     }

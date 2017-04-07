@@ -177,11 +177,11 @@ mesmanager.prototype.meshorajusti = function (dados, mes, msg, dia) {
   var novosdados = {};
   novosdados.bancodehorasjusti = (mes.bancodehorasjusti) ?
   mes.bancodehorasjusti + dados.valor : dados.valor;
-  if (dia.minutojusti > 0)  novosdados.bancodehorasjusti -= dia.minutojusti;
+  if (dia.minutojusti > 0 || dia.minutojusti  < 0)  novosdados.bancodehorasjusti -= dia.minutojusti;
 
   me.model.findByIdAndUpdate(mes._id, {$set: novosdados}, function (err, res) {
     if (err) {
-      console.log('erroa ao atualizar bancodehorasjusti do mes', err);
+      console.log('erro ao atualizar bancodehorasjusti do mes', err);
       me.emitManager(msg, '.error.ajustada', {err: err});
     } else {
       me.emitManager(msg, '.ajustada', {res: res});
