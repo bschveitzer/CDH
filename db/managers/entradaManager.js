@@ -130,8 +130,10 @@ entradamanager.prototype.registraentrada = function (registro) {
                 res_mes[index].save()
                   .then((res_mes_update)=> {
 
+                    let horasjusti = (res_mes_update.bancodehorasjusti > 0) ?
+                      res_mes_update.bancodehorasjusti : 0;
                     let divida = parseInt(res_mes_update.bancodehoras/60000) -
-                      res_mes_update.bancodehorasjusti;
+                      horasjusti;
                     let divida_atual = res_mes[0].usuario.horasdividas;
                     res_mes[0].usuario.horasdividas = (divida_atual > 0) ?
                       divida_atual + divida : divida;

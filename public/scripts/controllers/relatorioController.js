@@ -75,6 +75,11 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
     horas: null,
     minutos: null
   };
+  $scope.totalHorasDivida = {
+    positividade: null,
+    horas: null,
+    minutos: null
+  };
   $scope.diasJustificados = [];
   $scope.diaSelecionado = {};
 
@@ -199,6 +204,9 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
         $scope.mostrausuario = user.nome + ' ' + user.sobrenome;
         $scope.naotemrelatorio = false;
       }
+
+
+
 
     }
 
@@ -412,6 +420,24 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
         $scope.totalHorasJusti.minutos = '00';
     }
 
+    let user = JSON.parse($scope.relatorio.usuario);
+    if (user.horasdividas > 0 || user.horasdividas < 0) {
+
+      //Ajuste para valores negativos
+      $scope.totalHorasDivida.positividade = (user.horasdividas < 0) ? '-' : null;
+      let horas_justi = Math.abs(user.horasdividas);
+
+      //Calculo de horas
+      $scope.totalHorasDivida.horas = parseInt(horas_justi/60);
+      $scope.totalHorasDivida.minutos = (horas_justi%60 < 10) ? '0'+horas_justi%60 : horas_justi%60;
+    } else {
+      $scope.totalHorasDivida.positividade = null;
+      $scope.totalHorasDivida.horas = '00';
+      $scope.totalHorasDivida.minutos = '00';
+    }
+
+    console.log('dadoooooooooo', dado, user);
+
 
   };
 
@@ -460,7 +486,6 @@ app.controller("relatorioController", ['$scope', '$location', '$window', 'utilva
     $scope.diasJustificados = msg.getDado();
     $scope.$apply();
 
-    console.log('msg', $scope.diasJustificados);
   };
 
   me.wiring = function () {

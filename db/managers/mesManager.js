@@ -286,7 +286,9 @@ mesmanager.prototype.addhorames = function (msg) {
     usuario: dados.idusuario
   };
 
-  this.model.findOne(querymes).exec(function (errMes, resMes) {
+  this.model.findOne(querymes)
+    .populate('usuario')
+    .exec(function (errMes, resMes) {
     if (errMes) {
       console.log('erro ao buscar mes', errMes);
       me.emitManager(msg, '.error.ajustada', {err: errMes});
@@ -312,9 +314,18 @@ mesmanager.prototype.addhorames = function (msg) {
         });
 
       } else {
-        console.log('mes????', resMes);
         if (resMes.fechado) {
-        //  todo deve atualizar horasdividas do usuario
+
+          resMes.usuario.horasdividas -= dados.valor;
+          resMes.usuario.save()
+            .then((res_usuario_update) => {
+              me.addhoradia(dados, resMes, msg);
+            })
+            .catch((err_usuario_update) => {
+              console.log('erro ao atualizar horasdividas', errMesNovo);
+              me.emitManager(msg, '.error.ajustada', {err: err_usuario_update});
+            });
+
         } else {
           me.addhoradia(dados, resMes, msg);
         }
