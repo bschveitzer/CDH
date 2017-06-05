@@ -96,12 +96,27 @@ mesmanager.prototype.entrada = function (ponto) {
     'usuario': usuario
   }, function (err, res) {
     if (!res) {
+
+      // let mes_antigo = (entrada.getMonth()-1 >= 0) ? entrada.getMonth()-1 : 11;
+      // let ano_antigo = (entrada.getMonth()-1 >= 0) ?
+      //   entrada.getFullYear() : entrada.getFullYear()-1;
+      //
+      // me.model.findOne({
+      //   'nome': me.mes[mes_antigo],
+      //   'ano': ano_antigo,
+      //   'usuario': usuario
+      // }, (err, res) => {
+      //   console.log('retorno mes antigo', err, res);
+      // });
+
+
       var novomes = {
         nome: mes,
         ano: ano,
         fechado: false,
         usuario: usuario,
-        bancodehoras: me.calc_total_horas(ano, mes)
+        bancodehoras: me.calc_total_horas(ano, mes),
+        horasjuros: 0
       };
       me.model.create(novomes, function (err, res) {
         if (res) {
@@ -114,6 +129,7 @@ mesmanager.prototype.entrada = function (ponto) {
           console.log('deu erro no cria dia', err);
         }
       })
+
     } else if (err) {
       console.log('deu merda aqui', err);
     } else {
@@ -283,6 +299,7 @@ mesmanager.prototype.addhorames = function (msg) {
           fechado: false,
           usuario: dados.idusuario,
           bancodehoras: me.calc_total_horas(dados.data.ano, me.mes[dados.data.mes]),
+          horasjuros: 0,
         };
 
         me.model.create(novomes, function (errMesNovo, resMesNovo) {
@@ -295,7 +312,12 @@ mesmanager.prototype.addhorames = function (msg) {
         });
 
       } else {
-        me.addhoradia(dados, resMes, msg);
+        console.log('mes????', resMes);
+        if (resMes.fechado) {
+        //  todo deve atualizar horasdividas do usuario
+        } else {
+          me.addhoradia(dados, resMes, msg);
+        }
       }
     }
   });
