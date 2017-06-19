@@ -63,10 +63,9 @@ entradamanager.prototype.registraentrada = function (registro) {
     dia: registro.day
   };
 
-  this.model.find({dia: registro.day._id}, function (err, res) {
+  me.model.find({dia: registro.day._id}, function (err, res) {
     if (res) {
-      // res.length != 0
-      if (false) {
+      if (res.length != 0) {
         var obj = {
           mes: mes,
           cbjaentrada: registro.cb,
